@@ -1,0 +1,62 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Karan\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native-router-flux
+
+PATH: 
+  D:\ImageMagick-6.9.11-Q8;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Android;C:\Windows\System32;D:\poppler-0.68.0\bin;D:\apache-cassandra-3.11.8-bin\apache-cassandra-3.11.8\bin;C:\Python27;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Users\Karan\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\Karan\AppData\Local\Programs\Python\Python38-32\;C:\Users\Karan\AppData\Local\Microsoft\WindowsApps;C:\Users\Karan\AppData\Local\atom\bin;D:\poppler-0.68.0\bin;D:\poppler\bin;;C:\Users\Karan\AppData\Local\Microsoft\WindowsApps;C:\Users\Karan\AppData\Roaming\npm;C:\Users\Karan\AppData\Local\Programs\Microsoft VS Code\bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.5
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, rmdir 'C:\Google Drive\Project\SEM 4\React Native\onepass-v1\node_modules\.bin'
+
+npm manifest: 
+  {
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "eject": "expo eject"
+    },
+    "dependencies": {
+      "@expo-google-fonts/inter": "^0.1.0",
+      "@react-native-community/masked-view": "0.1.10",
+      "@react-navigation/native": "^5.9.2",
+      "@use-expo/font": "^2.0.0",
+      "expo": "~40.0.0",
+      "expo-app-loading": "^1.0.1",
+      "expo-font": "~8.4.0",
+      "expo-status-bar": "~1.0.3",
+      "express": "^4.17.1",
+      "react": "16.13.1",
+      "react-dom": "16.13.1",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+      "react-native-biometrics": "^2.1.4",
+      "react-native-gesture-handler": "~1.8.0",
+      "react-native-reanimated": "~1.13.0",
+      "react-native-safe-area-context": "3.1.9",
+      "react-native-screens": "~2.15.2",
+      "react-native-touch-id": "^4.4.1",
+      "react-native-web": "~0.13.12",
+      "react-navigation": "^4.4.3",
+      "typeface-roboto-condensed": "^1.1.13"
+    },
+    "devDependencies": {
+      "@babel/core": "~7.9.0"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
