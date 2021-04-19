@@ -1,42 +1,43 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{ useState,useEffect} from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity,Switch} from 'react-native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity,Switch, DevSettings} from 'react-native';
 import { useFonts } from 'expo-font';
 import  AppLoading  from "expo-app-loading";
 import axios from 'react-native-axios'
 import {css} from './css'
 import {fonts} from './fonts'
-import {useDispatch,useSelector} from 'react-redux'
-
-
+import {useDispatch} from 'react-redux'
+import { ScrollView } from 'react-native-gesture-handler';
+import { NativeModules } from "react-native";
 export default function Login  ({navigation}) {
+  
 const [input,setInput] = useState("")
 const [isLoaded] = useFonts(fonts);
 const styles = StyleSheet.create(css); 
 const [creds,setCreds] = useState({})
 const dispatch = useDispatch()
 const [toggle, setToggle] = useState(false);
-
-
-useEffect(()=>{
-  const getData  = async ()=>{
-   
-      await axios.get('http://127.0.0.1:3000/creds').then((res)=>{
-   setCreds(res.data)
- })
-   
-    
+const parameters = navigation.state.params
+// console.log(navigation.state.params)
+if(parameters)
+{
+  // flag.flag=false;
+  NativeModules.DevSettings.reload();
 }
-getData()
-},[setCreds])
+useEffect(()=>{
+  setCreds({})
+  const getData  = async ()=>{
+       await axios.get('http://10.0.0.6:3000/creds').then((res)=>{
+   setCreds(res.data)
+ })  }
+getData()},[setCreds])
 
 
 const login= (e)=>{  
   e.preventDefault()
   
   if(input !== "")
-  {axios.post('http://127.0.0.1:3000/login',{
+  {axios.post('http://10.0.0.6:3000/login',{
     username:creds.username ,
     password:input,
   },
@@ -49,7 +50,7 @@ const login= (e)=>{
   }
   ).then((res)=>{
     dispatch({type:"LOGIN",data:res.data})
-    navigation.navigate('Homepage')
+    navigation.navigate('Bottomnavbar')
   }).catch((er)=>{
     console.log("error")
   })
@@ -64,7 +65,7 @@ if (!isLoaded) {
   return <AppLoading/>;
 } else {
   return (
-      <View style={styles.container}>
+      <ScrollView><View style={styles.logincontainer}>
       <Text style={styles.header}>{"\n"}One-Pass</Text>
       <Text style={styles.bodytext}>Keep your credentials to yourself!{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
       <Text style={styles.bodytext}>{creds.username?(`Hello ${creds.username}`):(null)}</Text>
@@ -73,8 +74,6 @@ if (!isLoaded) {
       <TextInput style={[styles.inputbox,{width:300}]}
       onChangeText={text => setInput(text)}
       secureTextEntry = {true}
-     
-      
       />
       </View>
       <View style={styles.hinttoggle}>
@@ -100,16 +99,17 @@ if (!isLoaded) {
         >
         <Text style={styles.loginbuttontext}>Login</Text>
         </TouchableOpacity>
-        <Text style={styles.bodytext}>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}Not registered? Create account now{"\n"}</Text>
+        <Text style={styles.bodytext}>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}Not registered? Create account now{"\n"}</Text>
 
       <TouchableOpacity
           style={styles.button}
-          onPress={() => {navigation.navigate("Register") }} 
+          onPress={() => {navigation.navigate("Register") }}
         >
-        <Text style={styles.loginbuttontext}>Register</Text>
+        <Text style={styles.loginbuttontext}>Register{"\n"}</Text>
         </TouchableOpacity>
       <StatusBar style="auto" /> 
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 };

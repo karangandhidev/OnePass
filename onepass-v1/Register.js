@@ -8,9 +8,11 @@ import axios from 'react-native-axios';
 import {css} from './css'
 import {useDispatch} from 'react-redux'
 import PassMeter from "react-native-passmeter";
+// import { NavigationActions,StackActions } from '@react-navigation/native'
 
 
 export default function Register({navigation}) {
+
 const dispatch = useDispatch()
 const [input,setInput] = useState({
   name:"",
@@ -46,13 +48,12 @@ const register=()=>{
           if(valid){
             if(length){
               if(confirm){
-            const data = {
+              const data = {
               username:input.name,
               password:input.password,
               hint:input.hint
             }
-            
-          axios.post('http://127.0.0.1:3000/register',data,
+          axios.post('http://10.0.0.6:3000/register',data,
         {headers:
           {
           "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Authorization",
@@ -61,9 +62,8 @@ const register=()=>{
           }
         }
         ).then(()=>{
-        
         dispatch({type:"REGISTER",data:{username:input.name,hint:input.hint}})
-        navigation.navigate('Login',{username:input.name,hint:input.hint})
+        navigation.navigate('Login',{username:input.name,hint:input.hint,flag:true})
         }).catch((er)=>{
           alert(er)
         })
@@ -94,7 +94,7 @@ if (!isLoaded) {
   return <AppLoading/>;
 } else {
   return (
-    <View style={styles.container}>
+    <View style={styles.logincontainer}>
       <Text style={styles.header}>{"\n"}One-Pass</Text>
       <Text style={styles.bodytext}>Keep your credentials to yourself!{"\n"}{"\n"}</Text>
       <View style={styles.form}>
@@ -112,13 +112,13 @@ if (!isLoaded) {
         borderColor: '#F0F5F9',
         borderWidth: 1,
         alignItems: 'center',
-        outline:'none',
+        // outline:'none',
         borderRadius:7,
         textAlign:'center',
         height: 40,
         color: '#F0F5F9',
       }]}
-      onChangeText={text =>handleInput({value:text,name:"password"})}
+      onChangeText={text =>handleInput({value :text,name:"password"})}
       placeholder='Enter Password'
       secureTextEntry = {true}
       placeholderTextColor= '#F0F5F9'

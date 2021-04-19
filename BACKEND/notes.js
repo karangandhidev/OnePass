@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 notesSchema = mongoose.Schema({
-    name:{
-        type:String,
-        required:true
-    },
     topic:{
         type:String,
         required:true

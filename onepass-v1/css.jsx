@@ -1,8 +1,40 @@
+import { Dimensions } from 'react-native';
+const deviceWindow = Dimensions.get('window')
 export const css ={
-    container: {
+  overlay:{
+    width:deviceWindow.width * 0.80,
+    alignItems:'center',
+    height:120,
+    backgroundColor: 'rgba(52, 52, 52, 0.0)',
+    position:'absolute',
+    marginBottom:222,
+  },
+  overlaycard:{
+    borderRadius:7,
+      width:'85%',
+      height:'8%',
+      margin:'3%',
+      backgroundColor:'#F0F5F9',
+      alignItems: 'center',
+      shadowColor: 'rgba(0, 0, 0, 0.1)',
+      shadowOpacity: 0.8,
+      elevation: 6,
+      shadowRadius: 10 ,
+      justifyContent: 'center',
+      shadowOffset : { width: 1, height: 13},
+  },
+    logincontainer:{
       flex: 1,
       backgroundColor: '#1E2022',
       alignItems: 'center',
+      height:deviceWindow.height,
+    },
+    container: {
+      // flex: 1,
+      backgroundColor: '#1E2022',
+      alignItems: 'center',
+      width:deviceWindow.width,
+      height:deviceWindow.height,
     },
     hinttoggle:{
       flexDirection:'row',
@@ -42,6 +74,7 @@ export const css ={
       height:90,
       paddingTop:30,
       paddingBottom:-30,
+      // position:'relative'
     },
     iconback:{
       paddingTop:10,
@@ -83,10 +116,14 @@ export const css ={
       textAlign:'center',
       // borderBottom:-10,
     },
+    scroll:{
+      backgroundColor: '#FFFFFF',
+      height:deviceWindow.height,
+    },
     homescreeen:{
       backgroundColor: '#FFFFFF',
       alignItems: 'center',
-      height:'100%',
+      height:deviceWindow.height,
     },
       cards:{
       borderRadius:7,
@@ -97,8 +134,8 @@ export const css ={
       alignItems: 'center',
       shadowColor: 'rgba(0, 0, 0, 0.1)',
       shadowOpacity: 0.8,
-      elevation: 6,
       shadowRadius: 10 ,
+      elevation: 6,
       justifyContent: 'center',
       shadowOffset : { width: 1, height: 13},
     },
@@ -165,5 +202,27 @@ export const css ={
       borderColor: '#F0F5F9',
       textAlign:'center',
       color: '#F0F5F9',
-    }    
+    },  
+    formtext:{
+      color:'#1E2022',
+    },    
+    formfields:{
+      maxWidth:300,
+      width:300,
+      fontFamily: 'RobotoCondensed-Light', 
+      borderColor: '#F0F5F9',
+      borderWidth: 1,
+      alignItems: 'center',
+      borderRadius:7,
+      textAlign:'center',
+      height: 40,
+      color: '#1E2022',
+  },
+    scrollcontainer:{
+      fontFamily: 'RobotoCondensed-Light', 
+      fontSize: 23,    
+      textAlign:'center',
+      color:'#1E2022',
+    },  
   }
+ 

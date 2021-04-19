@@ -1,17 +1,9 @@
 export const defaultState  ={
-    details:{},
     user:null
 }
 
 export const reducer = (state=defaultState,action)=>{
-    switch (action.type){
-        case "REGISTER":
-        return {
-            ...state,
-            details:action.data
-        }
-        
-        
+    switch (action.type){      
         case "LOGIN":
             return{
                 ...state,
