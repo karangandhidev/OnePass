@@ -25,7 +25,7 @@ const SocialSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    notes:{
+    note:{
         type:String,
         required:true
     }
