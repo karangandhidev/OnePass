@@ -30,7 +30,7 @@ export default function Notes({ navigation }) {
   };
   const submit = () => {
     axios
-      .post("http://10.0.0.3:3000/notes", input, {
+      .post("http://10.0.0.9:3000/notes", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

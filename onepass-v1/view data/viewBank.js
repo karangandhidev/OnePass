@@ -32,7 +32,7 @@ export default function Viewbank({ navigation }) {
   };
   const del = () => {
     axios
-      .delete(`http://10.0.0.3:3000/bank/${data._id}`, data, {
+      .delete(`http://10.0.0.9:3000/bank/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -52,7 +52,7 @@ export default function Viewbank({ navigation }) {
 
   const submit = () => {
     axios
-      .put(`http://10.0.0.3:3000/bank/${data._id}`, data, {
+      .put(`http://10.0.0.9:3000/bank/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

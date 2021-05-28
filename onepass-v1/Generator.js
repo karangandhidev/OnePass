@@ -59,7 +59,7 @@ function Generator() {
     }${!parenthesis ? "(){}[]" : null}`;
 
     axios
-      .post("http://10.0.0.3:3000/generatepass", {
+      .post("http://10.0.0.9:3000/generatepass", {
         length: slider,
         numbers: isNumber,
         lowercase: isLower,
@@ -73,7 +73,7 @@ function Generator() {
   };
   useEffect(() => {
     axios
-      .post("http://10.0.0.3:3000/generatepass", {
+      .post("http://10.0.0.9:3000/generatepass", {
         length: 6,
         numbers: false,
         lowercase: true,

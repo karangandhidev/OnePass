@@ -32,7 +32,7 @@ export default function CardDetails({ navigation }) {
   };
   const submit = () => {
     axios
-      .post("http://10.0.0.3:3000/cards", input, {
+      .post("http://10.0.0.9:3000/cards", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

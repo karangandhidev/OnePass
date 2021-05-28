@@ -67,7 +67,7 @@ export default function Register({ navigation }) {
             hint: input.hint,
           };
           axios
-            .post("http://10.0.0.3:3000/register", data, {
+            .post("http://10.0.0.9:3000/register", data, {
               headers: {
                 "Access-Control-Allow-Headers":
                   "Access-Control-Allow-Headers, Authorization",

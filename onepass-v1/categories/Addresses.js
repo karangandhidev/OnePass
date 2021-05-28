@@ -23,11 +23,14 @@ export default function Addresses({ navigation }) {
   const [search, setSearch] = useState("");
   const [searchbar, setSearchbar] = useState(false);
 
+  const searchnow = () => {
+    setSearchbar(!searchbar);
+  };
   useEffect(() => {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.3:3000/address", { headers: { Auth: token } })
+        .get("http://10.0.0.9:3000/address", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });
@@ -57,9 +60,6 @@ export default function Addresses({ navigation }) {
     );
   };
 
-  const searchnow = () => {
-    setSearchbar(!searchbar);
-  };
   if (!isLoaded) {
     return <AppLoading />;
   } else {
@@ -98,12 +98,19 @@ export default function Addresses({ navigation }) {
             </>
           ) : (
             <>
-              <View style={{ alignItems: "center", width: "100%" }}>
+              <View style={styles.searchcancel}>
                 <TextInput
                   style={styles.searchbar}
                   onChangeText={(text) => setSearch(text)}
                   placeholder="Search"
                   placeholderTextColor="#000000"
+                />
+                <Icons
+                  onPress={searchnow}
+                  name={"close"}
+                  size={30}
+                  color="#F0F5F9"
+                  style={styles.editbackicon}
                 />
               </View>
             </>

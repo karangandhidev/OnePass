@@ -30,7 +30,7 @@ export default function Password({ navigation }) {
 
   const submit = () => {
     axios
-      .post("http://10.0.0.3:3000/passwords", input, {
+      .post("http://10.0.0.9:3000/passwords", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

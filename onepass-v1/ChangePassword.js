@@ -20,7 +20,7 @@ export default function ChangePassword() {
   const [input, setInput] = useState({});
   const styles = StyleSheet.create(newcss);
   const [isLoaded] = useFonts(fonts);
-  console.log(input)
+  console.log(input);
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -34,7 +34,7 @@ export default function ChangePassword() {
     if (username) {
       if (input.Username) {
         axios
-          .put("http://10.0.0.3:3000/changeusername", {
+          .put("http://10.0.0.9:3000/changeusername", {
             Username: input.Username,
           })
           .catch((err) => console.log(err));
@@ -42,14 +42,14 @@ export default function ChangePassword() {
     }
     if (hint) {
       if (input.Hint) {
-        axios.put("http://10.0.0.3:3000/changehint", {
+        axios.put("http://10.0.0.9:3000/changehint", {
           hint: input.Hint,
         });
       }
     }
     if (input.OldPassword && input.NewPassword)
       if (input.ConfirmNewPassword === input.NewPassword) {
-        axios.post("http://10.0.0.3:3000/changepass", {
+        axios.post("http://10.0.0.9:3000/changepass", {
           OldPassword: input.OldPassword,
           NewPassword: input.NewPassword,
         });

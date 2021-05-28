@@ -21,11 +21,16 @@ export default function Notes({ navigation }) {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState([]);
+  const [searchbar, setSearchbar] = useState(false);
+
+  const searchnow = () => {
+    setSearchbar(!searchbar);
+  };
   useEffect(() => {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.3:3000/notes", { headers: { Auth: token } })
+        .get("http://10.0.0.9:3000/notes", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });
@@ -56,44 +61,64 @@ export default function Notes({ navigation }) {
       </TouchableOpacity>
     );
   };
+
   if (!isLoaded) {
     return <AppLoading />;
   } else {
     return (
       <View style={styles.background}>
-        <View style={styles.header}>
+        <View style={styles.view_headerbg}>
           <Text style={styles.fakeheading}></Text>
         </View>
-        <View
-          style={{
-            position: "absolute",
-            elevation: 4,
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Icons
-            onPress={() => navigation.navigate("Homepage")}
-            name={"arrow-back"}
-            size={30}
-            color="#F0F5F9"
-            style={styles.iconback}
-          />
-          <Text style={styles.heading}>Notes</Text>
-          <Icons
-            onPress={() => navigation.goBack()}
-            name={"search"}
-            size={30}
-            color="#F0F5F9"
-            style={styles.iconsearch}
-          />
-          <TextInput
-            onChangeText={(text) => setSearch(text)}
-            placeholder="Search"
-            placeholderTextColor="#F0F5F9"
-          />
+        <View style={styles.view_headingview}>
+          {!searchbar ? (
+            <>
+              <Text style={styles.view_headingtext}>Notes</Text>
+            </>
+          ) : (
+            <Text style={styles.view_headingtext}></Text>
+          )}
         </View>
+
+        <View style={styles.view_actualheading}>
+          {!searchbar ? (
+            <>
+              <Icons
+                onPress={() => navigation.goBack()}
+                name={"arrow-back"}
+                size={30}
+                color="#F0F5F9"
+                style={styles.editbackicon}
+              />
+              <Icons
+                onPress={searchnow}
+                name={"search"}
+                size={30}
+                color="#F0F5F9"
+                style={styles.searchicon}
+              />
+            </>
+          ) : (
+            <>
+              <View style={styles.searchcancel}>
+                <TextInput
+                  style={styles.searchbar}
+                  onChangeText={(text) => setSearch(text)}
+                  placeholder="Search"
+                  placeholderTextColor="#000000"
+                />
+                <Icons
+                  onPress={searchnow}
+                  name={"close"}
+                  size={30}
+                  color="#F0F5F9"
+                  style={styles.editbackicon}
+                />
+              </View>
+            </>
+          )}
+        </View>
+
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
             {data.length > 0 ? (
