@@ -4,7 +4,8 @@ import Generator from './Generator'
 import Profile from './Profile'
 import React from 'react'
 import Homepage from './categories/index'
- 
+import {FontAwesome5} from '@expo/vector-icons'; 
+
 const bottomTabNavigator = createBottomTabNavigator(
   {
     Homepage: {

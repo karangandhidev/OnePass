@@ -19,7 +19,7 @@ export default function  Test (){
       <View style={styles.header}>
         <Text style={styles.fakeheading}></Text>
       </View>
-    <View style={{position:'absolute',elevation:4}}>
+    <View style={styles.textheading}>
       <Text style={styles.heading}>OnePass</Text>
     </View>
       <ScrollView style={styles.scroll}>

@@ -1,61 +1,125 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
-import { useFonts } from 'expo-font';
-import React,{useEffect, useState} from 'react';
-import axios from 'react-native-axios'
-import {newcss} from '../newcss'
-import {fonts} from '../fonts'
-import Icons from 'react-native-vector-icons/MaterialIcons'
-import {store} from '../Redux/globalReducer'
-import AppLoading  from "expo-app-loading";
-import { ScrollView } from 'react-native-gesture-handler';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import { useFonts } from "expo-font";
+import React, { useEffect, useState } from "react";
+import axios from "react-native-axios";
+import { newcss } from "../newcss";
+import { fonts } from "../fonts";
+import Icons from "react-native-vector-icons/MaterialIcons";
+import { store } from "../Redux/globalReducer";
+import AppLoading from "expo-app-loading";
+import { ScrollView } from "react-native-gesture-handler";
 
-export default function Addresses({navigation})
-{
+export default function Addresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-      const [data,setData] = useState([])
-useEffect(()=>{
-  const getData  = async ()=>{
-    const token =store.getState().reducer.user.data
-    await axios.get('http://10.0.0.6:3000/address',{headers:{Auth:token}}).then((res)=>{
-    setData(res.data)
-})  }
-getData()
-},[setData])
-      console.log(data)
-const onPressHandler = key => event => {
-  navigation.navigate('viewAddress',{ key })
-}
-  const render = (e) =>{
-    return(
-      <TouchableOpacity key={e._id} onPress={onPressHandler(e)} style={styles.datacard}>
+  const [data, setData] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchbar, setSearchbar] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const token = store.getState().reducer.user.data;
+      await axios
+        .get("http://10.0.0.3:3000/address", { headers: { Auth: token } })
+        .then((res) => {
+          setData(res.data);
+        });
+    };
+    getData();
+  }, [setData]);
+  useEffect(() => {
+    setFilter(
+      data.filter((obj) =>
+        obj.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, data, setFilter]);
+  const onPressHandler = (key) => (event) => {
+    navigation.navigate("viewAddress", { key });
+  };
+  const render = (e) => {
+    return (
+      <TouchableOpacity
+        key={e._id}
+        onPress={onPressHandler(e)}
+        style={styles.datacard}
+      >
         <Text style={styles.datacardtext}>{e.name}</Text>
         <Text style={styles.datacardtext}>{e.city}</Text>
-        </TouchableOpacity>
-    )
-  }
-
-  if (!isLoaded) {
-    return <AppLoading/>;
-  } else { return (
-    <View style={styles.background}>
-    <View style={styles.header}>
-      <Text style={styles.fakeheading}></Text>
-    </View>
-        <View style={{position:'absolute',elevation:4,flex:1,flexDirection:'row',justifyContent:'space-between'}}>
-          <Icons onPress={() => navigation.navigate('Homepage')} 
-          name={'arrow-back'} size={30} 
-          color='#F0F5F9' style={styles.iconback}/>
-              <Text style={styles.heading}>Addresses</Text>
-              <Icons onPress={() => navigation.goBack()} 
-        name={'search'} size={30} 
-        color='#F0F5F9' style={styles.iconsearch}/>
-            </View>
-        <ScrollView style={styles.scroll}>
-                <View style={styles.screenview}>
-        {(data.length>0)?data.map(render):<Text style={styles.carddata}>No data available</Text>}
-        </View>
-            </ScrollView>
-          </View>
+      </TouchableOpacity>
     );
-    }}
+  };
+
+  const searchnow = () => {
+    setSearchbar(!searchbar);
+  };
+  if (!isLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <View style={styles.background}>
+        <View style={styles.view_headerbg}>
+          <Text style={styles.fakeheading}></Text>
+        </View>
+        <View style={styles.view_headingview}>
+          {!searchbar ? (
+            <>
+              <Text style={styles.view_headingtext}>Addresses</Text>
+            </>
+          ) : (
+            <Text style={styles.view_headingtext}></Text>
+          )}
+        </View>
+
+        <View style={styles.view_actualheading}>
+          {!searchbar ? (
+            <>
+              <Icons
+                onPress={() => navigation.goBack()}
+                name={"arrow-back"}
+                size={30}
+                color="#F0F5F9"
+                style={styles.editbackicon}
+              />
+              <Icons
+                onPress={searchnow}
+                name={"search"}
+                size={30}
+                color="#F0F5F9"
+                style={styles.searchicon}
+              />
+            </>
+          ) : (
+            <>
+              <View style={{ alignItems: "center", width: "100%" }}>
+                <TextInput
+                  style={styles.searchbar}
+                  onChangeText={(text) => setSearch(text)}
+                  placeholder="Search"
+                  placeholderTextColor="#000000"
+                />
+              </View>
+            </>
+          )}
+        </View>
+
+        <ScrollView style={styles.scroll}>
+          <View style={styles.screenview}>
+            {data.length > 0 ? (
+              filter.map(render)
+            ) : (
+              <Text style={styles.datacardtext}>No data available</Text>
+            )}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+}
