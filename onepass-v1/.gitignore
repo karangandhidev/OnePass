@@ -9,5 +9,8 @@ npm-debug.*
 *.orig.*
 web-build/
 Redux/*
+backup/*
+assets*
+.expo-shared/*
 # macOS
 .DS_Store
