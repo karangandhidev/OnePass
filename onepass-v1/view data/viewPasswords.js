@@ -120,7 +120,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
               defaultValue={data.name}
               editable={editable}
             />
@@ -134,7 +134,7 @@ export default function Password({ navigation }) {
               placeholder="Category"
               defaultValue={data.category}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}URl</Text>
@@ -144,7 +144,7 @@ export default function Password({ navigation }) {
               placeholder="URL"
               defaultValue={data.url}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}User Name</Text>
@@ -156,7 +156,7 @@ export default function Password({ navigation }) {
               placeholder="User Name"
               defaultValue={data.username}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Email</Text>
@@ -168,7 +168,7 @@ export default function Password({ navigation }) {
               placeholder="Email"
               defaultValue={data.email}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Password</Text>
@@ -181,7 +181,7 @@ export default function Password({ navigation }) {
               // secureTextEntry = {true}
               defaultValue={data.password}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
@@ -193,7 +193,7 @@ export default function Password({ navigation }) {
               defaultValue={data.note}
               editable={editable}
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <View style={styles.deletebuttonview}>
               <Text>

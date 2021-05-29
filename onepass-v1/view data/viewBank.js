@@ -119,7 +119,7 @@ export default function Viewbank({ navigation }) {
                 handleInput({ value: text, name: "bank_name" })
               }
               placeholder="Bank Name"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
               defaultValue={data.bank_name}
               editable={editable}
             />
@@ -131,7 +131,7 @@ export default function Viewbank({ navigation }) {
                 handleInput({ value: text, name: "acc_no" })
               }
               placeholder="Account Number"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
               defaultValue={data.acc_no}
               editable={editable}
             />
@@ -142,7 +142,7 @@ export default function Viewbank({ navigation }) {
                 handleInput({ value: text, name: "ifsc" })
               }
               placeholder="IFSC Code"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
               defaultValue={data.ifsc}
               editable={editable}
             />
@@ -153,7 +153,7 @@ export default function Viewbank({ navigation }) {
                 handleInput({ value: text, name: "branch" })
               }
               placeholder="Branch Name"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
               defaultValue={data.branch}
               editable={editable}
             />
@@ -165,7 +165,7 @@ export default function Viewbank({ navigation }) {
                 handleInput({ value: text, name: "telephone" })
               }
               placeholder="Telephone Number"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
               defaultValue={data.telephone}
               editable={editable}
             />
@@ -176,7 +176,7 @@ export default function Viewbank({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               placeholder="Notes"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
               defaultValue={data.note}
               editable={editable}
             />

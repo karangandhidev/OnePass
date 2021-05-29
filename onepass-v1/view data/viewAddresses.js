@@ -120,7 +120,7 @@ export default function viewaddresses({ navigation }) {
               defaultValue={data.name}
               editable={editable}
               placeholder="Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}Apartment/Flat</Text>
             <TextInput
@@ -131,7 +131,7 @@ export default function viewaddresses({ navigation }) {
               defaultValue={data.apartment}
               editable={editable}
               placeholder="Aparthment / Flat"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}Street</Text>
             <TextInput
@@ -142,7 +142,7 @@ export default function viewaddresses({ navigation }) {
               defaultValue={data.street}
               editable={editable}
               placeholder="Street"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}Landmark</Text>
             <TextInput
@@ -153,7 +153,7 @@ export default function viewaddresses({ navigation }) {
               defaultValue={data.landmark}
               editable={editable}
               placeholder="Landmark"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}City</Text>
             <TextInput
@@ -164,7 +164,7 @@ export default function viewaddresses({ navigation }) {
                 handleInput({ value: text, name: "city" })
               }
               placeholder="City"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}State</Text>
             <TextInput
@@ -175,7 +175,7 @@ export default function viewaddresses({ navigation }) {
                 handleInput({ value: text, name: "state" })
               }
               placeholder="State"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}Country</Text>
             <TextInput
@@ -186,7 +186,7 @@ export default function viewaddresses({ navigation }) {
               placeholder="Country"
               defaultValue={data.country}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}Pin-Code</Text>
             <TextInput
@@ -198,7 +198,7 @@ export default function viewaddresses({ navigation }) {
               }
               keyboardType="number-pad"
               placeholder="Pin-Code"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <View style={styles.deletebuttonview}>
               <Text>

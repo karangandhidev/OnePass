@@ -117,7 +117,7 @@ export default function Notes({ navigation }) {
         <TextInput style={styles.fieldinput}
         onChangeText={text =>handleInput({value:text,name:"name"})}
         placeholder='Name'
-        placeholderTextColor= '#F0F5F9'
+        placeholderTextColor= '#000000'
         defaultValue={data.name}
         editable={editable}
         /> */}
@@ -128,7 +128,7 @@ export default function Notes({ navigation }) {
                 handleInput({ value: text, name: "topic" })
               }
               placeholder="Topic"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
               defaultValue={data.topic}
               editable={editable}
             />
@@ -139,7 +139,7 @@ export default function Notes({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
               defaultValue={data.note}
               editable={editable}
             />

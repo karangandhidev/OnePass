@@ -165,69 +165,6 @@ export function Homepage({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      // <ScrollView style={styles.scroll}>
-      //   <View style={styles.homescreeen}>
-      //     <View style={styles.navbar}>
-      //       <Text style={styles.navbarhead}>OnePass{"\n"}</Text>
-      //       <TouchableOpacity onPress={visis}>
-      //           <Text style={{color:'white'}}>Add Data</Text>
-      //         </TouchableOpacity>
-      //               <Modal visible={visible}>
-      //                   <View style={styles.overlay}>
-      //                 <TouchableOpacity style={styles.overlaycard}
-      //                 onPress={() => {navigation.navigate("formPasswords") ;}}
-      //                   onPressOut={visis}>
-      //                   <Text >Passwords</Text>
-      //                 </TouchableOpacity>
-      //                 <TouchableOpacity style={styles.overlaycard}
-      //                 onPress={() => { navigation.navigate("formNotes") ;}}
-      //                 onPressOut={visis}>
-      //                   <Text >Notes</Text>
-      //                 </TouchableOpacity>
-      //                 <TouchableOpacity style={styles.overlaycard}
-      //                 onPress={() => {navigation.navigate("formAddress") ;}}
-      //                 onPressOut={visis}>
-      //                   <Text >Addresses</Text>
-      //                 </TouchableOpacity>
-      //                   <TouchableOpacity style={styles.overlaycard}
-      //                   onPress={() => {navigation.navigate("formCards") ;}}
-      //                   onPressOut={visis}>
-      //                   <Text >Card Details</Text>
-      //                   </TouchableOpacity>
-      //                 <TouchableOpacity style={styles.overlaycard}
-      //                 onPress={() => {navigation.navigate("formBank")}}
-      //                 onPressOut={visis}>
-      //                   <Text >Bank Details</Text>
-      //                 </TouchableOpacity>
-      //               </View>
-      //             </Modal>
-      //       </View>
-      //     <TouchableOpacity style={styles.cards}
-      //     onPress={() => { navigation.navigate("Alldata") ;}}>
-      //       <Text style={styles.carddata}>All Data</Text>
-      //     </TouchableOpacity>
-      //     <TouchableOpacity style={styles.cards}
-      //     onPress={() => { navigation.navigate("Passwords") ;}}>
-      //       <Text style={styles.carddata}>Passwords</Text>
-      //     </TouchableOpacity>
-      //     <TouchableOpacity style={styles.cards}
-      //     onPress={() => { navigation.navigate("Notes") ;}}>
-      //       <Text style={styles.carddata}>Notes</Text>
-      //     </TouchableOpacity>
-      //     <TouchableOpacity style={styles.cards}
-      //     onPress={() => { navigation.navigate("Addresses") ;}}>
-      //       <Text style={styles.carddata}>Addresses</Text>
-      //     </TouchableOpacity>
-      //     <TouchableOpacity style={styles.cards}
-      //     onPress={() => { navigation.navigate("CardDetails") ;}}>
-      //       <Text style={styles.carddata}>Card Details</Text>
-      //     </TouchableOpacity>
-      //     <TouchableOpacity style={styles.cards}
-      //     onPress={() => { navigation.navigate("BankDetails")}}>
-      //       <Text style={styles.carddata}>Bank Details</Text>
-      //     </TouchableOpacity>
-      //   </View>
-      //   </ScrollView>
       <View style={styles.background}>
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
@@ -243,7 +180,7 @@ export function Homepage({ navigation }) {
                 }}
                 onPressOut={visis}
               >
-                <Text>Passwords</Text>
+                <Text style={styles.overlaytext}>Passwords</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.overlaycard}
@@ -252,7 +189,7 @@ export function Homepage({ navigation }) {
                 }}
                 onPressOut={visis}
               >
-                <Text>Notes</Text>
+                <Text style={styles.overlaytext}>Notes</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.overlaycard}
@@ -261,7 +198,7 @@ export function Homepage({ navigation }) {
                 }}
                 onPressOut={visis}
               >
-                <Text>Addresses</Text>
+                <Text style={styles.overlaytext}>Addresses</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.overlaycard}
@@ -270,7 +207,7 @@ export function Homepage({ navigation }) {
                 }}
                 onPressOut={visis}
               >
-                <Text>Card Details</Text>
+                <Text style={styles.overlaytext}>Card Details</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.overlaycard}
@@ -279,7 +216,7 @@ export function Homepage({ navigation }) {
                 }}
                 onPressOut={visis}
               >
-                <Text>Bank Details</Text>
+                <Text style={styles.overlaytext}>Bank Details</Text>
               </TouchableOpacity>
             </View>
           </Modal>

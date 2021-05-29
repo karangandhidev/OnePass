@@ -124,7 +124,7 @@ export default function CardDetails({ navigation }) {
               // secureTextEntry = {true}
               defaultValue={data.name}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Card Number</Text>
@@ -137,7 +137,7 @@ export default function CardDetails({ navigation }) {
               // secureTextEntry = {true}
               defaultValue={data.number}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}CVV</Text>
             <TextInput
@@ -147,7 +147,7 @@ export default function CardDetails({ navigation }) {
               // secureTextEntry = {true}
               defaultValue={data.cvv}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             {/* <Text style={styles.fieldname}>{"\n"}Month Of Expiry</Text> */}
@@ -188,7 +188,7 @@ export default function CardDetails({ navigation }) {
               // secureTextEntry = {true}
               defaultValue={data.bankname}
               editable={editable}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Password</Text>
@@ -201,7 +201,7 @@ export default function CardDetails({ navigation }) {
               defaultValue={data.password}
               editable={editable}
               // secureTextEntry = {true}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
@@ -214,7 +214,7 @@ export default function CardDetails({ navigation }) {
               defaultValue={data.notes}
               editable={editable}
               // secureTextEntry = {true}
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
             <View style={styles.deletebuttonview}>
               <Text>
