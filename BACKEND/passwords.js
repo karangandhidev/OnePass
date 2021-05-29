@@ -51,7 +51,7 @@ const {name,category,url,username,email,password,note} = req.body
     }
 })
 
-router.get('/passwords',async(req,res)=>{
+router.get('/socials',async(req,res)=>{
     
     const token = req.header("Auth")
     if(token){

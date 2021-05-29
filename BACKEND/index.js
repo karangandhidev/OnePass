@@ -10,12 +10,14 @@ const cards = require("./cards");
 const bank = require("./banks");
 const notes = require("./notes");
 const passwords = require("./passwords");
+const preference = require("./userpreference");
 const generator = require("generate-password");
+const secret = "afhakjfgakfg&*%^$%^afasdk";
 const app = express();
 
 const port = process.env.port || 3000;
 var corsoption = {
-  origin: ["http://10.0.0.3:19006", "http://localhost:19006"],
+  origin: ["http://10.0.0.9:19006", "http://localhost:19006"],
 };
 
 app.use(express.static(path.join(__dirname, "static")));
@@ -29,7 +31,14 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => console.log("done"));
-app.use(user, passwords.router, cards.router, address.router, notes.router);
+app.use(
+  user,
+  passwords.router,
+  cards.router,
+  address.router,
+  notes.router,
+  preference.router
+);
 
 app.get("/alldata", async (req, res) => {
   const token = req.header("Auth");
@@ -41,6 +50,7 @@ app.get("/alldata", async (req, res) => {
       const Cards = await cards.model.find({});
       const Passwords = await passwords.model.find({});
       const Notes = await notes.notes.find({});
+
       const data = [Address, Bank, Cards, Passwords, Notes];
       console.log(data);
       res.status(200).json(data);
@@ -53,10 +63,10 @@ app.get("/alldata", async (req, res) => {
 });
 
 app.post("/generatepass", (req, res) => {
-  const { length, numbers, uppercase, lowercase, symbols, exclude } = req.body;
+  const { len, numbers, uppercase, lowercase, symbols, exclude } = req.body;
 
   let pass = generator.generate({
-    length: length,
+    length: len,
     numbers: numbers,
     uppercase: uppercase,
     lowercase: lowercase,
@@ -64,6 +74,6 @@ app.post("/generatepass", (req, res) => {
     exclude: exclude,
     strict: true,
   });
-
+  console.log(pass);
   res.status(200).send(pass);
 });

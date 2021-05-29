@@ -19,45 +19,93 @@ import axios from "axios";
 function Generator() {
   const dispatch = useDispatch();
   const rerender = useSelector((state) => state.reducer.rerender);
+  const preference = useSelector((state) => state.preference.preference);
+  console.log(preference);
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [slider, setSlider] = useState(8); //size of password
-  const [isUpper, setUpper] = useState(false);
-  const [isLower, setLower] = useState(true);
-  const [isNumber, setNumber] = useState(false);
-  const [isSpecial, setSpecial] = useState(false);
+  const [slider, setSlider] = useState(preference.length); //size of password
+  const [isUpper, setUpper] = useState(preference.isUpper);
+  const [isLower, setLower] = useState(preference.isLower);
+  const [isNumber, setNumber] = useState(preference.isNumber);
+  const [isSpecial, setSpecial] = useState(preference.isSpecial);
   const [characters, setCharacters] = useState(false);
-  const [generalchar, setGeneralchar] = useState(true);
-  const [specialchar, setSpecialchar] = useState(false);
-  const [parenthesis, setParenthesis] = useState(false);
+  const [generalchar, setGeneralchar] = useState(preference.generalChar);
+  const [specialchar, setSpecialchar] = useState(preference.specialChar);
+  const [parenthesis, setParenthesis] = useState(preference.parenthesis);
   const [password, setPassword] = useState("defaultvalue");
+  useEffect(() => {
+    axios
+      .get("http://10.0.0.9:3000/preference")
+      .then((res) => dispatch({ type: "GETPREFERENCE", data: res.data }))
+      .catch((e) => console.log(e));
+  }, [dispatch]);
+  const changeLength = (value) => {
+    console.log(value);
+    dispatch({ type: "CHANGEPREF", data: { key: "length", value: value } });
 
-  const touchupper = () => {
+    setSlider(value);
+  };
+  const touchupper = (e) => {
+    dispatch({ type: "CHANGEPREF", data: { key: "isUpper", value: !isUpper } });
     setUpper(!isUpper);
   };
   const touchlower = () => {
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "isLower", value: !isLower },
+    });
     setLower(!isLower);
   };
   const touchnumber = () => {
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "isNumber", value: !isNumber },
+    });
     setNumber(!isNumber);
   };
   const touchspecialchar = () => {
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "specialChar", value: !specialchar },
+    });
     setSpecialchar(!specialchar);
   };
   const touchgeneralchar = () => {
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "generalChar", value: !generalchar },
+    });
     setGeneralchar(!generalchar);
   };
   const touchbrackets = () => {
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "parenthesis", value: !parenthesis },
+    });
     setParenthesis(!parenthesis);
   };
   const touchspecial = () => {
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "isSpecial", value: !isSpecial },
+    });
     setSpecial(!isSpecial);
   };
+  
+  useEffect(()=>{
+    let exclude = `${!generalchar ? "!@#$%^&*" : ""}${
+      !specialchar ? '-.,"?_`~;:+=<>|/' : ""
+    }${!parenthesis ? "(){}[]" : ""}`;
+    dispatch({
+      type: "CHANGEPREF",
+      data: { key: "exclusion", value: exclude },
+    });
+  },[generalchar,specialchar,parenthesis,dispatch])
+  
+  
+  
   const generatePassword = () => {
-    let exclude = `${!generalchar ? "!@#$%^&*" : null}${
-      !specialchar ? '-.,"?_`~;:+=<>|/' : null
-    }${!parenthesis ? "(){}[]" : null}`;
-
+    
     axios
       .post("http://10.0.0.9:3000/generatepass", {
         length: slider,
@@ -65,7 +113,7 @@ function Generator() {
         lowercase: isLower,
         uppercase: isUpper,
         symbols: isSpecial,
-        exclude: exclude,
+        exclude: preference.exlusion,
       })
       .then((res) => {
         setPassword(res.data);
@@ -74,21 +122,17 @@ function Generator() {
   useEffect(() => {
     axios
       .post("http://10.0.0.9:3000/generatepass", {
-        length: 6,
-        numbers: false,
-        lowercase: true,
-        uppercase: false,
-        symbols: false,
-        exclude: "!@#$%^&*-.,?_`~;:+=<>|/(){}[]",
+        len: preference.length,
+        numbers: preference.isNumber,
+        lowercase: preference.isLower,
+        uppercase: preference.isUpper,
+        symbols: preference.isSpecial,
+        exclude: preference.exclusion,
       })
       .then((res) => {
         setPassword(res.data);
       });
-    // if(rerender){
-    //   generatePassword()
-    //   dispatch({type:"RERENDER",data:false})
-    // }
-  }, [setPassword]);
+  }, [setPassword, preference]);
   useEffect(() => {
     if (rerender) {
       generatePassword();
@@ -167,9 +211,9 @@ function Generator() {
           minimumTrackTintColor="#b99aff"
           maximumTrackTintColor="#949494"
           thumbTintColor="#5970ce"
-          value={8}
+          value={preference.length}
           step={1}
-          onValueChange={(value) => setSlider(value)}
+          onValueChange={(value) => changeLength(value)}
         />
 
         <View style={styles.generatorpreference}>
@@ -179,6 +223,7 @@ function Generator() {
 
         <View style={styles.generatorpreference}>
           <TouchableOpacity
+            id="isUpper"
             style={styles.generatorpreference}
             onPress={touchupper}
           >

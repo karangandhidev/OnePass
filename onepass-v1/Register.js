@@ -109,7 +109,7 @@ export default function Register({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
   const MAX_LEN = 22,
-    MIN_LEN = 6,
+    MIN_LEN = 7,
     PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
 
   if (!isLoaded) {

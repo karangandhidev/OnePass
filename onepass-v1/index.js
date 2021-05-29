@@ -1,10 +1,10 @@
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
-import Register from './Register';
-import Login from './Login';
-import Bottomnavbar from './Bottomnavbar'
+import { createStackNavigator } from "react-navigation-stack";
+import { createAppContainer } from "react-navigation";
+import Register from "./Register";
+import Login from "./Login";
+import Bottomnavbar from "./Bottomnavbar";
 // import AddButton from "./AddButton";
-import ChangePassword from './ChangePassword'
+import ChangePassword from "./ChangePassword";
 const screens = {
   // AddButton: {
   //   screen: AddButton,

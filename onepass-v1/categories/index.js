@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useFonts } from "expo-font";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
+import { useDispatch } from "react-redux";
 import Modal from "react-native-root-modal";
 import { newcss } from "../newcss";
 import { fonts } from "../fonts";
@@ -32,7 +33,7 @@ import Addressview from "../view data/viewAddresses";
 import Cardsview from "../view data/viewCards";
 import Bankview from "../view data/viewBank";
 import Notesview from "../view data/viewNotes";
-
+import AddButton from "../AddButton";
 export default createStackNavigator({
   Homepage: {
     screen: Homepage,
@@ -141,9 +142,21 @@ export default createStackNavigator({
 });
 
 export function Homepage({ navigation }) {
+  const dispatch = useDispatch();
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://10.0.0.9:3000/preference")
+      .then((res) => {
+        console.log(res.data);
+        dispatch({ type: "GETPREFERENCE", data: res.data });
+      })
+      .catch((e) => console.log(e));
+  }, [dispatch]);
+
   const visis = () => {
     setVisible(!visible);
   };

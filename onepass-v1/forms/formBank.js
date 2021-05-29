@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { Component, useState } from "react";
@@ -44,26 +45,21 @@ export default function Bank({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.background}>
+      <KeyboardAvoidingView style={styles.background} behavior="height">
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
-        <View style={{ position: "absolute", elevation: 4 }}>
+        <View style={styles.formheaders}>
           <Icons
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#F0F5F9"
-            style={styles.iconback}
+            color="#ffffff"
+            style={styles.formheadericon}
           />
-          <Text style={styles.heading}>Bank Details</Text>
-          <Icons
-            onPress={() => navigation.goBack()}
-            name={"search"}
-            size={30}
-            color="#F0F5F9"
-            style={styles.iconsearch}
-          />
+        </View>
+        <View style={styles.formheaders2}>
+          <Text style={styles.formheading}>Bank Details</Text>
         </View>
         <ScrollView style={styles.scroll}>
           <View style={([styles.screenview], { alignItems: "flex-start" })}>
@@ -128,12 +124,23 @@ export default function Bank({ navigation }) {
               placeholderTextColor="#1E2022"
             />
 
-            <TouchableOpacity onPress={submit}>
-              <Text>Submit</Text>
-            </TouchableOpacity>
+            <View style={styles.deletebuttonview}>
+              <Text>
+                {"\n"}
+                {"\n"}
+              </Text>
+              <TouchableOpacity style={styles.submitdata} onPress={submit}>
+                <Text style={styles.deletebuttontext}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+            <Text>
+              {"\n"}
+              {"\n"}
+              {"\n"}
+            </Text>
           </View>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

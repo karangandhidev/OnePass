@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const preference = require("./userpreference").model;
+
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 const bcrypt = require("bcryptjs");
 const router = express.Router();
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -53,13 +56,23 @@ router.post("/register", async (req, res) => {
     .catch((err) => console.log(err));
   let { username, password, hint } = req.body;
 
-  // console.log(hint)
   password = bcrypt.hashSync(password, 10);
   try {
     let response = await model.create({
       username,
       password,
       hint,
+    });
+    let res = await preference.create({
+      length: 8,
+      isUpper: false,
+      isLower: true,
+      isNumber: false,
+      isSpecial: false,
+      generalChar: false,
+      specialChar: false,
+      parenthesis: false,
+      exclusion: "!@#$%^&*-.,?_`~;:+=<>|/(){}[]",
     });
     res.status(200).send({ status: "okay" });
   } catch (error) {

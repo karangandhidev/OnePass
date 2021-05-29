@@ -11,15 +11,17 @@ import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
 import { newcss } from "./newcss";
 import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 function Profile({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [settings, setSettings] = useState(false);
   const [aboutus, setAboutus] = useState(false);
   const dispatch = useDispatch();
+  const prefs = useSelector((state) => state.preference.preference);
   const logout = () => {
-    dispatch({ type: "LOGOUT" });
+    axios.post("http://10.0.0.9:3000/preference", prefs);
     navigation.navigate("Login");
   };
   const showSettings = () => {

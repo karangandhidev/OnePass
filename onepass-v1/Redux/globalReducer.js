@@ -1,5 +1,6 @@
 import {combineReducers ,createStore} from 'redux'
 import {reducer} from './auth'
-const reducers = combineReducers({reducer})
+import preference from './passpreference'
+const reducers = combineReducers({reducer,preference})
 
 export const store = createStore(reducers)

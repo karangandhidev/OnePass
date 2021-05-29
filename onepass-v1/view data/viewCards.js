@@ -19,7 +19,7 @@ import AppLoading from "expo-app-loading";
 export default function CardDetails({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -48,7 +48,7 @@ export default function CardDetails({ navigation }) {
   const changeState = () => {
     setEditable(!editable);
     setdelete(!deleteable);
-    if (!editable) {
+    if (editable) {
       navigation.navigate("CardDetails");
     }
   };
@@ -74,9 +74,9 @@ export default function CardDetails({ navigation }) {
           <Text style={styles.fakeheading}></Text>
         </View>
         <View style={styles.view_headingview}>
-          {editable ? (
+          {!editable ? (
             <>
-              <Text style={styles.view_headingtext}>Addresses</Text>
+              <Text style={styles.view_headingtext}>Card Details</Text>
             </>
           ) : (
             <Text style={styles.view_headingtext}>Editing Mode</Text>
@@ -84,7 +84,7 @@ export default function CardDetails({ navigation }) {
         </View>
 
         <View style={styles.view_actualheading}>
-          {editable ? (
+          {!editable ? (
             <>
               <Icons
                 onPress={() => navigation.goBack()}
@@ -123,7 +123,7 @@ export default function CardDetails({ navigation }) {
               placeholder="Card Holder Name"
               // secureTextEntry = {true}
               defaultValue={data.name}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -136,7 +136,7 @@ export default function CardDetails({ navigation }) {
               placeholder="Card Number"
               // secureTextEntry = {true}
               defaultValue={data.number}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
             <Text style={styles.fieldname}>{"\n"}CVV</Text>
@@ -146,7 +146,7 @@ export default function CardDetails({ navigation }) {
               placeholder="CVV"
               // secureTextEntry = {true}
               defaultValue={data.cvv}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -187,7 +187,7 @@ export default function CardDetails({ navigation }) {
               placeholder="Bank Name"
               // secureTextEntry = {true}
               defaultValue={data.bankname}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -199,7 +199,7 @@ export default function CardDetails({ navigation }) {
               }
               placeholder="Password"
               defaultValue={data.password}
-              disabled={editable}
+              editable={editable}
               // secureTextEntry = {true}
               placeholderTextColor="#F0F5F9"
             />
@@ -212,7 +212,7 @@ export default function CardDetails({ navigation }) {
               }
               placeholder="Note"
               defaultValue={data.notes}
-              disabled={editable}
+              editable={editable}
               // secureTextEntry = {true}
               placeholderTextColor="#F0F5F9"
             />

@@ -16,7 +16,7 @@ import AppLoading from "expo-app-loading";
 export default function viewaddresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -33,7 +33,7 @@ export default function viewaddresses({ navigation }) {
   const changeState = () => {
     setEditable(!editable);
     setdelete(!deleteable);
-    if (!editable) {
+    if (editable) {
       navigation.navigate("Addresses");
     }
   };
@@ -71,7 +71,7 @@ export default function viewaddresses({ navigation }) {
           <Text style={styles.fakeheading}></Text>
         </View>
         <View style={styles.view_headingview}>
-          {editable ? (
+          {!editable ? (
             <>
               <Text style={styles.view_headingtext}>Addresses</Text>
             </>
@@ -81,7 +81,7 @@ export default function viewaddresses({ navigation }) {
         </View>
 
         <View style={styles.view_actualheading}>
-          {editable ? (
+          {!editable ? (
             <>
               <Icons
                 onPress={() => navigation.goBack()}
@@ -118,7 +118,7 @@ export default function viewaddresses({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               defaultValue={data.name}
-              disabled={editable}
+              editable={editable}
               placeholder="Name"
               placeholderTextColor="#F0F5F9"
             />
@@ -129,7 +129,7 @@ export default function viewaddresses({ navigation }) {
                 handleInput({ value: text, name: "apartment" })
               }
               defaultValue={data.apartment}
-              disabled={editable}
+              editable={editable}
               placeholder="Aparthment / Flat"
               placeholderTextColor="#F0F5F9"
             />
@@ -140,7 +140,7 @@ export default function viewaddresses({ navigation }) {
                 handleInput({ value: text, name: "street" })
               }
               defaultValue={data.street}
-              disabled={editable}
+              editable={editable}
               placeholder="Street"
               placeholderTextColor="#F0F5F9"
             />
@@ -151,7 +151,7 @@ export default function viewaddresses({ navigation }) {
                 handleInput({ value: text, name: "landmark" })
               }
               defaultValue={data.landmark}
-              disabled={editable}
+              editable={editable}
               placeholder="Landmark"
               placeholderTextColor="#F0F5F9"
             />
@@ -159,7 +159,7 @@ export default function viewaddresses({ navigation }) {
             <TextInput
               style={styles.fieldinput}
               defaultValue={data.city}
-              disabled={editable}
+              editable={editable}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "city" })
               }
@@ -170,7 +170,7 @@ export default function viewaddresses({ navigation }) {
             <TextInput
               style={styles.fieldinput}
               defaultValue={data.state}
-              disabled={editable}
+              editable={editable}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "state" })
               }
@@ -185,17 +185,18 @@ export default function viewaddresses({ navigation }) {
               }
               placeholder="Country"
               defaultValue={data.country}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
             <Text style={styles.fieldname}>{"\n"}Pin-Code</Text>
             <TextInput
               style={styles.fieldinput}
-              // defaultValue = {data.pincode}
-              disabled={editable}
+              defaultValue={data.pincode}
+              editable={editable}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "pincode" })
               }
+              keyboardType="number-pad"
               placeholder="Pin-Code"
               placeholderTextColor="#F0F5F9"
             />

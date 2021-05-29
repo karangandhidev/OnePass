@@ -3,6 +3,7 @@ import {
   Text,
   TextInput,
   View,
+  KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
 import { useFonts } from "expo-font";
@@ -13,7 +14,7 @@ import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
-
+import Homepage from "../categories/index";
 export default function Notes({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
@@ -38,32 +39,27 @@ export default function Notes({ navigation }) {
           "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
         },
       })
-      .then(navigation.navigate("Notes"));
+      .then(navigation.navigate("Homepage"));
   };
   if (!isLoaded) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.background}>
+      <KeyboardAvoidingView style={styles.background} behavior="height">
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
-        <View style={{ position: "absolute", elevation: 4 }}>
+        <View style={styles.formheaders}>
           <Icons
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#F0F5F9"
-            style={styles.iconback}
+            color="#ffffff"
+            style={styles.formheadericon}
           />
-          <Text style={styles.heading}>Notes</Text>
-          <Icons
-            onPress={() => navigation.goBack()}
-            name={"search"}
-            size={30}
-            color="#F0F5F9"
-            style={styles.iconsearch}
-          />
+        </View>
+        <View style={styles.formheaders2}>
+          <Text style={styles.formheading}>Notes</Text>
         </View>
         <ScrollView style={styles.scroll}>
           <View style={([styles.screenview], { alignItems: "flex-start" })}>
@@ -94,12 +90,23 @@ export default function Notes({ navigation }) {
               placeholderTextColor="#F0F5F9"
             />
 
-            <TouchableOpacity onPress={submit}>
-              <Text>Submit</Text>
-            </TouchableOpacity>
+            <View style={styles.deletebuttonview}>
+              <Text>
+                {"\n"}
+                {"\n"}
+              </Text>
+              <TouchableOpacity style={styles.submitdata} onPress={submit}>
+                <Text style={styles.deletebuttontext}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+            <Text>
+              {"\n"}
+              {"\n"}
+              {"\n"}
+            </Text>
           </View>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

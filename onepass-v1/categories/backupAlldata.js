@@ -19,21 +19,24 @@ export default function Alldata({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [data, setData] = useState([]);
+  const [searchbar, setSearchbar] = useState(false);
 
+  const searchnow = () => {
+    setSearchbar(!searchbar);
+  };
   useEffect(() => {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
         .get("http://10.0.0.9:3000/alldata", { headers: { Auth: token } })
         .then((res) => {
-          console.log("here")
           setData(res.data);
         });
-
     };
     getData();
   }, [setData]);
   var merged = [].concat.apply([], data);
+
   const onPressHandler = (key) => (event) => {
     if (key.city) {
       navigation.navigate("viewAddress", { key });
@@ -73,7 +76,6 @@ export default function Alldata({ navigation }) {
       );
     } else if (e.topic) {
       console.log(e.topic);
-
       return (
         <TouchableOpacity
           key={e._id}
@@ -113,44 +115,62 @@ export default function Alldata({ navigation }) {
   } else {
     return (
       <View style={styles.background}>
-        <View style={styles.header}>
+        <View style={styles.view_headerbg}>
           <Text style={styles.fakeheading}></Text>
         </View>
-        <View
-          style={{
-            position: "absolute",
-            elevation: 4,
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Icons
-            onPress={() => navigation.goBack()}
-            name={"arrow-back"}
-            size={30}
-            color="#F0F5F9"
-            style={styles.iconback}
-          />
-          <Text style={styles.heading}>All Data</Text>
-          <Icons
-            onPress={() => navigation.goBack()}
-            name={"search"}
-            size={30}
-            color="#F0F5F9"
-            style={styles.iconsearch}
-          />
+        <View style={styles.view_headingview}>
+          {!searchbar ? (
+            <>
+              <Text style={styles.view_headingtext}>All Data</Text>
+            </>
+          ) : (
+            <Text style={styles.view_headingtext}></Text>
+          )}
         </View>
+
+        <View style={styles.view_actualheading}>
+          {!searchbar ? (
+            <>
+              <Icons
+                onPress={() => navigation.goBack()}
+                name={"arrow-back"}
+                size={30}
+                color="#F0F5F9"
+                style={styles.editbackicon}
+              />
+              <Icons
+                onPress={searchnow}
+                name={"search"}
+                size={30}
+                color="#F0F5F9"
+                style={styles.searchicon}
+              />
+            </>
+          ) : (
+            <>
+              <View style={styles.searchcancel}>
+                <TextInput
+                  style={styles.searchbar}
+                  onChangeText={(text) => setSearch(text)}
+                  placeholder="Search"
+                  placeholderTextColor="#000000"
+                />
+                <Icons
+                  onPress={searchnow}
+                  name={"close"}
+                  size={30}
+                  color="#F0F5F9"
+                  style={styles.editbackicon}
+                />
+              </View>
+            </>
+          )}
+        </View>
+
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
-            {merged.length > 0 ? (
-              merged.map(render)
-            ) : (
-              <Text style={styles.carddata}>No data available</Text>
-            )}
-
-            {/* {merged.map(render)} */}
-            {/* :<Text style={styles.carddata}>No data available</Text>} */}
+            {merged.map(render)}:
+            <Text style={styles.carddata}>No data available</Text>}
           </View>
         </ScrollView>
       </View>

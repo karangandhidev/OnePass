@@ -17,7 +17,7 @@ import AppLoading from "expo-app-loading";
 export default function Viewbank({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -45,7 +45,7 @@ export default function Viewbank({ navigation }) {
   const changeState = () => {
     setEditable(!editable);
     setdelete(!deleteable);
-    if (!editable) {
+    if (editable) {
       navigation.navigate("BankDetails");
     }
   };
@@ -71,9 +71,9 @@ export default function Viewbank({ navigation }) {
           <Text style={styles.fakeheading}></Text>
         </View>
         <View style={styles.view_headingview}>
-          {editable ? (
+          {!editable ? (
             <>
-              <Text style={styles.view_headingtext}>Addresses</Text>
+              <Text style={styles.view_headingtext}>Bank Details</Text>
             </>
           ) : (
             <Text style={styles.view_headingtext}>Editing Mode</Text>
@@ -81,7 +81,7 @@ export default function Viewbank({ navigation }) {
         </View>
 
         <View style={styles.view_actualheading}>
-          {editable ? (
+          {!editable ? (
             <>
               <Icons
                 onPress={() => navigation.goBack()}
@@ -121,7 +121,7 @@ export default function Viewbank({ navigation }) {
               placeholder="Bank Name"
               placeholderTextColor="#1E2022"
               defaultValue={data.bank_name}
-              disabled={editable}
+              editable={editable}
             />
             <Text style={styles.fieldname}>{"\n"}Account Number</Text>
             <TextInput
@@ -133,7 +133,7 @@ export default function Viewbank({ navigation }) {
               placeholder="Account Number"
               placeholderTextColor="#1E2022"
               defaultValue={data.acc_no}
-              disabled={editable}
+              editable={editable}
             />
             <Text style={styles.fieldname}>{"\n"}IFSC Code</Text>
             <TextInput
@@ -144,7 +144,7 @@ export default function Viewbank({ navigation }) {
               placeholder="IFSC Code"
               placeholderTextColor="#1E2022"
               defaultValue={data.ifsc}
-              disabled={editable}
+              editable={editable}
             />
             <Text style={styles.fieldname}>{"\n"}Branch</Text>
             <TextInput
@@ -155,7 +155,7 @@ export default function Viewbank({ navigation }) {
               placeholder="Branch Name"
               placeholderTextColor="#1E2022"
               defaultValue={data.branch}
-              disabled={editable}
+              editable={editable}
             />
 
             <Text style={styles.fieldname}>{"\n"}Telephone Number</Text>
@@ -167,7 +167,7 @@ export default function Viewbank({ navigation }) {
               placeholder="Telephone Number"
               placeholderTextColor="#1E2022"
               defaultValue={data.telephone}
-              disabled={editable}
+              editable={editable}
             />
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput
@@ -178,7 +178,7 @@ export default function Viewbank({ navigation }) {
               placeholder="Notes"
               placeholderTextColor="#1E2022"
               defaultValue={data.note}
-              disabled={editable}
+              editable={editable}
             />
             <View style={styles.deletebuttonview}>
               <Text>

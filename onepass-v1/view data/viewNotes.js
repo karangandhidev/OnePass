@@ -18,7 +18,7 @@ import AppLoading from "expo-app-loading";
 export default function Notes({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -47,7 +47,7 @@ export default function Notes({ navigation }) {
   const changeState = () => {
     setEditable(!editable);
     setdelete(!deleteable);
-    if (!editable) {
+    if (editable) {
       navigation.navigate("Notes");
     }
   };
@@ -73,9 +73,9 @@ export default function Notes({ navigation }) {
           <Text style={styles.fakeheading}></Text>
         </View>
         <View style={styles.view_headingview}>
-          {editable ? (
+          {!editable ? (
             <>
-              <Text style={styles.view_headingtext}>Addresses</Text>
+              <Text style={styles.view_headingtext}>Notes</Text>
             </>
           ) : (
             <Text style={styles.view_headingtext}>Editing Mode</Text>
@@ -83,7 +83,7 @@ export default function Notes({ navigation }) {
         </View>
 
         <View style={styles.view_actualheading}>
-          {editable ? (
+          {!editable ? (
             <>
               <Icons
                 onPress={() => navigation.goBack()}
@@ -119,7 +119,7 @@ export default function Notes({ navigation }) {
         placeholder='Name'
         placeholderTextColor= '#F0F5F9'
         defaultValue={data.name}
-        disabled={editable}
+        editable={editable}
         /> */}
             <Text style={styles.fieldname}>{"\n"}Topic</Text>
             <TextInput
@@ -130,7 +130,7 @@ export default function Notes({ navigation }) {
               placeholder="Topic"
               placeholderTextColor="#F0F5F9"
               defaultValue={data.topic}
-              disabled={editable}
+              editable={editable}
             />
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput
@@ -141,7 +141,7 @@ export default function Notes({ navigation }) {
               placeholder="Note"
               placeholderTextColor="#F0F5F9"
               defaultValue={data.note}
-              disabled={editable}
+              editable={editable}
             />
             <View style={styles.deletebuttonview}>
               <Text>

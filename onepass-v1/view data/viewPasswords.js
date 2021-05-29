@@ -19,7 +19,7 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Password({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -47,7 +47,7 @@ export default function Password({ navigation }) {
   const changeState = () => {
     setEditable(!editable);
     setdelete(!deleteable);
-    if (!editable) {
+    if (editable) {
       navigation.navigate("Passwords");
     }
   };
@@ -73,7 +73,7 @@ export default function Password({ navigation }) {
           <Text style={styles.fakeheading}></Text>
         </View>
         <View style={styles.view_headingview}>
-          {editable ? (
+          {!editable ? (
             <>
               <Text style={styles.view_headingtext}>Passwords</Text>
             </>
@@ -83,7 +83,7 @@ export default function Password({ navigation }) {
         </View>
 
         <View style={styles.view_actualheading}>
-          {editable ? (
+          {!editable ? (
             <>
               <Icons
                 onPress={() => navigation.goBack()}
@@ -122,7 +122,7 @@ export default function Password({ navigation }) {
               placeholder="Name"
               placeholderTextColor="#F0F5F9"
               defaultValue={data.name}
-              disabled={editable}
+              editable={editable}
             />
 
             <Text style={styles.fieldname}>{"\n"}Category</Text>
@@ -133,7 +133,7 @@ export default function Password({ navigation }) {
               }
               placeholder="Category"
               defaultValue={data.category}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -143,7 +143,7 @@ export default function Password({ navigation }) {
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
               placeholder="URL"
               defaultValue={data.url}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -155,7 +155,7 @@ export default function Password({ navigation }) {
               }
               placeholder="User Name"
               defaultValue={data.username}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -167,7 +167,7 @@ export default function Password({ navigation }) {
               }
               placeholder="Email"
               defaultValue={data.email}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -180,7 +180,7 @@ export default function Password({ navigation }) {
               placeholder="Password"
               // secureTextEntry = {true}
               defaultValue={data.password}
-              disabled={editable}
+              editable={editable}
               placeholderTextColor="#F0F5F9"
             />
 
@@ -191,7 +191,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               defaultValue={data.note}
-              disabled={editable}
+              editable={editable}
               placeholder="Note"
               placeholderTextColor="#F0F5F9"
             />
