@@ -91,8 +91,8 @@ function Generator() {
     });
     setSpecial(!isSpecial);
   };
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     let exclude = `${!generalchar ? "!@#$%^&*" : ""}${
       !specialchar ? '-.,"?_`~;:+=<>|/' : ""
     }${!parenthesis ? "(){}[]" : ""}`;
@@ -100,12 +100,9 @@ function Generator() {
       type: "CHANGEPREF",
       data: { key: "exclusion", value: exclude },
     });
-  },[generalchar,specialchar,parenthesis,dispatch])
-  
-  
-  
+  }, [generalchar, specialchar, parenthesis, dispatch]);
+
   const generatePassword = () => {
-    
     axios
       .post("http://10.0.0.9:3000/generatepass", {
         length: slider,
