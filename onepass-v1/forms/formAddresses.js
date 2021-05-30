@@ -14,12 +14,13 @@ import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
-import Homepage from "../categories/index";
+
+
 export default function Addresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [input, setInput] = useState({});
-
+  
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {

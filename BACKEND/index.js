@@ -32,7 +32,7 @@ mongoose
   })
   .then(() => console.log("done"));
 app.use(
-  user,
+  user.router,
   passwords.router,
   cards.router,
   address.router,
@@ -53,8 +53,8 @@ app.get("/alldata", async (req, res) => {
       const Notes = await notes.notes.find({});
 
       const data = [Address, Bank, Cards, Passwords, Notes];
-      console.log(data);
-      res.status(200).json(data);
+     const merged = [].concat.apply([], data);
+      res.status(200).json(merged);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
     }
@@ -65,7 +65,6 @@ app.get("/alldata", async (req, res) => {
 
 app.post("/generatepass", (req, res) => {
   const { length, numbers, uppercase, lowercase, symbols, exclude } = req.body;
-  console.log(length);
   let pass = generator.generate({
     length: length,
     numbers: numbers,

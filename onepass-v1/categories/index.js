@@ -267,7 +267,7 @@ export function Homepage({ navigation }) {
             <TouchableOpacity
               style={styles.datacard}
               onPress={() => {
-                navigation.navigate("Addresses");
+                navigation.navigate("formAddress");
               }}
             >
               <Text style={styles.datacardtext}>Addresses</Text>

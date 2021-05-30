@@ -173,5 +173,24 @@ router.put("/changehint", async (req, res) => {
     console.log(err);
   }
 });
+router.post("/masterdelete", async (req, res) => {
+  const { password } = req.body;
+  const User = await model.findOne({});
+  if (password) {
+    if (await bcrypt.compare(password, User.password)) {
+      try {
+        mongoose.connection.db.dropDatabase().then(() => {
+          return res.status(200).json({ message: "user deleted" });
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      res.status(400).json({ message: "User unauthorized" });
+    }
+  } else {
+    res.status(400).json({ message: "User unauthorized" });
+  }
+});
 
-module.exports = router;
+module.exports = { router, model };

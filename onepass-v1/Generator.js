@@ -102,7 +102,7 @@ function Generator() {
     });
   }, [generalchar, specialchar, parenthesis, dispatch]);
 
-  const generatePassword = () => {
+ const generatePassword = () => {
     console.log("SLIDER", slider);
     axios
       .post("http://10.0.0.9:3000/generatepass", {
@@ -114,7 +114,7 @@ function Generator() {
         exclude: preference.exclusion,
       })
       .then((res) => {
-        console.log(res);
+       
         setPassword(res.data);
       });
   };

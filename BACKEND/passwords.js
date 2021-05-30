@@ -78,20 +78,24 @@ router.get("/socials", async (req, res) => {
 });
 
 router.put("/passwords/:id", (req, res) => {
-  const { name, apartment, street, landmark, city, state, country, pincode } =
+  const { name ,category
+    ,url
+    ,username
+    ,email
+    ,password
+    ,note } =
     req.body;
   model.findByIdAndUpdate(
     { _id: req.params.id },
     {
       $set: {
-        name: name,
-        apartment: apartment,
-        street: street,
-        landmark: landmark,
-        city: city,
-        state: state,
-        country: country,
-        pincode: pincode,
+        name:name,
+        category:category,
+        url:url,
+        username:username,
+        email:email,
+        password: password,
+        note:note,
       },
     },
     { new: true, useFindAndModify: false },

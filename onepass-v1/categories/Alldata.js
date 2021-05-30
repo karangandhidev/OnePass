@@ -15,12 +15,15 @@ import Icons from "react-native-vector-icons/MaterialIcons";
 import { store } from "../Redux/globalReducer";
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
+ 
+
 export default function Alldata({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
   const [searchbar, setSearchbar] = useState(false);
-
+  const [filtereddata, setFilter] = useState([]);
   const searchnow = () => {
     setSearchbar(!searchbar);
   };
@@ -30,13 +33,37 @@ export default function Alldata({ navigation }) {
       await axios
         .get("http://10.0.0.9:3000/alldata", { headers: { Auth: token } })
         .then((res) => {
-          console.log("here");
           setData(res.data);
         });
     };
     getData();
   }, [setData]);
-  var merged = [].concat.apply([], data);
+
+  useEffect(() => {
+    setFilter(
+      data.filter((obj) => {
+        if (obj.city) {
+         return obj.city.toLowercase().includes(search.toLowerCase()) ||
+            obj.name.toLowerCase().includes(search.toLowerCase());
+        }
+
+        if (obj.bank_name) {
+         return obj.bank_name.toLowerCase().includes(search.toLowerCase());
+        }
+        if (obj.topic) {
+         return obj.topic.toLowerCase().includes(search.toLowerCase());
+        }
+        if (obj.username) {
+        return  obj.username.toLowerCase().includes(search.toLowerCase())
+        }
+        if(obj.moe){
+          return obj.bankname.toLowerCase().includes(search.toLowerCase()) ||
+             obj.name.toLowerCase().includes(search.toLowerCase());
+        }
+      })
+    );
+  }, [search,data, setFilter]);
+
   const onPressHandler = (key) => (event) => {
     if (key.city) {
       navigation.navigate("viewAddress", { key });
@@ -75,8 +102,6 @@ export default function Alldata({ navigation }) {
         </TouchableOpacity>
       );
     } else if (e.topic) {
-      console.log(e.topic);
-
       return (
         <TouchableOpacity
           key={e._id}
@@ -170,8 +195,8 @@ export default function Alldata({ navigation }) {
 
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
-            {merged.length > 0 ? (
-              merged.map(render)
+            {data.length > 0 ? (
+              filtereddata.map(render)
             ) : (
               <Text style={styles.carddata}>No data available</Text>
             )}

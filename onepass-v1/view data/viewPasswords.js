@@ -15,14 +15,15 @@ import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { store } from "../Redux/globalReducer";
 import { ScrollView } from "react-native-gesture-handler";
-
+import { useSelector } from "react-redux";
 export default function Password({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
+  const preference = useSelector((state) => state.preference.preference);
   const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
-
+  const [password, setPassword] = useState(data.password);
   const handleInput = (e) => {
     const { name, value } = e;
     setData((values) => {
@@ -32,16 +33,50 @@ export default function Password({ navigation }) {
       };
     });
   };
+
+  const genPass = () => {
+    axios
+      .post("http://10.0.0.9:3000/generatepass", {
+        length: preference.length,
+        numbers: preference.isNumber,
+        lowercase: preference.isLower,
+        uppercase: preference.isUpper,
+        symbols: preference.isSpecial,
+        exclude: preference.exclusion,
+      })
+      .then((res) => {
+        setPassword(res.data);
+        setData((state) => {
+          return {
+            ...state,
+            password: res.data,
+          };
+        });
+      });
+  };
+  console.log(data.password);
   const del = () => {
     axios
-      .delete(`http://10.0.0.9:3000/passwords/${data._id}`, data, {
-        headers: {
-          "Access-Control-Allow-Headers":
-            "Access-Control-Allow-Headers, Authorization",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+      .delete(
+        `http://10.0.0.9:3000/passwords/${data._id}`,
+        {
+          name: data.name,
+          category: data.category,
+          url: data.url,
+          username: data.username,
+          email: data.email,
+          password: password,
+          note: data.note,
         },
-      })
+        {
+          headers: {
+            "Access-Control-Allow-Headers":
+              "Access-Control-Allow-Headers, Authorization",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+          },
+        }
+      )
       .then(navigation.navigate("Homepage"));
   };
   const changeState = () => {
@@ -173,16 +208,19 @@ export default function Password({ navigation }) {
 
             <Text style={styles.fieldname}>{"\n"}Password</Text>
             <TextInput
+              key={password}
               style={styles.fieldinput}
+              editable={editable}
+              defaultValue={password}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "password" })
               }
               placeholder="Password"
-              // secureTextEntry = {true}
-              defaultValue={data.password}
-              editable={editable}
               placeholderTextColor="#000000"
             />
+            <TouchableOpacity style={styles.submitdata} onPress={genPass}>
+              <Text style={styles.deletebuttontext}>Submit</Text>
+            </TouchableOpacity>
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput

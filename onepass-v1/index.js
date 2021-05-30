@@ -3,10 +3,10 @@ import { createAppContainer } from "react-navigation";
 import Register from "./Register";
 import Login from "./Login";
 import Bottomnavbar from "./Bottomnavbar";
-// import AddButton from "./AddButton";
+import Test from "./Test";
 const screens = {
-  // AddButton: {
-  //   screen: AddButton,
+  // Test: {
+  //   screen: Test,
   //   navigationOptions: {
   //     headerShown: false,
   //   },
@@ -29,7 +29,6 @@ const screens = {
       headerShown: false,
     },
   },
-  
 };
 
 const Homestack = createStackNavigator(screens);

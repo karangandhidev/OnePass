@@ -13,12 +13,14 @@ import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";
+
 export default function viewaddresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
+  const [deletepopup, setDeletepopup] = useState(false);
 
   const handleInput = (e) => {
     const { name, value } = e;
@@ -37,6 +39,7 @@ export default function viewaddresses({ navigation }) {
       navigation.navigate("Addresses");
     }
   };
+
   const del = () => {
     axios
       .delete(`http://10.0.0.9:3000/address/${data._id}`, data, {
@@ -207,7 +210,10 @@ export default function viewaddresses({ navigation }) {
               </Text>
               {deleteable ? null : (
                 <>
-                  <TouchableOpacity style={styles.deletebutton} onPress={del}>
+                  <TouchableOpacity
+                    style={styles.deletebutton}
+                    onPress={setDeletepopup(!deletepopup)}
+                  >
                     <Text style={styles.deletebuttontext}>Delete</Text>
                   </TouchableOpacity>
                 </>

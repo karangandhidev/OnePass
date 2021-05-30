@@ -433,4 +433,61 @@ export const newcss = {
     fontFamily: "RobotoCondensed-Light",
     fontSize: 18,
   },
+  popupwindow: {
+    flex: 1,
+    height: deviceWindow.height,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: "transparent",
+
+    position: "absolute",
+  },
+  popupbox: {
+    borderWidth: 2,
+    backgroundColor: "white",
+    width: deviceWindow.width * 0.8,
+    height: deviceWindow.height * 0.22,
+    marginBottom: 90,
+  },
+  popupbuttonbox: {
+    flex: 2,
+    flexDirection: "row",
+    height: deviceWindow.height * 0.1,
+  },
+  popupboxtext: {
+    marginBottom: 65,
+  },
+  popuptitle: {
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 30,
+    textAlign: "center",
+  },
+  popupcontent: {
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 30,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  popupbuttoncontent: {
+    textAlign: "center",
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 25,
+  },
+  popupLeftbutton: {
+    flex: 1,
+    borderTopWidth: 2,
+    borderRightWidth: 1,
+    backgroundColor: "red",
+    justifyContent: "center",
+    elevation: 10,
+  },
+  popupRightbutton: {
+    flex: 1,
+    borderTopWidth: 2,
+    borderLeftWidth: 1,
+    backgroundColor: "green",
+    elevation: 10,
+    justifyContent: "center",
+  },
 };
