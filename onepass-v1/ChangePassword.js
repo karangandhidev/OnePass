@@ -12,7 +12,7 @@ import axios from "axios";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
 import { newcss } from "./newcss";
-import {useDispatch} from 'react-redux'
+import { useDispatch } from "react-redux";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
 export default function ChangePassword({ navigation }) {
@@ -25,9 +25,9 @@ export default function ChangePassword({ navigation }) {
   // const [flaguser, setFlaguser] = useState(false);
   // const [flaghint, setFlaghint] = useState(false);
   // const [flagpass, setflagpass] = useState(false);
-  
-  const dispatch = useDispatch()
-  
+
+  const dispatch = useDispatch();
+
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -46,8 +46,12 @@ export default function ChangePassword({ navigation }) {
         axios
           .put("http://10.0.0.9:3000/changeusername", {
             Username: input.Username,
-          }).then(()=>{
-            dispatch({type:"CHANGEDATA",data:{key:"username",value:input.Username}})
+          })
+          .then(() => {
+            dispatch({
+              type: "CHANGEDATA",
+              data: { key: "username", value: input.Username },
+            });
           })
           .catch((err) => console.log(err));
       }

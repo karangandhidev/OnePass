@@ -106,7 +106,7 @@ function Generator() {
     console.log("SLIDER", slider);
     axios
       .post("http://10.0.0.9:3000/generatepass", {
-        length: preference.length,
+       length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
         uppercase: preference.isUpper,
