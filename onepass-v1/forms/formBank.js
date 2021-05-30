@@ -30,8 +30,9 @@ export default function Bank({ navigation }) {
     });
   };
   const submit = () => {
+    console.log("AKJSGDKFJHGAKLJFDSD");
     axios
-      .post("http://10.0.0.9:3000/bank", input, {
+      .post("http://10.0.0.9:3000/banks", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -39,7 +40,7 @@ export default function Bank({ navigation }) {
           "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
         },
       })
-      .then(navigation.navigate("BankDetails"));
+      .then(navigation.navigate("Homepage"));
   };
   if (!isLoaded) {
     return <AppLoading />;
@@ -110,6 +111,7 @@ export default function Bank({ navigation }) {
               onChangeText={(text) =>
                 handleInput({ value: text, name: "telephone" })
               }
+              keyboardType="numeric"
               placeholder="Telephone Number"
               placeholderTextColor="#1E2022"
             />

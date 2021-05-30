@@ -36,7 +36,6 @@ export default function Login({ navigation }) {
   }, [dispatch]);
   const login = (e) => {
     e.preventDefault();
-
     if (input !== "") {
       axios
         .post(
@@ -66,6 +65,7 @@ export default function Login({ navigation }) {
       alert("Credentials cannot be empty");
     }
   };
+  console.log(creds);
 
   if (!isLoaded) {
     return <AppLoading />;

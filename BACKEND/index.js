@@ -36,6 +36,7 @@ app.use(
   passwords.router,
   cards.router,
   address.router,
+  bank.router,
   notes.router,
   preference.router
 );
@@ -74,6 +75,5 @@ app.post("/generatepass", (req, res) => {
     exclude: exclude,
     strict: true,
   });
-  console.log(pass);
   res.status(200).send(pass);
 });

@@ -100,6 +100,7 @@ router.post("/login", async (req, res) => {
     res.status(403);
     res.json({ error: "Invalid username or password" });
   }
+  console.log(username);
 });
 router.get("/creds", async (req, res) => {
   const User = await model.findOne({});
