@@ -12,6 +12,7 @@ import axios from "axios";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
 import { newcss } from "./newcss";
+import {useDispatch} from 'react-redux'
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
 export default function ChangePassword({ navigation }) {
@@ -21,7 +22,12 @@ export default function ChangePassword({ navigation }) {
   const [input, setInput] = useState({});
   const styles = StyleSheet.create(newcss);
   const [isLoaded] = useFonts(fonts);
-  console.log(input);
+  // const [flaguser, setFlaguser] = useState(false);
+  // const [flaghint, setFlaghint] = useState(false);
+  // const [flagpass, setflagpass] = useState(false);
+  
+  const dispatch = useDispatch()
+  
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -31,21 +37,33 @@ export default function ChangePassword({ navigation }) {
       };
     });
   };
+  const logout = () => {
+    navigation.navigate("Login");
+  };
   const changeCreds = () => {
     if (username) {
       if (input.Username) {
         axios
           .put("http://10.0.0.9:3000/changeusername", {
             Username: input.Username,
+          }).then(()=>{
+            dispatch({type:"CHANGEDATA",data:{key:"username",value:input.Username}})
           })
           .catch((err) => console.log(err));
       }
     }
     if (hint) {
       if (input.Hint) {
-        axios.put("http://10.0.0.9:3000/changehint", {
-          hint: input.Hint,
-        });
+        axios
+          .put("http://10.0.0.9:3000/changehint", {
+            hint: input.Hint,
+          })
+          .then(() =>
+            dispatch({
+              type: "CHANGEDATA",
+              data: { key: "hint", value: input.Hint },
+            })
+          );
       }
     }
     if (input.OldPassword && input.NewPassword)
@@ -54,6 +72,7 @@ export default function ChangePassword({ navigation }) {
           OldPassword: input.OldPassword,
           NewPassword: input.NewPassword,
         });
+        logout();
       }
   };
   const changeusername = () => {

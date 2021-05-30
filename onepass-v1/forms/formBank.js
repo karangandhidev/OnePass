@@ -46,7 +46,11 @@ export default function Bank({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <KeyboardAvoidingView style={styles.background} behavior="height">
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="20"
+      >
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -55,7 +59,7 @@ export default function Bank({ navigation }) {
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#ffffff"
+            color="#F0F5F9"
             style={styles.formheadericon}
           />
         </View>
@@ -71,7 +75,7 @@ export default function Bank({ navigation }) {
                 handleInput({ value: text, name: "bank_name" })
               }
               placeholder="Bank Name"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Account Number</Text>
@@ -82,7 +86,7 @@ export default function Bank({ navigation }) {
               }
               placeholder="Account Number"
               secureTextEntry={true}
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}IFSC Code</Text>
@@ -92,7 +96,7 @@ export default function Bank({ navigation }) {
                 handleInput({ value: text, name: "ifsc" })
               }
               placeholder="IFSC Code"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Branch</Text>
@@ -102,7 +106,7 @@ export default function Bank({ navigation }) {
                 handleInput({ value: text, name: "branch" })
               }
               placeholder="Branch Name"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Telephone Number</Text>
@@ -113,7 +117,7 @@ export default function Bank({ navigation }) {
               }
               keyboardType="numeric"
               placeholder="Telephone Number"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
@@ -123,7 +127,7 @@ export default function Bank({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               placeholder="Notes"
-              placeholderTextColor="#1E2022"
+              placeholderTextColor="#000000"
             />
 
             <View style={styles.deletebuttonview}>

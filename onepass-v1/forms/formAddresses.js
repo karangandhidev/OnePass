@@ -45,7 +45,11 @@ export default function Addresses({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <KeyboardAvoidingView style={styles.background} behavior="height">
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="20"
+      >
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -54,7 +58,7 @@ export default function Addresses({ navigation }) {
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#ffffff"
+            color="#F0F5F9"
             style={styles.formheadericon}
           />
         </View>
@@ -70,7 +74,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Name"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
             <Text style={styles.fieldname}>{"\n"}Apartment/Flat</Text>
             <TextInput
@@ -79,7 +83,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "apartment" })
               }
               placeholder="Aparthment / Flat"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Street</Text>
@@ -89,7 +93,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "street" })
               }
               placeholder="Street"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Landmark</Text>
@@ -99,7 +103,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "landmark" })
               }
               placeholder="Landmark"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}City</Text>
@@ -109,7 +113,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "city" })
               }
               placeholder="City"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}State</Text>
@@ -119,7 +123,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "state" })
               }
               placeholder="State"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Country</Text>
@@ -129,7 +133,7 @@ export default function Addresses({ navigation }) {
                 handleInput({ value: text, name: "country" })
               }
               placeholder="Country"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Pin-Code</Text>
@@ -140,7 +144,7 @@ export default function Addresses({ navigation }) {
               }
               keyboardType="numeric"
               placeholder="Pin-Code"
-              placeholderTextColor="#ffffff"
+              placeholderTextColor="#000000"
             />
             <View style={styles.deletebuttonview}>
               <Text>

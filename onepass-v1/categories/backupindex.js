@@ -1,4 +1,3 @@
-import Icons from "react-native-vector-icons/MaterialIcons";
 import { StatusBar } from "expo-status-bar";
 import {
   Button,
@@ -34,7 +33,7 @@ import Addressview from "../view data/viewAddresses";
 import Cardsview from "../view data/viewCards";
 import Bankview from "../view data/viewBank";
 import Notesview from "../view data/viewNotes";
-import ChangePassword from "../ChangePassword";
+import AddButton from "../AddButton";
 export default createStackNavigator({
   Homepage: {
     screen: Homepage,
@@ -140,12 +139,6 @@ export default createStackNavigator({
       headerShown: false,
     },
   },
-  ChangePassword: {
-    screen: ChangePassword,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
 });
 
 export function Homepage({ navigation }) {
@@ -173,71 +166,64 @@ export function Homepage({ navigation }) {
   } else {
     return (
       <View style={styles.background}>
-        {visible ? (
-          <View style={styles.overlay}>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                navigation.navigate("formPasswords");
-              }}
-              onPressOut={visis}
-            >
-              <Text style={styles.overlaytext}>Passwords</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                navigation.navigate("formNotes");
-              }}
-              onPressOut={visis}
-            >
-              <Text style={styles.overlaytext}>Notes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                navigation.navigate("formAddress");
-              }}
-              onPressOut={visis}
-            >
-              <Text style={styles.overlaytext}>Addresses</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                navigation.navigate("formCards");
-              }}
-              onPressOut={visis}
-            >
-              <Text style={styles.overlaytext}>Card Details</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                navigation.navigate("formBank");
-              }}
-              onPressOut={visis}
-            >
-              <Text style={styles.overlaytext}>Bank Details</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.overlaycard} onPress={visis}>
-              <Icons onPress={visis} name={"close"} size={30} color="#000000" />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <>
-            <View style={styles.header}>
-              <Text style={styles.fakeheading}></Text>
-              <TouchableOpacity style={styles.addbutton} onPress={visis}>
-                <Text style={styles.addbuttontext}>Add Data</Text>
+        <View style={styles.header}>
+          <Text style={styles.fakeheading}></Text>
+          <TouchableOpacity style={styles.addbutton} onPress={visis}>
+            <Text style={styles.addbuttontext}>Add Data</Text>
+          </TouchableOpacity>
+          <Modal visible={visible}>
+            <View style={styles.overlay}>
+              <TouchableOpacity
+                style={styles.overlaycard}
+                onPress={() => {
+                  navigation.navigate("formPasswords");
+                }}
+                onPressOut={visis}
+              >
+                <Text style={styles.overlaytext}>Passwords</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overlaycard}
+                onPress={() => {
+                  navigation.navigate("formNotes");
+                }}
+                onPressOut={visis}
+              >
+                <Text style={styles.overlaytext}>Notes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overlaycard}
+                onPress={() => {
+                  navigation.navigate("formAddress");
+                }}
+                onPressOut={visis}
+              >
+                <Text style={styles.overlaytext}>Addresses</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overlaycard}
+                onPress={() => {
+                  navigation.navigate("formCards");
+                }}
+                onPressOut={visis}
+              >
+                <Text style={styles.overlaytext}>Card Details</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overlaycard}
+                onPress={() => {
+                  navigation.navigate("formBank");
+                }}
+                onPressOut={visis}
+              >
+                <Text style={styles.overlaytext}>Bank Details</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.textheading}>
-              <Text style={styles.heading}>OnePass</Text>
-            </View>
-          </>
-        )}
-
+          </Modal>
+        </View>
+        <View style={styles.textheading}>
+          <Text style={styles.heading}>OnePass</Text>
+        </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
             <TouchableOpacity

@@ -128,7 +128,7 @@ export default function Register({ navigation }) {
             style={[styles.inputbox, { width: 300 }]}
             onChangeText={(text) => handleInput({ value: text, name: "name" })}
             placeholder="Enter Name"
-            placeholderTextColor="#F0F5F9"
+            placeholderTextColor="#000000"
           />
           <Text style={styles.bodytext}>{"\n"}Set Password</Text>
           <TextInput
@@ -151,7 +151,7 @@ export default function Register({ navigation }) {
             }
             placeholder="Enter Password"
             secureTextEntry={true}
-            placeholderTextColor="#F0F5F9"
+            placeholderTextColor="#000000"
           />
           <View style={{ borderRadius: 7, width: 300 }}>
             <PassMeter
@@ -170,14 +170,14 @@ export default function Register({ navigation }) {
             }
             placeholder="Confirm Password"
             secureTextEntry={true}
-            placeholderTextColor="#F0F5F9"
+            placeholderTextColor="#000000"
           />
           <Text style={styles.bodytext}>{"\n"}Password Hint</Text>
           <TextInput
             style={[styles.inputbox, { width: 300 }]}
             onChangeText={(text) => handleInput({ value: text, name: "hint" })}
             placeholder="Hint to remember"
-            placeholderTextColor="#F0F5F9"
+            placeholderTextColor="#000000"
           />
         </View>
         <Text>

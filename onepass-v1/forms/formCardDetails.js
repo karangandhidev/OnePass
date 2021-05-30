@@ -13,7 +13,7 @@ import axios from "react-native-axios";
 import { newcss } from "../newcss";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
-import DatePicker from "react-native-datepicker";
+
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -47,7 +47,11 @@ export default function CardDetails({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <KeyboardAvoidingView style={styles.background} behavior="height">
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="20"
+      >
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -56,7 +60,7 @@ export default function CardDetails({ navigation }) {
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#ffffff"
+            color="#F0F5F9"
             style={styles.formheadericon}
           />
         </View>
@@ -72,7 +76,7 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Card Holder Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Card Number</Text>
@@ -83,7 +87,7 @@ export default function CardDetails({ navigation }) {
               }
               keyboardType="numeric"
               placeholder="Card Number"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}CVV</Text>
@@ -92,7 +96,7 @@ export default function CardDetails({ navigation }) {
               onChangeText={(text) => handleInput({ value: text, name: "cvv" })}
               placeholder="CVV"
               keyboardType="numeric"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Month Of Expiry</Text>
@@ -130,7 +134,7 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "bankname" })
               }
               placeholder="Bank Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Password</Text>
@@ -140,7 +144,7 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "password" })
               }
               placeholder="Password"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
@@ -150,7 +154,7 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "notes" })
               }
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <View style={styles.deletebuttonview}>

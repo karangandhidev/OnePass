@@ -46,7 +46,11 @@ export default function Password({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <KeyboardAvoidingView style={styles.background} behavior="height">
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="20"
+      >
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -55,7 +59,7 @@ export default function Password({ navigation }) {
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#ffffff"
+            color="#F0F5F9"
             style={styles.formheadericon}
           />
         </View>
@@ -71,7 +75,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Category</Text>
@@ -81,7 +85,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "category" })
               }
               placeholder="Category"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}URl</Text>
@@ -89,7 +93,7 @@ export default function Password({ navigation }) {
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
               placeholder="URL"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}User Name</Text>
@@ -99,7 +103,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "username" })
               }
               placeholder="User Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Email</Text>
@@ -109,7 +113,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "email" })
               }
               placeholder="Email"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Password</Text>
@@ -119,7 +123,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "password" })
               }
               placeholder="Password"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
@@ -129,7 +133,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <View style={styles.deletebuttonview}>

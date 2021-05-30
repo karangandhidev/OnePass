@@ -103,23 +103,25 @@ function Generator() {
   }, [generalchar, specialchar, parenthesis, dispatch]);
 
   const generatePassword = () => {
+    console.log("SLIDER", slider);
     axios
       .post("http://10.0.0.9:3000/generatepass", {
-        length: slider,
-        numbers: isNumber,
-        lowercase: isLower,
-        uppercase: isUpper,
-        symbols: isSpecial,
-        exclude: preference.exlusion,
+        length: preference.length,
+        numbers: preference.isNumber,
+        lowercase: preference.isLower,
+        uppercase: preference.isUpper,
+        symbols: preference.isSpecial,
+        exclude: preference.exclusion,
       })
       .then((res) => {
+        console.log(res);
         setPassword(res.data);
       });
   };
   useEffect(() => {
     axios
       .post("http://10.0.0.9:3000/generatepass", {
-        len: preference.length,
+        length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
         uppercase: preference.isUpper,

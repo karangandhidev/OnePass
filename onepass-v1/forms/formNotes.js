@@ -45,7 +45,11 @@ export default function Notes({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <KeyboardAvoidingView style={styles.background} behavior="height">
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="20"
+      >
         <View style={styles.header}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -54,7 +58,7 @@ export default function Notes({ navigation }) {
             onPress={() => navigation.goBack()}
             name={"arrow-back"}
             size={30}
-            color="#ffffff"
+            color="#F0F5F9"
             style={styles.formheadericon}
           />
         </View>
@@ -77,7 +81,7 @@ export default function Notes({ navigation }) {
                 handleInput({ value: text, name: "topic" })
               }
               placeholder="Topic"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
@@ -87,7 +91,7 @@ export default function Notes({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#000000"
             />
 
             <View style={styles.deletebuttonview}>

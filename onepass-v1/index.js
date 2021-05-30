@@ -4,7 +4,6 @@ import Register from "./Register";
 import Login from "./Login";
 import Bottomnavbar from "./Bottomnavbar";
 // import AddButton from "./AddButton";
-import ChangePassword from "./ChangePassword";
 const screens = {
   // AddButton: {
   //   screen: AddButton,
@@ -30,12 +29,7 @@ const screens = {
       headerShown: false,
     },
   },
-  ChangePassword: {
-    screen: ChangePassword,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
+  
 };
 
 const Homestack = createStackNavigator(screens);

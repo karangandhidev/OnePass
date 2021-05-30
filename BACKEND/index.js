@@ -64,10 +64,10 @@ app.get("/alldata", async (req, res) => {
 });
 
 app.post("/generatepass", (req, res) => {
-  const { len, numbers, uppercase, lowercase, symbols, exclude } = req.body;
-
+  const { length, numbers, uppercase, lowercase, symbols, exclude } = req.body;
+  console.log(length);
   let pass = generator.generate({
-    length: len,
+    length: length,
     numbers: numbers,
     uppercase: uppercase,
     lowercase: lowercase,
