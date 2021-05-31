@@ -21,7 +21,8 @@ export default function CardDetails({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [input, setInput] = useState({});
-
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -31,16 +32,30 @@ export default function CardDetails({ navigation }) {
       };
     });
   };
+
+  const moe = `${month}/${year}`;
   const submit = () => {
     axios
-      .post("http://10.0.0.9:3000/cards", input, {
-        headers: {
-          "Access-Control-Allow-Headers":
-            "Access-Control-Allow-Headers, Authorization",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+      .post(
+        "http://10.0.0.9:3000/cards",
+        {
+          name: input.name,
+          number: input.number,
+          cvv: input.cvv,
+          moe: moe,
+          bankname: input.bankname,
+          password: input.password,
+          notes: input.notes,
         },
-      })
+        {
+          headers: {
+            "Access-Control-Allow-Headers":
+              "Access-Control-Allow-Headers, Authorization",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+          },
+        }
+      )
       .then(navigation.navigate("CardDetails"));
   };
   if (!isLoaded) {
@@ -98,35 +113,26 @@ export default function CardDetails({ navigation }) {
               keyboardType="numeric"
               placeholderTextColor="#000000"
             />
-
-            <Text style={styles.fieldname}>{"\n"}Month Of Expiry</Text>
-            {/* <DatePicker
-            style={styles.datePickerStyle}
-            // date={date} // Initial date from state
-            mode="date" // The enum of date, datetime and time
-            placeholder="Select date"
-            format="DD-MM-YYYY"
-            minDate="01-01-2016"
-            maxDate="01-01-2019"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                //display: 'none',
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0,
-              },
-              dateInput: {
-                marginLeft: 36,
-              },
-            }}
-            onDateChange={(date) => {
-              handleInput({value:date,name:"moe"});
-            }}
-          /> */}
-
+            <Text style={styles.fieldname}>
+              {"\n"}Month Of Expiry{"\n"}
+            </Text>
+            <View style={styles.moeview}>
+              <TextInput
+                style={styles.moeinput}
+                onChangeText={(text) => setMonth(text)}
+                placeholder="Month"
+                keyboardType="numeric"
+                placeholderTextColor="#000000"
+              />
+              <Text style={styles.moename}>/</Text>
+              <TextInput
+                style={styles.moeinput}
+                onChangeText={(text) => setYear(text)}
+                placeholder="Year"
+                keyboardType="numeric"
+                placeholderTextColor="#000000"
+              />
+            </View>
             <Text style={styles.fieldname}>{"\n"}Bank Name</Text>
             <TextInput
               style={styles.fieldinput}

@@ -73,6 +73,7 @@ export const newcss = {
   screenview: {
     alignItems: "center",
     elevation: 5,
+    height: "100%",
   },
   datacard: {
     borderRadius: 5,
@@ -125,6 +126,42 @@ export const newcss = {
     maxWidth: deviceWindow.width * 0.9,
     // height:deviceWindow.height * 0.05,
     maxHeight: deviceWindow.height * 0.1,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 18,
+  },
+  moeview: {
+    flex: 2,
+    flexDirection: "row",
+    marginLeft: deviceWindow.width * 0.045,
+    marginRight: deviceWindow.width * 0.045,
+  },
+  moename: {
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 28,
+    paddingLeft: deviceWindow.width * 0.004,
+  },
+  moeinput: {
+    borderWidth: 1,
+    width: deviceWindow.width * 0.08,
+    maxWidth: deviceWindow.width * 0.2,
+    height: deviceWindow.height * 0.05,
+    maxHeight: deviceWindow.height * 0.1,
+
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 18,
+  },
+  noteinput: {
+    marginLeft: deviceWindow.width * 0.045,
+    marginRight: deviceWindow.width * 0.045,
+    borderWidth: 1,
+    width: deviceWindow.width * 0.9,
+    maxWidth: deviceWindow.width * 0.9,
+    height: deviceWindow.height * 0.27,
+    maxHeight: deviceWindow.height * 0.6,
     paddingLeft: 10,
     paddingRight: 10,
     fontFamily: "RobotoCondensed-Light",
@@ -213,7 +250,7 @@ export const newcss = {
   submitbutton: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#6bf060",
+    backgroundColor: "#fb4737",
     top: 43,
     bottom: 20,
     right: 15,
@@ -267,7 +304,7 @@ export const newcss = {
   deletebutton: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fb4737",
+    backgroundColor: "#6bf060",
     justifyContent: "center",
     height: deviceWindow.height * 0.04,
     maxWidth: deviceWindow.width * 0.2,
@@ -436,12 +473,18 @@ export const newcss = {
   popupwindow: {
     flex: 1,
     height: deviceWindow.height,
+    width: deviceWindow.width,
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "center",
     backgroundColor: "transparent",
-
     position: "absolute",
+    left: 0,
+    top: 0,
+    right: deviceWindow.width,
+    bottom: deviceWindow.height,
+
+    // backgroundColor: "blue",
   },
   popupbox: {
     borderWidth: 2,
@@ -449,14 +492,21 @@ export const newcss = {
     width: deviceWindow.width * 0.8,
     height: deviceWindow.height * 0.22,
     marginBottom: 90,
+    elevation: 100,
+    top: deviceWindow.height * 0.3,
+    left: deviceWindow.width * 0.1,
+    elevation: 10,
+    position: "absolute",
   },
   popupbuttonbox: {
     flex: 2,
     flexDirection: "row",
+    elevation: 6,
     height: deviceWindow.height * 0.1,
   },
   popupboxtext: {
-    marginBottom: 65,
+    elevation: 6,
+    marginBottom: 60,
   },
   popuptitle: {
     fontFamily: "RobotoCondensed-Light",
@@ -480,14 +530,12 @@ export const newcss = {
     borderRightWidth: 1,
     backgroundColor: "red",
     justifyContent: "center",
-    elevation: 10,
   },
   popupRightbutton: {
     flex: 1,
     borderTopWidth: 2,
     borderLeftWidth: 1,
     backgroundColor: "green",
-    elevation: 10,
     justifyContent: "center",
   },
 };

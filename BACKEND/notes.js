@@ -51,10 +51,10 @@ router.get("/notes", async (req, res) => {
 });
 
 router.put("/notes/:id", (req, res) => {
-  const { name, topic } = req.body;
+  const { topic, note } = req.body;
   notes.findByIdAndUpdate(
     { _id: req.params.id },
-    { $set: { name: name, topic: topic } },
+    { $set: { topic: topic, note: note } },
     { new: true, useFindAndModify: false },
     (err, data) => {
       res.send("updated");

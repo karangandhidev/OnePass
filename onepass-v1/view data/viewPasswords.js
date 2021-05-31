@@ -22,6 +22,7 @@ export default function Password({ navigation }) {
   const preference = useSelector((state) => state.preference.preference);
   const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
+  const [confirm, setConfirm] = useState(false);
   const [data, setData] = useState(navigation.state.params.key);
   const [password, setPassword] = useState(data.password);
   const handleInput = (e) => {
@@ -140,14 +141,39 @@ export default function Password({ navigation }) {
                 <Text style={styles.cancelbuttontext}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.submitbutton} onPress={submit}>
-                <Text style={styles.submitbuttontext}>Submit</Text>
+              <TouchableOpacity
+                style={styles.submitbutton}
+                onPress={() => setConfirm(!confirm)}
+              >
+                <Text style={styles.deletebuttontext}>Delete</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
         <ScrollView style={styles.scroll}>
           <View style={([styles.screenview], { alignItems: "flex-start" })}>
+            {confirm ? (
+              <View style={styles.popupbox}>
+                <View style={styles.popupboxtext}>
+                  <Text style={styles.popuptitle}>Delete</Text>
+                  <Text style={styles.popupcontent}>Confirm Deletion</Text>
+                </View>
+                <View style={styles.popupbuttonbox}>
+                  <TouchableOpacity
+                    onPress={() => setConfirm(!confirm)}
+                    style={styles.popupLeftbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={del}
+                    style={styles.popupRightbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : null}
             <Text style={styles.fieldname}>{"\n"}Name</Text>
             <TextInput
               style={styles.fieldinput}
@@ -172,7 +198,7 @@ export default function Password({ navigation }) {
               placeholderTextColor="#000000"
             />
 
-            <Text style={styles.fieldname}>{"\n"}URl</Text>
+            <Text style={styles.fieldname}>{"\n"}URL</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
@@ -218,9 +244,13 @@ export default function Password({ navigation }) {
               placeholder="Password"
               placeholderTextColor="#000000"
             />
-            <TouchableOpacity style={styles.submitdata} onPress={genPass}>
-              <Text style={styles.deletebuttontext}>Submit</Text>
-            </TouchableOpacity>
+            {editable ? (
+              <>
+                <TouchableOpacity onPress={genPass}>
+                  <Text>Generate Password</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput
@@ -240,8 +270,11 @@ export default function Password({ navigation }) {
               </Text>
               {deleteable ? null : (
                 <>
-                  <TouchableOpacity style={styles.deletebutton} onPress={del}>
-                    <Text style={styles.deletebuttontext}>Delete</Text>
+                  <TouchableOpacity
+                    style={styles.deletebutton}
+                    onPress={submit}
+                  >
+                    <Text style={styles.submitbuttontext}>Submit</Text>
                   </TouchableOpacity>
                 </>
               )}

@@ -14,13 +14,13 @@ import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
 export default function Password({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [input, setInput] = useState({});
-  const [password,setPassword] = useState("")
-    const preference = useSelector((state) => state.preference.preference);
+  const [password, setPassword] = useState("");
+  const preference = useSelector((state) => state.preference.preference);
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -30,26 +30,26 @@ export default function Password({ navigation }) {
       };
     });
   };
-const genPass = ()=>{
-   axios
-     .post("http://10.0.0.9:3000/generatepass", {
-       length: preference.length,
-       numbers: preference.isNumber,
-       lowercase: preference.isLower,
-       uppercase: preference.isUpper,
-       symbols: preference.isSpecial,
-       exclude: preference.exclusion,
-     })
-     .then((res) => {
-       setPassword(res.data);
-       setInput(state=>{
-         return{
-           ...state,
-           password:res.data
-         }
-       })
-     });
-}
+  const genPass = () => {
+    axios
+      .post("http://10.0.0.9:3000/generatepass", {
+        length: preference.length,
+        numbers: preference.isNumber,
+        lowercase: preference.isLower,
+        uppercase: preference.isUpper,
+        symbols: preference.isSpecial,
+        exclude: preference.exclusion,
+      })
+      .then((res) => {
+        setPassword(res.data);
+        setInput((state) => {
+          return {
+            ...state,
+            password: res.data,
+          };
+        });
+      });
+  };
   const submit = () => {
     axios
       .post("http://10.0.0.9:3000/passwords", input, {
@@ -147,8 +147,8 @@ const genPass = ()=>{
               placeholder="Password"
               placeholderTextColor="#000000"
             />
-            <TouchableOpacity style={styles.submitdata} onPress={genPass}>
-              <Text style={styles.deletebuttontext}>Submit</Text>
+            <TouchableOpacity onPress={genPass}>
+              <Text>Submit</Text>
             </TouchableOpacity>
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>

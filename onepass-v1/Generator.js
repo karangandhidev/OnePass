@@ -40,9 +40,7 @@ function Generator() {
       .catch((e) => console.log(e));
   }, [dispatch]);
   const changeLength = (value) => {
-    console.log(value);
     dispatch({ type: "CHANGEPREF", data: { key: "length", value: value } });
-
     setSlider(value);
   };
   const touchupper = (e) => {
@@ -93,7 +91,7 @@ function Generator() {
   };
 
   useEffect(() => {
-    let exclude = `${!generalchar ? "!@#$%^&*" : ""}${
+    let exclude = `${!generalchar ? '!@#$%^"&*' : ""}${
       !specialchar ? '-.,"?_`~;:+=<>|/' : ""
     }${!parenthesis ? "(){}[]" : ""}`;
     dispatch({
@@ -102,11 +100,10 @@ function Generator() {
     });
   }, [generalchar, specialchar, parenthesis, dispatch]);
 
- const generatePassword = () => {
-    console.log("SLIDER", slider);
+  const generatePassword = () => {
     axios
       .post("http://10.0.0.9:3000/generatepass", {
-       length: preference.length,
+        length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
         uppercase: preference.isUpper,
@@ -114,7 +111,6 @@ function Generator() {
         exclude: preference.exclusion,
       })
       .then((res) => {
-       
         setPassword(res.data);
       });
   };

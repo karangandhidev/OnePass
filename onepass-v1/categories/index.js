@@ -178,45 +178,45 @@ export function Homepage({ navigation }) {
             <TouchableOpacity
               style={styles.overlaycard}
               onPress={() => {
+                visis();
                 navigation.navigate("formPasswords");
               }}
-              onPressOut={visis}
             >
               <Text style={styles.overlaytext}>Passwords</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.overlaycard}
               onPress={() => {
+                visis();
                 navigation.navigate("formNotes");
               }}
-              onPressOut={visis}
             >
               <Text style={styles.overlaytext}>Notes</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.overlaycard}
               onPress={() => {
+                visis();
                 navigation.navigate("formAddress");
               }}
-              onPressOut={visis}
             >
               <Text style={styles.overlaytext}>Addresses</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.overlaycard}
               onPress={() => {
+                visis();
                 navigation.navigate("formCards");
               }}
-              onPressOut={visis}
             >
               <Text style={styles.overlaytext}>Card Details</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.overlaycard}
               onPress={() => {
+                visis();
                 navigation.navigate("formBank");
               }}
-              onPressOut={visis}
             >
               <Text style={styles.overlaytext}>Bank Details</Text>
             </TouchableOpacity>
@@ -267,7 +267,7 @@ export function Homepage({ navigation }) {
             <TouchableOpacity
               style={styles.datacard}
               onPress={() => {
-                navigation.navigate("formAddress");
+                navigation.navigate("Addresses");
               }}
             >
               <Text style={styles.datacardtext}>Addresses</Text>

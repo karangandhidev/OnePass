@@ -86,7 +86,7 @@ export default function Notes({ navigation }) {
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput
-              style={styles.fieldinput}
+              style={styles.noteinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "note" })
               }

@@ -53,7 +53,7 @@ app.get("/alldata", async (req, res) => {
       const Notes = await notes.notes.find({});
 
       const data = [Address, Bank, Cards, Passwords, Notes];
-     const merged = [].concat.apply([], data);
+      const merged = [].concat.apply([], data);
       res.status(200).json(merged);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
@@ -65,6 +65,21 @@ app.get("/alldata", async (req, res) => {
 
 app.post("/generatepass", (req, res) => {
   const { length, numbers, uppercase, lowercase, symbols, exclude } = req.body;
+  if (
+    length == null ||
+    numbers == null ||
+    lowercase == null ||
+    uppercase == null ||
+    symbols == null ||
+    exclude == null
+  ) {
+    length = 8;
+    numbers = false;
+    lowercase = true;
+    uppercase = false;
+    symbols = false;
+    exclude = '*.!@#$%^&(){}[]":;<>,.?/~_+-=|';
+  }
   let pass = generator.generate({
     length: length,
     numbers: numbers,
@@ -74,5 +89,6 @@ app.post("/generatepass", (req, res) => {
     exclude: exclude,
     strict: true,
   });
+  console.log(pass);
   res.status(200).send(pass);
 });

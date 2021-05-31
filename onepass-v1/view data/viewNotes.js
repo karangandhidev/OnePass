@@ -19,6 +19,7 @@ export default function Notes({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [editable, setEditable] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -105,22 +106,39 @@ export default function Notes({ navigation }) {
                 <Text style={styles.cancelbuttontext}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.submitbutton} onPress={submit}>
-                <Text style={styles.submitbuttontext}>Submit</Text>
+              <TouchableOpacity
+                style={styles.submitbutton}
+                onPress={() => setConfirm(!confirm)}
+              >
+                <Text style={styles.deletebuttontext}>Delete</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
         <ScrollView style={styles.scroll}>
           <View style={([styles.screenview], { alignItems: "flex-start" })}>
-            {/* <Text >{"\n"}Name</Text>
-        <TextInput style={styles.fieldinput}
-        onChangeText={text =>handleInput({value:text,name:"name"})}
-        placeholder='Name'
-        placeholderTextColor= '#000000'
-        defaultValue={data.name}
-        editable={editable}
-        /> */}
+            {confirm ? (
+              <View style={styles.popupbox}>
+                <View style={styles.popupboxtext}>
+                  <Text style={styles.popuptitle}>Delete</Text>
+                  <Text style={styles.popupcontent}>Confirm Deletion</Text>
+                </View>
+                <View style={styles.popupbuttonbox}>
+                  <TouchableOpacity
+                    onPress={() => setConfirm(!confirm)}
+                    style={styles.popupLeftbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={del}
+                    style={styles.popupRightbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : null}
             <Text style={styles.fieldname}>{"\n"}Topic</Text>
             <TextInput
               style={styles.fieldinput}
@@ -134,7 +152,7 @@ export default function Notes({ navigation }) {
             />
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput
-              style={styles.fieldinput}
+              style={styles.noteinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "note" })
               }
@@ -150,8 +168,11 @@ export default function Notes({ navigation }) {
               </Text>
               {deleteable ? null : (
                 <>
-                  <TouchableOpacity style={styles.deletebutton} onPress={del}>
-                    <Text style={styles.deletebuttontext}>Delete</Text>
+                  <TouchableOpacity
+                    style={styles.deletebutton}
+                    onPress={submit}
+                  >
+                    <Text style={styles.submitbuttontext}>Submit</Text>
                   </TouchableOpacity>
                 </>
               )}

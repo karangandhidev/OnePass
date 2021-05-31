@@ -12,7 +12,6 @@ import axios from "react-native-axios";
 import { newcss } from "../newcss";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
-import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";
 
@@ -20,6 +19,7 @@ export default function CardDetails({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [editable, setEditable] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
 
@@ -106,14 +106,39 @@ export default function CardDetails({ navigation }) {
                 <Text style={styles.cancelbuttontext}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.submitbutton} onPress={submit}>
-                <Text style={styles.submitbuttontext}>Submit</Text>
+              <TouchableOpacity
+                style={styles.submitbutton}
+                onPress={() => setConfirm(!confirm)}
+              >
+                <Text style={styles.deletebuttontext}>Delete</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
         <ScrollView style={styles.scroll}>
           <View style={([styles.screenview], { alignItems: "flex-start" })}>
+            {confirm ? (
+              <View style={styles.popupbox}>
+                <View style={styles.popupboxtext}>
+                  <Text style={styles.popuptitle}>Delete</Text>
+                  <Text style={styles.popupcontent}>Confirm Deletion</Text>
+                </View>
+                <View style={styles.popupbuttonbox}>
+                  <TouchableOpacity
+                    onPress={() => setConfirm(!confirm)}
+                    style={styles.popupLeftbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={del}
+                    style={styles.popupRightbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : null}
             <Text style={styles.fieldname}>{"\n"}Card Holder Name</Text>
             <TextInput
               style={styles.fieldinput}
@@ -150,33 +175,16 @@ export default function CardDetails({ navigation }) {
               placeholderTextColor="#000000"
             />
 
-            {/* <Text style={styles.fieldname}>{"\n"}Month Of Expiry</Text> */}
-            {/* <DatePicker
-          style={styles.datePickerStyle}
-          date={date} // Initial date from state
-          mode="date" // The enum of date, datetime and time
-          placeholder="Select date"
-          format="DD-MM-YYYY"
-          minDate="01-01-2016"
-          maxDate="01-01-2019"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              //display: 'none',
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-          }}
-          onDateChange={(date) => {
-            handleInput({value:date,name:"moe"});
-          }}
-        /> */}
+            <Text style={styles.fieldname}>{"\n"}Month Of Expiry</Text>
+            <TextInput
+              style={styles.fieldinput}
+              onChangeText={(text) => handleInput({ value: text, name: "moe" })}
+              placeholder="Month of Expiry"
+              // secureTextEntry = {true}
+              defaultValue={data.moe}
+              editable={editable}
+              placeholderTextColor="#000000"
+            />
 
             <Text style={styles.fieldname}>{"\n"}Bank Name</Text>
             <TextInput
@@ -223,8 +231,11 @@ export default function CardDetails({ navigation }) {
               </Text>
               {deleteable ? null : (
                 <>
-                  <TouchableOpacity style={styles.deletebutton} onPress={del}>
-                    <Text style={styles.deletebuttontext}>Delete</Text>
+                  <TouchableOpacity
+                    style={styles.deletebutton}
+                    onPress={submit}
+                  >
+                    <Text style={styles.submitbuttontext}>Submit</Text>
                   </TouchableOpacity>
                 </>
               )}

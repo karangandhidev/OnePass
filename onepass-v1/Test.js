@@ -21,26 +21,25 @@ export default function Test() {
         </View>
         <View style={styles.textheading}>
           <Text style={styles.heading}>OnePass</Text>
-          <Text style={styles.heading}>OnePass</Text>
-          <Text style={styles.heading}>OnePass</Text>
-          <Text style={styles.heading}>OnePass</Text>
         </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
-            <View style={styles.popupwindow}>
-              <View style={styles.popupbox}>
-                <View style={styles.popupboxtext}>
-                  <Text style={styles.popuptitle}>Title</Text>
-                  <Text style={styles.popupcontent}>Some text here</Text>
-                </View>
-                <View style={styles.popupbuttonbox}>
-                  <TouchableOpacity style={styles.popupLeftbutton}>
-                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.popupRightbutton}>
-                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
-                  </TouchableOpacity>
-                </View>
+            {/* <View style={styles.popupwindow}> */}
+            <View style={styles.popupbox}>
+              <View style={styles.popupboxtext}>
+                <Text style={styles.popuptitle}>Title</Text>
+                <Text style={styles.popupcontent}>Some text here</Text>
+              </View>
+              <View style={styles.popupbuttonbox}>
+                <TouchableOpacity style={styles.popupLeftbutton}>
+                  <Text style={styles.popupbuttoncontent}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => alert("TEST")}
+                  style={styles.popupRightbutton}
+                >
+                  <Text style={styles.popupbuttoncontent}>Confirm</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

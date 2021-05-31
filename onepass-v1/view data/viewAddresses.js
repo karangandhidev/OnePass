@@ -18,6 +18,7 @@ export default function viewaddresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [editable, setEditable] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
   const [deletepopup, setDeletepopup] = useState(false);
@@ -106,14 +107,39 @@ export default function viewaddresses({ navigation }) {
                 <Text style={styles.cancelbuttontext}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.submitbutton} onPress={submit}>
-                <Text style={styles.submitbuttontext}>Submit</Text>
+              <TouchableOpacity
+                style={styles.submitbutton}
+                onPress={() => setConfirm(!confirm)}
+              >
+                <Text style={styles.deletebuttontext}>Delete</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
         <ScrollView style={styles.scroll}>
           <View style={([styles.screenview], { alignItems: "flex-start" })}>
+            {confirm ? (
+              <View style={styles.popupbox}>
+                <View style={styles.popupboxtext}>
+                  <Text style={styles.popuptitle}>Delete</Text>
+                  <Text style={styles.popupcontent}>Confirm Deletion</Text>
+                </View>
+                <View style={styles.popupbuttonbox}>
+                  <TouchableOpacity
+                    onPress={() => setConfirm(!confirm)}
+                    style={styles.popupLeftbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={del}
+                    style={styles.popupRightbutton}
+                  >
+                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : null}
             <Text style={styles.fieldname}>{"\n"}Name</Text>
             <TextInput
               style={styles.fieldinput}
@@ -212,9 +238,9 @@ export default function viewaddresses({ navigation }) {
                 <>
                   <TouchableOpacity
                     style={styles.deletebutton}
-                    onPress={setDeletepopup(!deletepopup)}
+                    onPress={submit}
                   >
-                    <Text style={styles.deletebuttontext}>Delete</Text>
+                    <Text style={styles.submitbuttontext}>Submit</Text>
                   </TouchableOpacity>
                 </>
               )}
