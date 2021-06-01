@@ -56,10 +56,10 @@ export default function Login({ navigation }) {
         .then((res) => {
           dispatch({ type: "LOGIN", data: res.data });
           setInput("");
-          // navigation.navigate("Login2FA", {
-          //   data: res.data,
-          // });
-          navigation.navigate("Bottomnavbar");
+          navigation.navigate("Login2FA", {
+            data: res.data,
+          });
+          // navigation.navigate("Bottomnavbar");
         })
         .catch((er) => {
           console.log("error");
