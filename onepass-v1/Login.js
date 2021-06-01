@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      await axios.get("http://127.0.0.1:3000/creds").then((res) => {
+      await axios.get("http://10.0.0.4:3000/creds").then((res) => {
         dispatch({ type: "GET_DATA", data: res.data });
       });
     };
@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
     if (input !== "") {
       axios
         .post(
-          "http://127.0.0.1:3000/login",
+          "http://10.0.0.4:3000/login",
           {
             username: creds.username,
             password: input,

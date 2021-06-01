@@ -37,7 +37,7 @@ export default function Password({ navigation }) {
 
   const genPass = () => {
     axios
-      .post("http://127.0.0.1:3000/generatepass", {
+      .post("http://10.0.0.4:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -59,7 +59,7 @@ export default function Password({ navigation }) {
   const del = () => {
     axios
       .delete(
-        `http://127.0.0.1:3000/passwords/${data._id}`,
+        `http://10.0.0.4:3000/passwords/${data._id}`,
         {
           name: data.name,
           category: data.category,
@@ -90,7 +90,7 @@ export default function Password({ navigation }) {
 
   const submit = () => {
     axios
-      .put(`http://127.0.0.1:3000/passwords/${data._id}`, data, {
+      .put(`http://10.0.0.4:3000/passwords/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

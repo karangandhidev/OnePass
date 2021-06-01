@@ -37,7 +37,7 @@ export default function CardDetails({ navigation }) {
   const submit = () => {
     axios
       .post(
-        "http://127.0.0.1:3000/cards",
+        "http://10.0.0.4:3000/cards",
         {
           name: input.name,
           number: input.number,

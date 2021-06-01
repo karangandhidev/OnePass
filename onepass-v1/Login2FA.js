@@ -22,33 +22,35 @@ export default function Login2FA({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
   const [data] = useState(navigation.state.params.data);
-  const [display,setDisplay] = useState(null)
-  const [questions,setQuestions] = useState([])
+  const [display, setDisplay] = useState(null);
+  const [questions, setQuestions] = useState([]);
   const creds = useSelector((state) => state.reducer.creds);
   console.log(data);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      await axios.get("http://127.0.0.1:3000/questions").then((res) => {
-        setQuestions(res.data)
+      await axios.get("http://10.0.0.4:3000/questions").then((res) => {
+        setQuestions(res.data);
       });
     };
     getData();
   }, [setQuestions]);
-  
-  useEffect(()=>{
-   const index =  Math.floor(Math.random() * ((questions.length-1) - 0 + 1) +0);
-   console.log(questions.length)
-   setDisplay(questions[index])
-  },[questions,setDisplay])
-  console.log(display)
+
+  useEffect(() => {
+    const index = Math.floor(
+      Math.random() * (questions.length - 1 - 0 + 1) + 0
+    );
+    console.log(questions.length);
+    setDisplay(questions[index]);
+  }, [questions, setDisplay]);
+  console.log(display);
   const login = (e) => {
     e.preventDefault();
     if (input !== "") {
       axios
         .post(
-          "http://127.0.0.1:3000/2ndauth",
+          "http://10.0.0.4:3000/2ndauth",
           {
             id: display._id,
             answer: input,
@@ -88,7 +90,7 @@ export default function Login2FA({ navigation }) {
             {"\n"}
             {"\n"}
           </Text>
-          <Text style={styles.bodytext}>{display?display.question:""}</Text>
+          <Text style={styles.bodytext}>{display ? display.question : ""}</Text>
           <View style={styles.form}>
             <Text style={styles.bodytext}>{"\n"}Answer</Text>
             <TextInput

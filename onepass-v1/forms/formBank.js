@@ -32,7 +32,7 @@ export default function Bank({ navigation }) {
   const submit = () => {
     console.log("AKJSGDKFJHGAKLJFDSD");
     axios
-      .post("http://127.0.0.1:3000/banks", input, {
+      .post("http://10.0.0.4:3000/banks", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

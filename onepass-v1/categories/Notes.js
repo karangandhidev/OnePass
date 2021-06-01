@@ -28,8 +28,9 @@ export default function Notes({ navigation }) {
   useEffect(() => {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
+      console.log(token);
       await axios
-        .get("http://127.0.0.1:3000/notes", { headers: { Auth: token } })
+        .get("http://10.0.0.4:3000/notes", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
           console.log(res.data);
@@ -37,13 +38,13 @@ export default function Notes({ navigation }) {
     };
     getData();
   }, [setData]);
-  // useEffect(() => {
-  //   setFilter(
-  //     data.filter((obj) =>
-  //       obj.topic.toLowerCase().includes(search.toLowerCase())
-  //     )
-  //   );
-  // }, [search, data, setFilter]);
+  useEffect(() => {
+    setFilter(
+      data.filter((obj) =>
+        obj.topic.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, data, setFilter]);
   const onPressHandler = (key) => (event) => {
     navigation.navigate("viewNotes", { key });
   };

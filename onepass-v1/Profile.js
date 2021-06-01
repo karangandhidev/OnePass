@@ -21,22 +21,18 @@ function Profile({ navigation }) {
   const [aboutus, setAboutus] = useState(false);
   const dispatch = useDispatch();
   const prefs = useSelector((state) => state.preference.preference);
-  
-  
-  
-  const masterdelete =()=>{
-    axios.post("http://127.0.0.1:3000/masterdelete",{password:"some pass"}).then(()=>{
-      navigation.navigate("Register")
-    }).catch(e=>console.log(e))
-  }
-  
-  
-  
-  
-  
-  
+
+  const masterdelete = () => {
+    axios
+      .post("http://10.0.0.4:3000/masterdelete", { password: "some pass" })
+      .then(() => {
+        navigation.navigate("Register");
+      })
+      .catch((e) => console.log(e));
+  };
+
   const logout = () => {
-    axios.post("http://127.0.0.1:3000/preference", prefs);
+    axios.post("http://10.0.0.4:3000/preference", prefs);
     navigation.navigate("Login");
   };
   const showSettings = () => {

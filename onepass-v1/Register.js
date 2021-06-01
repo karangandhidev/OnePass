@@ -70,7 +70,7 @@ export default function Register({ navigation }) {
             };
             console.log(data.username);
             // axios
-            //   .post("http://127.0.0.1:3000/register", data, {
+            //   .post("http://10.0.0.4:3000/register", data, {
             //     headers: {
             //       "Access-Control-Allow-Headers":
             //         "Access-Control-Allow-Headers, Authorization",

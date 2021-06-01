@@ -19,10 +19,12 @@ export default function Register2FA({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
   const dispatch = useDispatch();
-  const [input, setInput] = useState([{
-      question:"",
-      answer:""
-  }]);
+  const [input, setInput] = useState([
+    {
+      question: "",
+      answer: "",
+    },
+  ]);
   const [message, setMessage] = useState({
     creds: "Please enter all the credentials",
     password: "Please enter a longer password",
@@ -30,11 +32,9 @@ export default function Register2FA({ navigation }) {
     badpass: "Password cannot be username",
   });
 
-console.log(input)
+  console.log(input);
 
-
-
-  const [number,setNumber] = useState(1)
+  const [number, setNumber] = useState(1);
   const [items, setItems] = useState([
     <View key={0} style={styles.form}>
       <Text style={styles.bodytext}>{"\n"}Question</Text>
@@ -49,7 +49,7 @@ console.log(input)
       <TextInput
         key={0}
         style={[styles.inputbox, { width: 300 }]}
-        onChange={(e) => handleInput(e.target.value,  e.target.key, "answer")}
+        onChange={(e) => handleInput(e.target.value, e.target.key, "answer")}
         placeholder="Enter Answer"
         placeholderTextColor="#F0F5F9"
       />
@@ -58,19 +58,17 @@ console.log(input)
   let valid = false;
   let length = false;
   let confirm = false;
-  const handleInput = (value,key,name) => {
-    console.log(value,key,name)
+  const handleInput = (value, key, name) => {
+    console.log(value, key, name);
   };
 
-  
-  const removeQuestion = ()=>{
-  setItems((lastItems) => lastItems.filter((item, i) => i+1 !== number));
-  setInput((lastItems) => lastItems.filter((item, i) => i+1 !== number));
+  const removeQuestion = () => {
+    setItems((lastItems) => lastItems.filter((item, i) => i + 1 !== number));
+    setInput((lastItems) => lastItems.filter((item, i) => i + 1 !== number));
 
-  setNumber(number-1)
-  }
-  
-  
+    setNumber(number - 1);
+  };
+
   const addQuestion = () => {
     setItems((state) => {
       return [
@@ -80,7 +78,9 @@ console.log(input)
           <TextInput
             id={number}
             style={[styles.inputbox, { width: 300 }]}
-            onChange={(e) => handleInput(e.target.value, e,target.id, "question")}
+            onChange={(e) =>
+              handleInput(e.target.value, e, target.id, "question")
+            }
             placeholder="Enter Question"
             placeholderTextColor="#F0F5F9"
           />
@@ -90,21 +90,23 @@ console.log(input)
             style={[styles.inputbox, { width: 300 }]}
             placeholder="Enter Answer"
             placeholderTextColor="#F0F5F9"
-            onChange={(e) => handleInput(e.target.value, e.target.key, "answer")}
+            onChange={(e) =>
+              handleInput(e.target.value, e.target.key, "answer")
+            }
           />
         </View>,
       ];
     });
-    setInput(state=>{
-        return[
-            ...state,
-            {
-                question:"",
-                answer:""
-            }
-        ]
-    })
-    setNumber(number+1)
+    setInput((state) => {
+      return [
+        ...state,
+        {
+          question: "",
+          answer: "",
+        },
+      ];
+    });
+    setNumber(number + 1);
   };
 
   const formValidation = () => {
@@ -134,7 +136,7 @@ console.log(input)
             };
             console.log(data.username);
             axios
-              .post("http://127.0.0.1:3000/register", data, {
+              .post("http://10.0.0.4:3000/register", data, {
                 headers: {
                   "Access-Control-Allow-Headers":
                     "Access-Control-Allow-Headers, Authorization",

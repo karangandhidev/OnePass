@@ -37,7 +37,7 @@ function Generator() {
   useEffect(() => {
     console.log("GETTING PREF");
     axios
-      .get("http://127.0.0.1:3000/preference")
+      .get("http://10.0.0.4:3000/preference")
       .then((res) => dispatch({ type: "GETPREFERENCE", data: res.data }))
       .catch((e) => console.log(e));
   }, [dispatch]);
@@ -116,7 +116,7 @@ function Generator() {
     console.log("generate hua");
 
     axios
-      .post("http://127.0.0.1:3000/generatepass", {
+      .post("http://10.0.0.4:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -131,7 +131,7 @@ function Generator() {
   useEffect(() => {
     console.log("USEEFFECT");
     axios
-      .post("http://127.0.0.1:3000/generatepass", {
+      .post("http://10.0.0.4:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,

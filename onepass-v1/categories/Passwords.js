@@ -30,7 +30,7 @@ export default function Password({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://127.0.0.1:3000/socials", { headers: { Auth: token } })
+        .get("http://10.0.0.4:3000/socials", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });

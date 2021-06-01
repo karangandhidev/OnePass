@@ -14,10 +14,10 @@ const preference = require("./userpreference");
 const generator = require("generate-password");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 const app = express();
-const secondfactor = require("./2ndfactorauth")
+const secondfactor = require("./2ndfactorauth");
 const port = process.env.port || 3000;
 var corsoption = {
-  origin: ["http://10.0.0.9:19006", "http://localhost:19006"],
+  origin: ["http://10.0.0.4:19006", "http://localhost:19006"],
 };
 
 app.use(express.static(path.join(__dirname, "static")));
