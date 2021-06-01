@@ -5,7 +5,6 @@ const preference = require("./userpreference").model;
 
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 const bcrypt = require("bcryptjs");
-const { encrypt, decrypt } = require("./hash");
 const router = express.Router();
 
 const userSchema = new mongoose.Schema(
@@ -15,7 +14,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     password: {
-      type: Object,
+      type: String,
       required: true,
     },
     hint: {
@@ -30,34 +29,50 @@ const userSchema = new mongoose.Schema(
 
 const model = mongoose.model("userSchema", userSchema);
 router.post("/register", async (req, res) => {
-  let User = await model.find({});
-
-  if (User.length > 0) {
-    mongoose.connection.db
-      .dropDatabase()
-      .then(console.log("done"))
-      .catch((er) => console.log(er));
-  }
-
+  model
+    .find({})
+    .then((db) => {
+      if (db.length > 0) {
+        mongoose.connection.db
+          .dropDatabase()
+          .then(async () => {
+            let { username, password, hint } = req.body;
+            password = bcrypt.hashSync(password, 10);
+            try {
+              let response = await model.create({
+                username,
+                password,
+                hint,
+              });
+              // return res.status(200).json({status:"okay"})
+            } catch (error) {
+              console.log(error);
+              return res.json({ status: "error" });
+            }
+          })
+          .catch((er) => console.log(er));
+      }
+    })
+    .catch((err) => console.log(err));
   let { username, password, hint } = req.body;
 
-  password = encrypt(password);
+  password = bcrypt.hashSync(password, 10);
   try {
     let response = await model.create({
       username,
       password,
       hint,
     });
-    let result = await preference.create({
-      isUpper: true,
+    let res = await preference.create({
       length: 8,
+      isUpper: false,
       isLower: true,
-      isNumber: true,
-      isSpecial: true,
-      generalChar: true,
-      specialChar: true,
-      parenthesis: true,
-      exclusion: " ",
+      isNumber: false,
+      isSpecial: false,
+      generalChar: false,
+      specialChar: false,
+      parenthesis: false,
+      exclusion: "!@#$%^&*-.,?_`~;:+=<>|/(){}[]",
     });
     res.status(200).send({ status: "okay" });
   } catch (error) {
@@ -70,14 +85,13 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  let User = await model.findOne({ username }).lean();
-  let ogpass = decrypt(User.password);
+  const User = await model.findOne({ username }).lean();
   if (!User) {
     return res
       .status(403)
       .send({ status: "error", error: "Invalid username or password" });
   }
-  if (password === ogpass) {
+  if (await bcrypt.compare(password, User.password)) {
     const token = jwt.sign(User, secret);
     res.status(200).send({
       data: token,
@@ -97,9 +111,8 @@ router.post("/changepass", async (req, res) => {
   const { OldPassword, NewPassword } = req.body;
 
   const User = await model.findOne({}).lean();
-  let ogpass = decrypt(User.password);
-  if (OldPassword === ogpass) {
-    const newpass = encrypt(NewPassword);
+  if (await bcrypt.compare(OldPassword, User.password)) {
+    const newpass = bcrypt.hashSync(NewPassword, 10);
     try {
       model.findByIdAndUpdate(
         User._id,
@@ -164,8 +177,7 @@ router.post("/masterdelete", async (req, res) => {
   const { password } = req.body;
   const User = await model.findOne({});
   if (password) {
-    let ogpass = decrypt(User.password);
-    if (password === ogpass) {
+    if (await bcrypt.compare(password, User.password)) {
       try {
         mongoose.connection.db.dropDatabase().then(() => {
           return res.status(200).json({ message: "user deleted" });

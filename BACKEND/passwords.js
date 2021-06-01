@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const express = require("express");
+const { encrypt } = require("./hash");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 
 const router = express.Router();
@@ -19,15 +20,15 @@ const SocialSchema = mongoose.Schema(
       required: true,
     },
     username: {
-      type: String,
+      type: Object,
       required: true,
     },
     email: {
-      type: String,
+      type: Object,
       required: true,
     },
     password: {
-      type: String,
+      type: Object,
       required: true,
     },
     note: {
@@ -41,8 +42,12 @@ const SocialSchema = mongoose.Schema(
 );
 
 const model = mongoose.model("Social Schema", SocialSchema);
-router.post("/passwords", async (req, res) => {
-  const { name, category, url, username, email, password, note } = req.body;
+router.post("/socials", async (req, res) => {
+  let { name, category, url, username, email, password, note } = req.body;
+  username = encrypt(username);
+  email = encrypt(email);
+  password = encrypt(password);
+
   try {
     const response = await model.create({
       name,
@@ -62,12 +67,17 @@ router.post("/passwords", async (req, res) => {
   }
 });
 
-router.get("/socials", async (req, res) => {
+router.get("/passwords", async (req, res) => {
   const token = req.header("Auth");
   if (token) {
     const verification = jwt.verify(token, secret);
     if (verification) {
-      const Passwords = await model.find({});
+      let Passwords = await model.find({});
+      Passwords.map((pass) => {
+        pass.username = decrypt(pass.username);
+        pass.email = decrypt(pass.email);
+        pass.password = decrypt(pass.password);
+      });
       res.status(200).json(Passwords);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
@@ -78,24 +88,21 @@ router.get("/socials", async (req, res) => {
 });
 
 router.put("/passwords/:id", (req, res) => {
-  const { name ,category
-    ,url
-    ,username
-    ,email
-    ,password
-    ,note } =
-    req.body;
+  let { name, category, url, username, email, password, note } = req.body;
+  username = encrypt(username);
+  email = encrypt(email);
+  password = encrypt(password);
   model.findByIdAndUpdate(
     { _id: req.params.id },
     {
       $set: {
-        name:name,
-        category:category,
-        url:url,
-        username:username,
-        email:email,
+        name: name,
+        category: category,
+        url: url,
+        username: username,
+        email: email,
         password: password,
-        note:note,
+        note: note,
       },
     },
     { new: true, useFindAndModify: false },

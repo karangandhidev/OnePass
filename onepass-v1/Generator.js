@@ -33,9 +33,11 @@ function Generator() {
   const [specialchar, setSpecialchar] = useState(preference.specialChar);
   const [parenthesis, setParenthesis] = useState(preference.parenthesis);
   const [password, setPassword] = useState("defaultvalue");
+
   useEffect(() => {
+    console.log("GETTING PREF");
     axios
-      .get("http://10.0.0.9:3000/preference")
+      .get("http://127.0.0.1:3000/preference")
       .then((res) => dispatch({ type: "GETPREFERENCE", data: res.data }))
       .catch((e) => console.log(e));
   }, [dispatch]);
@@ -88,6 +90,16 @@ function Generator() {
       data: { key: "isSpecial", value: !isSpecial },
     });
     setSpecial(!isSpecial);
+    if (length == null) {
+      setSlider(8);
+      setNumber(true);
+      setLower(true);
+      setUpper(true);
+      setSpecial(true);
+      setSpecialchar(true);
+      setGeneralchar(true);
+      setParenthesis(true);
+    }
   };
 
   useEffect(() => {
@@ -101,8 +113,10 @@ function Generator() {
   }, [generalchar, specialchar, parenthesis, dispatch]);
 
   const generatePassword = () => {
+    console.log("generate hua");
+
     axios
-      .post("http://10.0.0.9:3000/generatepass", {
+      .post("http://127.0.0.1:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -115,8 +129,9 @@ function Generator() {
       });
   };
   useEffect(() => {
+    console.log("USEEFFECT");
     axios
-      .post("http://10.0.0.9:3000/generatepass", {
+      .post("http://127.0.0.1:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,

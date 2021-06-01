@@ -38,13 +38,17 @@ export default function ChangePassword({ navigation }) {
     });
   };
   const logout = () => {
-    navigation.navigate("Login");
+    navigation.navigate("Login", {
+      username: input.Username,
+      hint: input.Hint,
+      flag: true,
+    });
   };
   const changeCreds = () => {
     if (username) {
       if (input.Username) {
         axios
-          .put("http://10.0.0.9:3000/changeusername", {
+          .put("http://127.0.0.1:3000/changeusername", {
             Username: input.Username,
           })
           .then(() => {
@@ -54,12 +58,13 @@ export default function ChangePassword({ navigation }) {
             });
           })
           .catch((err) => console.log(err));
+        logout();
       }
     }
     if (hint) {
       if (input.Hint) {
         axios
-          .put("http://10.0.0.9:3000/changehint", {
+          .put("http://127.0.0.1:3000/changehint", {
             hint: input.Hint,
           })
           .then(() =>
@@ -68,11 +73,12 @@ export default function ChangePassword({ navigation }) {
               data: { key: "hint", value: input.Hint },
             })
           );
+        logout();
       }
     }
     if (input.OldPassword && input.NewPassword)
       if (input.ConfirmNewPassword === input.NewPassword) {
-        axios.post("http://10.0.0.9:3000/changepass", {
+        axios.post("http://127.0.0.1:3000/changepass", {
           OldPassword: input.OldPassword,
           NewPassword: input.NewPassword,
         });

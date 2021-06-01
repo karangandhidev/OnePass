@@ -17,32 +17,41 @@ import { fonts } from "./fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function Login({ navigation }) {
+export default function Login2FA({ navigation }) {
   const [input, setInput] = useState("");
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
-
+  const [data] = useState(navigation.state.params.data);
+  const [display,setDisplay] = useState(null)
+  const [questions,setQuestions] = useState([])
   const creds = useSelector((state) => state.reducer.creds);
-
+  console.log(data);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      await axios.get("http://127.0.0.1:3000/creds").then((res) => {
-        dispatch({ type: "GET_DATA", data: res.data });
+      await axios.get("http://127.0.0.1:3000/questions").then((res) => {
+        setQuestions(res.data)
       });
     };
     getData();
-  }, [dispatch]);
+  }, [setQuestions]);
+  
+  useEffect(()=>{
+   const index =  Math.floor(Math.random() * ((questions.length-1) - 0 + 1) +0);
+   console.log(questions.length)
+   setDisplay(questions[index])
+  },[questions,setDisplay])
+  console.log(display)
   const login = (e) => {
     e.preventDefault();
     if (input !== "") {
       axios
         .post(
-          "http://127.0.0.1:3000/login",
+          "http://127.0.0.1:3000/2ndauth",
           {
-            username: creds.username,
-            password: input,
+            id: display._id,
+            answer: input,
           },
           {
             headers: {
@@ -54,11 +63,9 @@ export default function Login({ navigation }) {
           }
         )
         .then((res) => {
-          dispatch({ type: "LOGIN", data: res.data });
+          dispatch({ type: "LOGIN", data: data.data });
           setInput("");
-          navigation.navigate("Login2FA", {
-            data: res.data,
-          });
+          navigation.navigate("Bottomnavbar");
         })
         .catch((er) => {
           console.log("error");
@@ -73,41 +80,23 @@ export default function Login({ navigation }) {
     return (
       <ScrollView style={{ height: "100%" }}>
         <View style={styles.logincontainer}>
-          <Text style={styles.header}>{"\n"}One-Pass</Text>
-          <Text style={styles.bodytext}>
-            Keep your credentials to yourself!{"\n"}
+          <Text>
+            {"\n"}
             {"\n"}
             {"\n"}
             {"\n"}
             {"\n"}
             {"\n"}
           </Text>
-          <Text style={styles.bodytext}>
-            {creds.username ? `Hello ${creds.username}` : null}
-          </Text>
+          <Text style={styles.bodytext}>{display?display.question:""}</Text>
           <View style={styles.form}>
-            <Text style={styles.bodytext}>{"\n"}Password</Text>
+            <Text style={styles.bodytext}>{"\n"}Answer</Text>
             <TextInput
               style={[styles.inputbox, { width: 300 }]}
               onChangeText={(text) => setInput(text)}
               value={input}
-              secureTextEntry={true}
             />
           </View>
-          <View style={styles.hinttoggle}>
-            <Text style={styles.hinttext}>Enable Hint</Text>
-            <Switch
-              style={{ marginTop: 16 }}
-              trackColor={{ false: "#F0F5F9", true: "#4dd163" }}
-              thumbColor="#F0F5F9"
-              // onTintColor='#F0F5F9'
-              // ios_backgroundColor="#F0F5F9"
-              onValueChange={(value) => setToggle(value)}
-              value={toggle}
-            />
-          </View>
-          {toggle ? <Text style={styles.hint}>{creds.hint}</Text> : null}
-
           <Text style={styles.bodytext}>
             {"\n"}
             {"\n"}
@@ -119,18 +108,16 @@ export default function Login({ navigation }) {
           <Text style={styles.bodytext}>
             {"\n"}
             {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}Not registered? Create account now{"\n"}
+            {"\n"}Go Back
           </Text>
 
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("Register");
+              navigation.goBack();
             }}
           >
-            <Text style={styles.loginbuttontext}>Register{"\n"}</Text>
+            <Text style={styles.loginbuttontext}>ICON HERE{"\n"}</Text>
           </TouchableOpacity>
           <StatusBar style="auto" />
         </View>

@@ -15,12 +15,11 @@ import Icons from "react-native-vector-icons/MaterialIcons";
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
 
-
 export default function Addresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   const [input, setInput] = useState({});
-  
+
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -32,7 +31,7 @@ export default function Addresses({ navigation }) {
   };
   const submit = () => {
     axios
-      .post("http://10.0.0.9:3000/address", input, {
+      .post("http://127.0.0.1:3000/address", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

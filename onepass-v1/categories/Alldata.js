@@ -15,7 +15,6 @@ import Icons from "react-native-vector-icons/MaterialIcons";
 import { store } from "../Redux/globalReducer";
 import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
- 
 
 export default function Alldata({ navigation }) {
   const [isLoaded] = useFonts(fonts);
@@ -31,7 +30,7 @@ export default function Alldata({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.9:3000/alldata", { headers: { Auth: token } })
+        .get("http://127.0.0.1:3000/alldata", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });
@@ -43,26 +42,30 @@ export default function Alldata({ navigation }) {
     setFilter(
       data.filter((obj) => {
         if (obj.city) {
-         return obj.city.toLowercase().includes(search.toLowerCase()) ||
-            obj.name.toLowerCase().includes(search.toLowerCase());
+          return (
+            obj.city.toLowerCase().includes(search.toLowerCase()) ||
+            obj.name.toLowerCase().includes(search.toLowerCase())
+          );
         }
 
         if (obj.bank_name) {
-         return obj.bank_name.toLowerCase().includes(search.toLowerCase());
+          return obj.bank_name.toLowerCase().includes(search.toLowerCase());
         }
         if (obj.topic) {
-         return obj.topic.toLowerCase().includes(search.toLowerCase());
+          return obj.topic.toLowerCase().includes(search.toLowerCase());
         }
         if (obj.username) {
-        return  obj.username.toLowerCase().includes(search.toLowerCase())
+          return obj.username.toLowerCase().includes(search.toLowerCase());
         }
-        if(obj.moe){
-          return obj.bankname.toLowerCase().includes(search.toLowerCase()) ||
-             obj.name.toLowerCase().includes(search.toLowerCase());
+        if (obj.moe) {
+          return (
+            obj.bankname.toLowerCase().includes(search.toLowerCase()) ||
+            obj.name.toLowerCase().includes(search.toLowerCase())
+          );
         }
       })
     );
-  }, [search,data, setFilter]);
+  }, [search, data, setFilter]);
 
   const onPressHandler = (key) => (event) => {
     if (key.city) {
@@ -198,7 +201,7 @@ export default function Alldata({ navigation }) {
             {data.length > 0 ? (
               filtereddata.map(render)
             ) : (
-              <Text style={styles.carddata}>No data available</Text>
+              <Text style={styles.datacardtext}>No data available</Text>
             )}
 
             {/* {merged.map(render)} */}

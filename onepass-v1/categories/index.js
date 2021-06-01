@@ -156,9 +156,8 @@ export function Homepage({ navigation }) {
 
   useEffect(() => {
     axios
-      .get("http://10.0.0.9:3000/preference")
+      .get("http://127.0.0.1:3000/preference")
       .then((res) => {
-        console.log(res.data);
         dispatch({ type: "GETPREFERENCE", data: res.data });
       })
       .catch((e) => console.log(e));
@@ -167,7 +166,7 @@ export function Homepage({ navigation }) {
   const visis = () => {
     setVisible(!visible);
   };
-  console.log(visible);
+
   if (!isLoaded) {
     return <AppLoading />;
   } else {

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const express = require("express");
+const { encrypt } = require("./hash");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 
 const router = express.Router();
@@ -11,11 +12,11 @@ const BankSchema = mongoose.Schema(
       required: true,
     },
     acc_no: {
-      type: String,
+      type: Object,
       required: true,
     },
     ifsc: {
-      type: String,
+      type: Object,
       required: true,
     },
     branch: {
@@ -23,7 +24,7 @@ const BankSchema = mongoose.Schema(
       required: true,
     },
     telephone: {
-      type: String,
+      type: Object,
       required: true,
     },
     note: {
@@ -37,9 +38,12 @@ const BankSchema = mongoose.Schema(
 );
 
 const bank = mongoose.model("Bank Schema", BankSchema);
-router.post("/banks", async (req, res) => {
-  const { bank_name, acc_no, ifsc, branch, telephone, note } = req.body;
-  console.log("AKOJSGDJKHGAJHKSGD");
+router.post("/bank", async (req, res) => {
+  let { bank_name, acc_no, ifsc, branch, telephone, note } = req.body;
+  acc_no = encrypt(acc_no);
+  ifsc = encrypt(ifsc);
+  telephone = encrypt(telephone);
+
   try {
     const response = await bank.create({
       bank_name,
@@ -57,15 +61,18 @@ router.post("/banks", async (req, res) => {
     });
   }
 });
-router.get("/bankview", async (req, res) => {
-  console.log("HERE");
+router.get("/bank", async (req, res) => {
   const token = req.header("Auth");
   if (token) {
     const verification = jwt.verify(token, secret);
     if (verification) {
-      const Bank = await bank.find({});
-      res.status(200).json(Bank);
-      console.log(Bank);
+      let Banks = await bank.find({});
+      Banks.map((bank) => {
+        bank.telephone = decrypt(bank.telephone);
+        bank.ifsc = decrypt(bank.ifsc);
+        bank.acc_no = decrypt(bank.acc_no);
+      });
+      res.status(200).json(Banks);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
     }
@@ -74,7 +81,10 @@ router.get("/bankview", async (req, res) => {
   }
 });
 router.put("/bank/:id", (req, res) => {
-  const { bank_name, acc_no, ifsc, branch, telephone, note } = req.body;
+  let { bank_name, acc_no, ifsc, branch, telephone, note } = req.body;
+  acc_no = encrypt(acc_no);
+  ifsc = encrypt(ifsc);
+  telephone = encrypt(telephone);
   bank.findByIdAndUpdate(
     { _id: req.params.id },
     {

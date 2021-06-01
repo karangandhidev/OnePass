@@ -13,7 +13,7 @@ import AppLoading from "expo-app-loading";
 import { fonts } from "./fonts";
 import axios from "react-native-axios";
 import { css } from "./css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PassMeter from "react-native-passmeter";
 // import { NavigationActions,StackActions } from '@react-navigation/native'
 
@@ -31,6 +31,7 @@ export default function Register({ navigation }) {
     creds: "Please enter all the credentials",
     password: "Please enter a longer password",
     confirm: "Passwords donot match",
+    badpass: "Password cannot be username",
   });
 
   let valid = false;
@@ -49,7 +50,7 @@ export default function Register({ navigation }) {
       input.confirm_password !== ""
     ) {
       valid = true;
-      if (input.password.length > 6 && input.password.length <= 22) {
+      if (input.password.length > 7 && input.password.length <= 22) {
         length = true;
         if (input.password === input.confirm_password) {
           confirm = true;
@@ -61,35 +62,41 @@ export default function Register({ navigation }) {
     if (valid) {
       if (length) {
         if (confirm) {
-          const data = {
-            username: input.name,
-            password: input.password,
-            hint: input.hint,
-          };
-          axios
-            .post("http://10.0.0.9:3000/register", data, {
-              headers: {
-                "Access-Control-Allow-Headers":
-                  "Access-Control-Allow-Headers, Authorization",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods":
-                  "PUT, DELETE, POST, GET, OPTIONS",
-              },
-            })
-            .then(() => {
-              dispatch({
-                type: "GET_DATA",
-                data: { username: input.name, hint: input.hint },
-              });
-              navigation.navigate("Login", {
-                username: input.name,
-                hint: input.hint,
-                flag: true,
-              });
-            })
-            .catch((er) => {
-              alert(er);
-            });
+          if (input.password != input.name) {
+            const data = {
+              username: input.name,
+              password: input.password,
+              hint: input.hint,
+            };
+            console.log(data.username);
+            // axios
+            //   .post("http://127.0.0.1:3000/register", data, {
+            //     headers: {
+            //       "Access-Control-Allow-Headers":
+            //         "Access-Control-Allow-Headers, Authorization",
+            //       "Access-Control-Allow-Origin": "*",
+            //       "Access-Control-Allow-Methods":
+            //         "PUT, DELETE, POST, GET, OPTIONS",
+            //     },
+            //   })
+            //   .then(() => {
+            //     dispatch({
+            //       type: "GET_DATA",
+            //       data: { username: input.name, hint: input.hint },
+            //     });
+            //     navigation.navigate("Login", {
+            //       username: input.name,
+            //       hint: input.hint,
+            //       flag: true,
+            //     });
+            //   })
+            //   .catch((er) => {
+            //     alert(er);
+            //   });
+            navigation.navigate("Register2FA", { data: data });
+          } else {
+            alert(message.badpass);
+          }
         } else {
           alert(message.confirm);
         }
@@ -109,7 +116,7 @@ export default function Register({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
   const MAX_LEN = 22,
-    MIN_LEN = 7,
+    MIN_LEN = 8,
     PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
 
   if (!isLoaded) {
@@ -128,7 +135,7 @@ export default function Register({ navigation }) {
             style={[styles.inputbox, { width: 300 }]}
             onChangeText={(text) => handleInput({ value: text, name: "name" })}
             placeholder="Enter Name"
-            placeholderTextColor="#000000"
+            placeholderTextColor="#F0F5F9"
           />
           <Text style={styles.bodytext}>{"\n"}Set Password</Text>
           <TextInput
@@ -151,7 +158,7 @@ export default function Register({ navigation }) {
             }
             placeholder="Enter Password"
             secureTextEntry={true}
-            placeholderTextColor="#000000"
+            placeholderTextColor="#F0F5F9"
           />
           <View style={{ borderRadius: 7, width: 300 }}>
             <PassMeter
@@ -170,14 +177,14 @@ export default function Register({ navigation }) {
             }
             placeholder="Confirm Password"
             secureTextEntry={true}
-            placeholderTextColor="#000000"
+            placeholderTextColor="#F0F5F9"
           />
           <Text style={styles.bodytext}>{"\n"}Password Hint</Text>
           <TextInput
             style={[styles.inputbox, { width: 300 }]}
             onChangeText={(text) => handleInput({ value: text, name: "hint" })}
             placeholder="Hint to remember"
-            placeholderTextColor="#000000"
+            placeholderTextColor="#F0F5F9"
           />
         </View>
         <Text>
@@ -189,7 +196,6 @@ export default function Register({ navigation }) {
           <Text style={styles.loginbuttontext}>Register</Text>
         </TouchableOpacity>
         <Text style={styles.bodytext}>
-          {"\n"}
           {"\n"}
           {"\n"}
           {"\n"}Already Registered? Login{"\n"}

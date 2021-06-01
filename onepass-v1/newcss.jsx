@@ -130,12 +130,14 @@ export const newcss = {
     paddingRight: 10,
     fontFamily: "RobotoCondensed-Light",
     fontSize: 18,
+    color: "#000000",
   },
   moeview: {
     flex: 2,
     flexDirection: "row",
     marginLeft: deviceWindow.width * 0.045,
     marginRight: deviceWindow.width * 0.045,
+    marginTop: deviceWindow.width * -0.045,
   },
   moename: {
     fontFamily: "RobotoCondensed-Light",
@@ -144,11 +146,10 @@ export const newcss = {
   },
   moeinput: {
     borderWidth: 1,
-    width: deviceWindow.width * 0.08,
+    width: deviceWindow.width * 0.2,
     maxWidth: deviceWindow.width * 0.2,
     height: deviceWindow.height * 0.05,
     maxHeight: deviceWindow.height * 0.1,
-
     paddingLeft: 10,
     paddingRight: 10,
     fontFamily: "RobotoCondensed-Light",

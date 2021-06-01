@@ -29,7 +29,7 @@ export default function BankDetails({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.9:3000/bankview", { headers: { Auth: token } })
+        .get("http://127.0.0.1:3000/bankview", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });
@@ -119,7 +119,7 @@ export default function BankDetails({ navigation }) {
             {data.length > 0 ? (
               filter.map(render)
             ) : (
-              <Text style={styles.carddata}>No data available</Text>
+              <Text style={styles.datacardtext}>No data available</Text>
             )}
           </View>
         </ScrollView>

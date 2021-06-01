@@ -1,23 +1,35 @@
-const crypto = require("crypto"),
-  resizedIV = Buffer.allocUnsafe(16),
-  iv = crypto.createHash("sha256").update("myHashedIV").digest();
-const newiv = "<Buffer 38 9e d8 b6 06 02 00 00 40 a9 d8 b6 06 02 00 00>";
-const createCypher = (data) => {
-  console.log(resizedIV);
-  const key = "d59b50ad1a3772e659665456e35fee55",
-    cipher = crypto.createCipheriv("aes256", key, resizedIV);
-  cipher.update(data, "binary", "binary");
-  return cipher.final("binary");
-};
-const decypher = (data) => {
-  console.log(resizedIV);
-  const key = "d59b50ad1a3772e659665456e35fee55",
-    decipher = crypto.createDecipheriv("aes256", key, resizedIV),
-    msg = [];
+const crypto = require("crypto");
+const algorithm = "aes-256-ctr";
+const secretKey = "vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3";
+const iv = crypto.randomBytes(16);
 
-  msg.push(decipher.update(data, "binary", "binary"));
-  msg.push(decipher.final("binary"));
-  return msg.join("");
+const encrypt = (text) => {
+  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+
+  const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
+
+  return {
+    iv: iv.toString("hex"),
+    content: encrypted.toString("hex"),
+  };
 };
 
-module.exports = { createCypher, decypher };
+const decrypt = (hash) => {
+  const decipher = crypto.createDecipheriv(
+    algorithm,
+    secretKey,
+    Buffer.from(hash.iv, "hex")
+  );
+
+  const decrpyted = Buffer.concat([
+    decipher.update(Buffer.from(hash.content, "hex")),
+    decipher.final(),
+  ]);
+
+  return decrpyted.toString();
+};
+
+module.exports = {
+  encrypt,
+  decrypt,
+};

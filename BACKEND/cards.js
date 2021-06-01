@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const express = require("express");
-const { createCypher, decypher } = require("./hash");
+const { decrypt } = require("./hash");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 
 const router = express.Router();
-
 const cardsSchema = new mongoose.Schema(
   {
     name: {
@@ -13,15 +12,15 @@ const cardsSchema = new mongoose.Schema(
       required: true,
     },
     number: {
-      type: String,
+      type: Object,
       required: true,
     },
     cvv: {
-      type: String,
+      type: Object,
       required: true,
     },
     moe: {
-      type: String,
+      type: Object,
       required: true,
     },
     bankname: {
@@ -29,7 +28,7 @@ const cardsSchema = new mongoose.Schema(
       required: true,
     },
     password: {
-      type: String,
+      type: Object,
       required: true,
     },
     notes: {
@@ -45,11 +44,11 @@ const cardsSchema = new mongoose.Schema(
 const model = mongoose.model("cards schema", cardsSchema);
 router.post("/cards", async (req, res) => {
   let { name, number, cvv, moe, bankname, password, notes } = req.body;
-  //   const hash = createCypher(password);
-  //   console.log(hash);
-  //   const pass = decypher(hash);
-  //   console.log(pass);
-  //   moe = "LOL";
+  number = encrypt(number);
+  cvv = encrypt(cvv);
+  moe = encrypt(moe);
+  password = encrypt(password);
+
   try {
     const response = await model.create({
       name,
@@ -73,13 +72,13 @@ router.get("/cards", async (req, res) => {
   if (token) {
     const verification = jwt.verify(token, secret);
     if (verification) {
-      const Cards = await model.find({});
-      //   Cards.map((c) => {
-      //     console.log(c.password);
-      //     const passwordhere = c.password;
-      //     const test = decypher(passwordhere);
-      //     console.log(test);
-      //   });
+      let Cards = await model.find({});
+      Cards.map((card) => {
+        card.number = decrypt(card.number);
+        card.cvv = decrypt(card.cvv);
+        card.password = decrypt(card.password);
+        card.moe = decrypt(card.moe);
+      });
       res.status(200).json(Cards);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
@@ -89,7 +88,11 @@ router.get("/cards", async (req, res) => {
   }
 });
 router.put("/cards/:id", (req, res) => {
-  const { name, number, cvv, moe, bankname, password, notes } = req.body;
+  let { name, number, cvv, moe, bankname, password, notes } = req.body;
+  number = encrypt(number);
+  cvv = encrypt(cvv);
+  moe = encrypt(moe);
+  password = encrypt(password);
   model.findByIdAndUpdate(
     { _id: req.params.id },
     {

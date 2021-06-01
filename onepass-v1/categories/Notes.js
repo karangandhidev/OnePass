@@ -17,7 +17,6 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Notes({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState([]);
@@ -30,22 +29,21 @@ export default function Notes({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.9:3000/notes", { headers: { Auth: token } })
+        .get("http://127.0.0.1:3000/notes", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
+          console.log(res.data);
         });
     };
     getData();
   }, [setData]);
-
-  useEffect(() => {
-    setFilter(
-      data.filter((obj) =>
-        obj.topic.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search, data, setFilter]);
-
+  // useEffect(() => {
+  //   setFilter(
+  //     data.filter((obj) =>
+  //       obj.topic.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   );
+  // }, [search, data, setFilter]);
   const onPressHandler = (key) => (event) => {
     navigation.navigate("viewNotes", { key });
   };
@@ -124,7 +122,7 @@ export default function Notes({ navigation }) {
             {data.length > 0 ? (
               filter.map(render)
             ) : (
-              <Text style={styles.carddata}>No data available</Text>
+              <Text style={styles.datacardtext}>No data available</Text>
             )}
           </View>
         </ScrollView>

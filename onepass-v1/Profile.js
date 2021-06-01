@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Button,
+  Linking,
 } from "react-native";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
@@ -20,8 +21,22 @@ function Profile({ navigation }) {
   const [aboutus, setAboutus] = useState(false);
   const dispatch = useDispatch();
   const prefs = useSelector((state) => state.preference.preference);
+  
+  
+  
+  const masterdelete =()=>{
+    axios.post("http://127.0.0.1:3000/masterdelete",{password:"some pass"}).then(()=>{
+      navigation.navigate("Register")
+    }).catch(e=>console.log(e))
+  }
+  
+  
+  
+  
+  
+  
   const logout = () => {
-    axios.post("http://10.0.0.9:3000/preference", prefs);
+    axios.post("http://127.0.0.1:3000/preference", prefs);
     navigation.navigate("Login");
   };
   const showSettings = () => {
@@ -61,10 +76,22 @@ function Profile({ navigation }) {
         </TouchableOpacity>
         {aboutus && (
           <>
-            <TouchableOpacity style={styles.profilesubmenutouch}>
+            <TouchableOpacity
+              style={styles.profilesubmenutouch}
+              onPress={() => {
+                Linking.openURL(
+                  "https://www.linkedin.com/in/samarth-aher-sa09/"
+                );
+              }}
+            >
               <Text style={styles.profilesubmenu}>Samarth Aher</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.profilesubmenutouch}>
+            <TouchableOpacity
+              style={styles.profilesubmenutouch}
+              onPress={() => {
+                Linking.openURL("https://www.linkedin.com/in/karangandhi97");
+              }}
+            >
               <Text style={styles.profilesubmenu}>Karan Gandhi</Text>
             </TouchableOpacity>
           </>
@@ -72,7 +99,7 @@ function Profile({ navigation }) {
         <TouchableOpacity onPress={logout} style={styles.profilecard}>
           <Text style={styles.profilecardtext}>Logout</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={logout} style={styles.profilecard}>
+        <TouchableOpacity onPress={masterdelete} style={styles.profilecard}>
           <Text style={styles.profilecardtext}>Delete Account</Text>
         </TouchableOpacity>
       </ScrollView>
