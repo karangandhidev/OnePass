@@ -158,6 +158,7 @@ export function Homepage({ navigation }) {
     axios
       .get("http://10.0.0.4:3000/preference")
       .then((res) => {
+        console.log(res.data);
         dispatch({ type: "GETPREFERENCE", data: res.data });
       })
       .catch((e) => console.log(e));
