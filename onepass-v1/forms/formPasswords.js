@@ -41,6 +41,7 @@ export default function Password({ navigation }) {
         exclude: preference.exclusion,
       })
       .then((res) => {
+        console.log(res.data);
         setPassword(res.data);
         setInput((state) => {
           return {
@@ -109,7 +110,7 @@ export default function Password({ navigation }) {
               placeholderTextColor="#000000"
             />
 
-            <Text style={styles.fieldname}>{"\n"}URl</Text>
+            <Text style={styles.fieldname}>{"\n"}URL</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
@@ -139,6 +140,7 @@ export default function Password({ navigation }) {
 
             <Text style={styles.fieldname}>{"\n"}Password</Text>
             <TextInput
+              key={password}
               style={styles.fieldinput}
               defaultValue={password}
               onChangeText={(text) =>

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const express = require("express");
-const { decrypt } = require("./hash");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
+const { encrypt, decrypt } = require("./hash");
 
 const router = express.Router();
 const cardsSchema = new mongoose.Schema(

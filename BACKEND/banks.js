@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const express = require("express");
-const { encrypt } = require("./hash");
+const { encrypt, decrypt } = require("./hash");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 
 const router = express.Router();
@@ -38,7 +38,7 @@ const BankSchema = mongoose.Schema(
 );
 
 const bank = mongoose.model("Bank Schema", BankSchema);
-router.post("/bank", async (req, res) => {
+router.post("/banks", async (req, res) => {
   let { bank_name, acc_no, ifsc, branch, telephone, note } = req.body;
   acc_no = encrypt(acc_no);
   ifsc = encrypt(ifsc);
@@ -61,7 +61,7 @@ router.post("/bank", async (req, res) => {
     });
   }
 });
-router.get("/bank", async (req, res) => {
+router.get("/bankview", async (req, res) => {
   const token = req.header("Auth");
   if (token) {
     const verification = jwt.verify(token, secret);

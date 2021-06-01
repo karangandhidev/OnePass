@@ -36,8 +36,8 @@ router.post("/notes", async (req, res) => {
   }
 });
 
-router.get("/notes", async (req, res) => {
-  const token = req.header("Authorization");
+router.get("/notesview", async (req, res) => {
+  const token = req.header("Auth");
   if (token) {
     const verification = jwt.verify(token, secret);
     if (verification) {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const express = require("express");
-const { encrypt } = require("./hash");
+const { encrypt, decrypt } = require("./hash");
 const secret = "afhakjfgakfg&*%^$%^afasdk";
 
 const router = express.Router();
@@ -42,12 +42,11 @@ const SocialSchema = mongoose.Schema(
 );
 
 const model = mongoose.model("Social Schema", SocialSchema);
-router.post("/socials", async (req, res) => {
+router.post("/passwords", async (req, res) => {
   let { name, category, url, username, email, password, note } = req.body;
   username = encrypt(username);
   email = encrypt(email);
   password = encrypt(password);
-
   try {
     const response = await model.create({
       name,
@@ -67,7 +66,7 @@ router.post("/socials", async (req, res) => {
   }
 });
 
-router.get("/passwords", async (req, res) => {
+router.get("/socials", async (req, res) => {
   const token = req.header("Auth");
   if (token) {
     const verification = jwt.verify(token, secret);

@@ -38,6 +38,7 @@ export default function Password({ navigation }) {
     getData();
   }, [setData]);
   useEffect(() => {
+    
     setFilter(
       data.filter((obj) =>
         obj.name.toLowerCase().includes(search.toLowerCase())

@@ -17,6 +17,7 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Notes({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
+
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState([]);
@@ -28,16 +29,15 @@ export default function Notes({ navigation }) {
   useEffect(() => {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
-      console.log(token);
       await axios
-        .get("http://10.0.0.4:3000/notes", { headers: { Auth: token } })
+        .get("http://10.0.0.4:3000/notesview", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
-          console.log(res.data);
         });
     };
     getData();
   }, [setData]);
+
   useEffect(() => {
     setFilter(
       data.filter((obj) =>
@@ -45,6 +45,7 @@ export default function Notes({ navigation }) {
       )
     );
   }, [search, data, setFilter]);
+
   const onPressHandler = (key) => (event) => {
     navigation.navigate("viewNotes", { key });
   };
