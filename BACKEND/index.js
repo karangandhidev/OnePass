@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const {decrypt} = require('./hash')
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const user = require("./users");
@@ -48,13 +49,29 @@ app.get("/alldata", async (req, res) => {
     const verification = jwt.verify(token, secret);
     if (verification) {
       const Address = await address.model.find({});
-      const Bank = await bank.bank.find({});
-      const Cards = await cards.model.find({});
-      const Passwords = await passwords.model.find({});
+      let Bank = await bank.bank.find({});
+      let Cards = await cards.model.find({});
+      let Passwords = await passwords.model.find({});
       const Notes = await notes.notes.find({});
-
+           Bank.map((bank) => {
+             bank.telephone = decrypt(bank.telephone);
+             bank.ifsc = decrypt(bank.ifsc);
+             bank.acc_no = decrypt(bank.acc_no);
+           });
+           Cards.map((card) => {
+             card.number = decrypt(card.number);
+             card.cvv = decrypt(card.cvv);
+             card.password = decrypt(card.password);
+             card.moe = decrypt(card.moe);
+           });
+            Passwords.map((pass) => {
+              pass.username = decrypt(pass.username);
+              pass.email = decrypt(pass.email);
+              pass.password = decrypt(pass.password);
+            });
       const data = [Address, Bank, Cards, Passwords, Notes];
       const merged = [].concat.apply([], data);
+      console.log(merged)
       res.status(200).json(merged);
     } else {
       res.status(200).json({ message: "User Unauthorized" });

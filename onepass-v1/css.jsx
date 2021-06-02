@@ -27,7 +27,8 @@ export const css = {
     flex: 1,
     backgroundColor: "#1E2022",
     alignItems: "center",
-    height: deviceWindow.height * 2,
+    width: deviceWindow.width,
+    // position: "absolute",
   },
   container: {
     // flex: 1,

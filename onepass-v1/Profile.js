@@ -44,6 +44,9 @@ function Profile({ navigation }) {
   const preference = () => {
     navigation.navigate("ChangePassword");
   };
+  const tfa = () => {
+    navigation.navigate("Changetfa");
+  };
   return (
     <View style={styles.background}>
       <View style={styles.header2}>
@@ -64,6 +67,9 @@ function Profile({ navigation }) {
               onPress={preference}
             >
               <Text style={styles.profilesubmenu}>Change Credentials</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.profilesubmenutouch} onPress={tfa}>
+              <Text style={styles.profilesubmenu}>Change 2FA</Text>
             </TouchableOpacity>
           </>
         )}

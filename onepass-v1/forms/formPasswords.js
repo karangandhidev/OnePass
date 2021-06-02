@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   View,
+  Clipboard,
   TouchableOpacity,
 } from "react-native";
 import { useFonts } from "expo-font";
@@ -137,8 +138,19 @@ export default function Password({ navigation }) {
               placeholder="Email"
               placeholderTextColor="#000000"
             />
-
-            <Text style={styles.fieldname}>{"\n"}Password</Text>
+            <View style={styles.generateinform}>
+            <Text style={styles.generatename}>{"\n"}Password</Text>
+            <Text>
+                {"\n"}
+                {"\n"}
+                <Icons
+                  onPress={genPass}
+                  name={"autorenew"}
+                  size={30}
+                  color="#000000"
+                />
+              </Text>
+            </View>
             <TextInput
               key={password}
               style={styles.fieldinput}
@@ -149,9 +161,6 @@ export default function Password({ navigation }) {
               placeholder="Password"
               placeholderTextColor="#000000"
             />
-            <TouchableOpacity onPress={genPass}>
-              <Text>Submit</Text>
-            </TouchableOpacity>
 
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput

@@ -12,7 +12,7 @@ import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-native-root-modal";
 import { newcss } from "../newcss";
 import { fonts } from "../fonts";
@@ -35,6 +35,7 @@ import Cardsview from "../view data/viewCards";
 import Bankview from "../view data/viewBank";
 import Notesview from "../view data/viewNotes";
 import ChangePassword from "../ChangePassword";
+// import Changetfa from "../Changetfa";
 export default createStackNavigator({
   Homepage: {
     screen: Homepage,
@@ -146,6 +147,12 @@ export default createStackNavigator({
       headerShown: false,
     },
   },
+  // Changetfa: {
+  //   screen: Changetfa,
+  //   navigationOptions: {
+  //     headerShown: false,
+  //   },
+  // },
 });
 
 export function Homepage({ navigation }) {
@@ -154,6 +161,7 @@ export function Homepage({ navigation }) {
   const styles = StyleSheet.create(newcss);
   const [visible, setVisible] = useState(false);
 
+  const jwt = useSelector((state) => state.reducer.user);
   useEffect(() => {
     axios
       .get("http://10.0.0.4:3000/preference")

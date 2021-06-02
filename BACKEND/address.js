@@ -36,7 +36,7 @@ const addressSchema = new mongoose.Schema(
       required: true,
     },
     pincode: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

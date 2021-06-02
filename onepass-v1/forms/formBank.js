@@ -40,7 +40,7 @@ export default function Bank({ navigation }) {
           "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
         },
       })
-      .then(navigation.navigate("Homepage"));
+      .then(navigation.navigate("BankDetails"));
   };
   if (!isLoaded) {
     return <AppLoading />;

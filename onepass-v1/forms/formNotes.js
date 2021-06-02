@@ -39,7 +39,7 @@ export default function Notes({ navigation }) {
           "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
         },
       })
-      .then(navigation.navigate("Homepage"));
+      .then(navigation.navigate("Notes"));
   };
   if (!isLoaded) {
     return <AppLoading />;

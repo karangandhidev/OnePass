@@ -539,4 +539,16 @@ export const newcss = {
     backgroundColor: "green",
     justifyContent: "center",
   },
+  generateinform: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: deviceWindow.width * 0.9,
+    marginLeft: deviceWindow.width * 0.045,
+  },
+  generatename: { fontFamily: "RobotoCondensed-Light", fontSize: 28 },
+  generatebutton: {
+    fontFamily: "RobotoCondensed-Light",
+    fontSize: 28,
+  },
 };

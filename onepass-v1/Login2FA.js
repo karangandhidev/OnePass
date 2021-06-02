@@ -21,11 +21,10 @@ export default function Login2FA({ navigation }) {
   const [input, setInput] = useState("");
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
-  const [data] = useState(navigation.state.params.data);
   const [display, setDisplay] = useState(null);
   const [questions, setQuestions] = useState([]);
   const creds = useSelector((state) => state.reducer.creds);
-  console.log(data);
+
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
@@ -44,7 +43,7 @@ export default function Login2FA({ navigation }) {
     console.log(questions.length);
     setDisplay(questions[index]);
   }, [questions, setDisplay]);
-  console.log(display);
+
   const login = (e) => {
     e.preventDefault();
     if (input !== "") {
@@ -65,7 +64,6 @@ export default function Login2FA({ navigation }) {
           }
         )
         .then((res) => {
-          dispatch({ type: "LOGIN", data: data.data });
           setInput("");
           navigation.navigate("Bottomnavbar");
         })
@@ -90,7 +88,9 @@ export default function Login2FA({ navigation }) {
             {"\n"}
             {"\n"}
           </Text>
-          <Text style={styles.bodytext}>{display ? display.question : ""}</Text>
+          <Text style={styles.bodytext}>
+            {display ? display.question : ""}?
+          </Text>
           <View style={styles.form}>
             <Text style={styles.bodytext}>{"\n"}Answer</Text>
             <TextInput
@@ -119,7 +119,7 @@ export default function Login2FA({ navigation }) {
               navigation.goBack();
             }}
           >
-            <Text style={styles.loginbuttontext}>ICON HERE{"\n"}</Text>
+            <Text style={styles.loginbuttontext}>BACK ICON HERE{"\n"}</Text>
           </TouchableOpacity>
           <StatusBar style="auto" />
         </View>

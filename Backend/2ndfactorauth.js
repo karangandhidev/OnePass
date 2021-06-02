@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { decrypt, encrypt } = require("./hash");
 const router = require("express").Router();
-
+const user = require("./users").model;
 const questionSchema = mongoose.Schema(
   {
     question: {
@@ -20,12 +20,12 @@ const model = mongoose.model("questions", questionSchema);
 
 router.get("/questions", async (req, res) => {
   let questions = await model.find({});
-  let data  =[]
   questions.map((q) => {
     q.question = decrypt(q.question);
-    data.push({_id:q.id,question:q.question})
+    q.answer =decrypt(q.answer)
   });
-  return res.status(200).json(data);
+  console.log(questions)
+  return res.status(200).json(questions);
 });
 
 router.post("/questions", (req, res) => {
@@ -50,6 +50,27 @@ router.post("/2ndauth", async (req, res) => {
     res.status(200).json({ message: "Correct Answer" });
   } else {
     res.status(401).json({ message: "Wrong Answer" });
+  }
+});
+
+router.put("/questions", async (req, res) => {
+  let { _id,password, question, answer } = req.body;
+  const User = await user.find({});
+  const ogpass = decrypt(User.password);
+  if (password === ogpass) {
+    question = encrypt(question)
+    answer = encrypt(question)
+    model.findByIdAndUpdate(
+      { _id: _id },
+      { $set: {question:question, answer:answer } },
+      { new: true, useFindAndModify: false },
+      (err, data) => {
+        res.send("updated");
+        res.end();
+      }
+    );
+  }else{
+    res.status(401).json({message:"User UnAuthorized"})
   }
 });
 

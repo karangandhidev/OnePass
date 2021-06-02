@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { fonts } from "./fonts";
@@ -68,7 +70,7 @@ export default function Register({ navigation }) {
               password: input.password,
               hint: input.hint,
             };
-            console.log(data.username);
+          
             // axios
             //   .post("http://10.0.0.4:3000/register", data, {
             //     headers: {
@@ -123,94 +125,100 @@ export default function Register({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.logincontainer}>
-        <Text style={styles.header}>{"\n"}One-Pass</Text>
-        <Text style={styles.bodytext}>
-          Keep your credentials to yourself!{"\n"}
-          {"\n"}
-        </Text>
-        <View style={styles.form}>
-          <Text style={styles.bodytext}>{"\n"}Name</Text>
-          <TextInput
-            style={[styles.inputbox, { width: 300 }]}
-            onChangeText={(text) => handleInput({ value: text, name: "name" })}
-            placeholder="Enter Name"
-            placeholderTextColor="#F0F5F9"
-          />
-          <Text style={styles.bodytext}>{"\n"}Set Password</Text>
-          <TextInput
-            style={[
-              {
-                width: 300,
-                fontFamily: "RobotoCondensed-Light",
-                borderColor: "#F0F5F9",
-                borderWidth: 1,
-                alignItems: "center",
-                // outline:'none',
-                borderRadius: 7,
-                textAlign: "center",
-                height: 40,
-                color: "#F0F5F9",
-              },
-            ]}
-            onChangeText={(text) =>
-              handleInput({ value: text, name: "password" })
-            }
-            placeholder="Enter Password"
-            secureTextEntry={true}
-            placeholderTextColor="#F0F5F9"
-          />
-          <View style={{ borderRadius: 7, width: 300 }}>
-            <PassMeter
-              showLabels
-              password={input.password}
-              maxLength={MAX_LEN}
-              minLength={MIN_LEN}
-              labels={PASS_LABELS}
+      <ScrollView style={{ height: "100%" }}>
+        <View style={styles.logincontainer}>
+          <Text style={styles.header}>{"\n"}One-Pass</Text>
+          <Text style={styles.bodytext}>
+            Keep your credentials to yourself!{"\n"}
+            {"\n"}
+          </Text>
+          <View style={styles.form}>
+            <Text style={styles.bodytext}>{"\n"}Name</Text>
+            <TextInput
+              style={[styles.inputbox, { width: 300 }]}
+              onChangeText={(text) =>
+                handleInput({ value: text, name: "name" })
+              }
+              placeholder="Enter Name"
+              placeholderTextColor="#F0F5F9"
+            />
+            <Text style={styles.bodytext}>{"\n"}Set Password</Text>
+            <TextInput
+              style={[
+                {
+                  width: 300,
+                  fontFamily: "RobotoCondensed-Light",
+                  borderColor: "#F0F5F9",
+                  borderWidth: 1,
+                  alignItems: "center",
+                  // outline:'none',
+                  borderRadius: 7,
+                  textAlign: "center",
+                  height: 40,
+                  color: "#F0F5F9",
+                },
+              ]}
+              onChangeText={(text) =>
+                handleInput({ value: text, name: "password" })
+              }
+              placeholder="Enter Password"
+              secureTextEntry={true}
+              placeholderTextColor="#F0F5F9"
+            />
+            <View style={{ borderRadius: 7, width: 300 }}>
+              <PassMeter
+                showLabels
+                password={input.password}
+                maxLength={MAX_LEN}
+                minLength={MIN_LEN}
+                labels={PASS_LABELS}
+              />
+            </View>
+            <Text style={styles.bodytext}>{"\n"}Confirm Password</Text>
+            <TextInput
+              style={styles.loginpass}
+              onChangeText={(text) =>
+                handleInput({ value: text, name: "confirm_password" })
+              }
+              placeholder="Confirm Password"
+              secureTextEntry={true}
+              placeholderTextColor="#F0F5F9"
+            />
+            <Text style={styles.bodytext}>{"\n"}Password Hint</Text>
+            <TextInput
+              style={[styles.inputbox, { width: 300 }]}
+              onChangeText={(text) =>
+                handleInput({ value: text, name: "hint" })
+              }
+              placeholder="Hint to remember"
+              placeholderTextColor="#F0F5F9"
             />
           </View>
-          <Text style={styles.bodytext}>{"\n"}Confirm Password</Text>
-          <TextInput
-            style={styles.loginpass}
-            onChangeText={(text) =>
-              handleInput({ value: text, name: "confirm_password" })
-            }
-            placeholder="Confirm Password"
-            secureTextEntry={true}
-            placeholderTextColor="#F0F5F9"
-          />
-          <Text style={styles.bodytext}>{"\n"}Password Hint</Text>
-          <TextInput
-            style={[styles.inputbox, { width: 300 }]}
-            onChangeText={(text) => handleInput({ value: text, name: "hint" })}
-            placeholder="Hint to remember"
-            placeholderTextColor="#F0F5F9"
-          />
-        </View>
-        <Text>
-          {"\n"}
-          {"\n"}
-        </Text>
-        {/* <Button onPress = {register}></Button> */}
-        <TouchableOpacity style={styles.button} onPress={combined}>
-          <Text style={styles.loginbuttontext}>Register</Text>
-        </TouchableOpacity>
-        <Text style={styles.bodytext}>
-          {"\n"}
-          {"\n"}
-          {"\n"}Already Registered? Login{"\n"}
-        </Text>
+          <Text>
+            {"\n"}
+            {"\n"}
+          </Text>
+          {/* <Button onPress = {register}></Button> */}
+          <TouchableOpacity style={styles.button} onPress={combined}>
+            <Text style={styles.loginbuttontext}>Register</Text>
+          </TouchableOpacity>
+          <Text style={styles.bodytext}>
+            {"\n"}
+            {"\n"}
+            {"\n"}Already Registered? Login{"\n"}
+          </Text>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("Login");
-          }}
-        >
-          <Text style={styles.loginbuttontext}>Login</Text>
-        </TouchableOpacity>
-        <StatusBar style="auto" />
-      </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          >
+            <Text style={styles.loginbuttontext}>Login</Text>
+          </TouchableOpacity>
+          <StatusBar style="auto" />
+        </View>
+      </ScrollView>
     );
   }
 }

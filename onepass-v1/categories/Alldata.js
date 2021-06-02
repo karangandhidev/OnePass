@@ -55,7 +55,10 @@ export default function Alldata({ navigation }) {
           return obj.topic.toLowerCase().includes(search.toLowerCase());
         }
         if (obj.username) {
-          return obj.username.toLowerCase().includes(search.toLowerCase());
+          return (
+            obj.username.toLowerCase().includes(search.toLowerCase()) ||
+            obj.name.toLowerCase().includes(search.toLowerCase())
+          );
         }
         if (obj.moe) {
           return (
@@ -203,9 +206,6 @@ export default function Alldata({ navigation }) {
             ) : (
               <Text style={styles.datacardtext}>No data available</Text>
             )}
-
-            {/* {merged.map(render)} */}
-            {/* :<Text style={styles.carddata}>No data available</Text>} */}
           </View>
         </ScrollView>
       </View>

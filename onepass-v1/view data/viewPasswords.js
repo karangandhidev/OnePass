@@ -5,6 +5,8 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Clipboard,
+  Linking,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { Component, useState, useEffect } from "react";
@@ -56,6 +58,9 @@ export default function Password({ navigation }) {
       });
   };
   console.log(data.password);
+  const copy = (karan) => {
+    Clipboard.setString(karan);
+  };
   const del = () => {
     axios
       .delete(
@@ -197,8 +202,21 @@ export default function Password({ navigation }) {
               editable={editable}
               placeholderTextColor="#000000"
             />
-
-            <Text style={styles.fieldname}>{"\n"}URL</Text>
+            <View style={styles.generateinform}>
+              <Text style={styles.fieldname}>{"\n"}URL</Text>
+              <Text>
+                {"\n"}
+                {"\n"}
+                <Icons
+                  onPress={() => {
+                    Linking.openURL(data.url);
+                  }}
+                  name={"autorenew"}
+                  size={30}
+                  color="#000000"
+                />
+              </Text>
+            </View>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
@@ -207,7 +225,6 @@ export default function Password({ navigation }) {
               editable={editable}
               placeholderTextColor="#000000"
             />
-
             <Text style={styles.fieldname}>{"\n"}User Name</Text>
             <TextInput
               style={styles.fieldinput}
@@ -232,7 +249,32 @@ export default function Password({ navigation }) {
               placeholderTextColor="#000000"
             />
 
-            <Text style={styles.fieldname}>{"\n"}Password</Text>
+            <View style={styles.generateinform}>
+              <Text style={styles.generatename}>{"\n"}Password</Text>
+              <Text>
+                {"\n"}
+                {"\n"}
+                <Icons
+                  onPress={() => {
+                    copy(password);
+                  }}
+                  name={"content-copy"}
+                  size={30}
+                  color="#000000"
+                />
+                {editable ? (
+                  <>
+                    {" "}
+                    <Icons
+                      onPress={genPass}
+                      name={"autorenew"}
+                      size={30}
+                      color="#000000"
+                    />
+                  </>
+                ) : null}
+              </Text>
+            </View>
             <TextInput
               key={password}
               style={styles.fieldinput}
@@ -244,14 +286,6 @@ export default function Password({ navigation }) {
               placeholder="Password"
               placeholderTextColor="#000000"
             />
-            {editable ? (
-              <>
-                <TouchableOpacity onPress={genPass}>
-                  <Text>Generate Password</Text>
-                </TouchableOpacity>
-              </>
-            ) : null}
-
             <Text style={styles.fieldname}>{"\n"}Note</Text>
             <TextInput
               style={styles.fieldinput}

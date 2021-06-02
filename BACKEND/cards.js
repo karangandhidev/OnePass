@@ -79,6 +79,7 @@ router.get("/cards", async (req, res) => {
         card.password = decrypt(card.password);
         card.moe = decrypt(card.moe);
       });
+      
       res.status(200).json(Cards);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
