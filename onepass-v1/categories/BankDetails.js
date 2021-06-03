@@ -29,7 +29,7 @@ export default function BankDetails({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.4:3000/bankview", { headers: { Auth: token } })
+        .get("http://10.0.0.7:3000/bankview", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });

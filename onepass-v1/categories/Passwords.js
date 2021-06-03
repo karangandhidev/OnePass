@@ -30,7 +30,7 @@ export default function Password({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.4:3000/socials", { headers: { Auth: token } })
+        .get("http://10.0.0.7:3000/socials", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });
@@ -38,7 +38,6 @@ export default function Password({ navigation }) {
     getData();
   }, [setData]);
   useEffect(() => {
-    
     setFilter(
       data.filter((obj) =>
         obj.name.toLowerCase().includes(search.toLowerCase())

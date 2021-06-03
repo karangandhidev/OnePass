@@ -29,7 +29,7 @@ export default function Login2FA({ navigation }) {
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      await axios.get("http://10.0.0.4:3000/questions").then((res) => {
+      await axios.get("http://10.0.0.7:3000/questions").then((res) => {
         setQuestions(res.data);
       });
     };
@@ -49,7 +49,7 @@ export default function Login2FA({ navigation }) {
     if (input !== "") {
       axios
         .post(
-          "http://10.0.0.4:3000/2ndauth",
+          "http://10.0.0.7:3000/2ndauth",
           {
             id: display._id,
             answer: input,

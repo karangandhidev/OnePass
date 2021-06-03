@@ -23,7 +23,7 @@ export default function Changetfa({ navigation }) {
 
   useEffect(() => {
     axios
-      .get("http://10.0.0.4:3000/questions")
+      .get("http://10.0.0.7:3000/questions")
       .then((res) => {
         setInput(res.data);
       })
@@ -32,7 +32,7 @@ export default function Changetfa({ navigation }) {
 
   const changeQuestions = () => {
     input.map((i) => {
-      axios.put("http://10.0.0.4:3000/questions", i).then(() => {
+      axios.put("http://10.0.0.7:3000/questions", i).then(() => {
         console.log(i);
       });
       navigation.navigate("Login");

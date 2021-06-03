@@ -30,7 +30,7 @@ export default function Notes({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.4:3000/notesview", { headers: { Auth: token } })
+        .get("http://10.0.0.7:3000/notesview", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });

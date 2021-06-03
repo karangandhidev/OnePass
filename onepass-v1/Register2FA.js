@@ -59,33 +59,32 @@ export default function Register2FA({ navigation }) {
   };
   const register = () => {
     if (formValidation()) {
-       axios
-         .post("http://10.0.0.4:3000/register", data, {
-           headers: {
-             "Access-Control-Allow-Headers":
-               "Access-Control-Allow-Headers, Authorization",
-             "Access-Control-Allow-Origin": "*",
-             "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
-           },
-         })
-         .then(() => {
-           dispatch({
-             type: "GET_DATA",
-             data: { username: data.username, hint: data.hint },
-           });
-           navigation.navigate("Login", {
-             username: data.username,
-             hint: data.hint,
-             flag: true,
-           });
-         })
-         .catch((er) => {
-           alert(er);
-         });
+      axios
+        .post("http://10.0.0.7:3000/register", data, {
+          headers: {
+            "Access-Control-Allow-Headers":
+              "Access-Control-Allow-Headers, Authorization",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+          },
+        })
+        .then(() => {
+          dispatch({
+            type: "GET_DATA",
+            data: { username: data.username, hint: data.hint },
+          });
+          navigation.navigate("Login", {
+            username: data.username,
+            hint: data.hint,
+            flag: true,
+          });
+        })
+        .catch((er) => {
+          alert(er);
+        });
       input.map((inp) => {
-        axios.post("http://10.0.0.4:3000/questions", inp).then(() => {});
+        axios.post("http://10.0.0.7:3000/questions", inp).then(() => {});
       });
-     
     } else {
       alert("Please fill all questions");
     }

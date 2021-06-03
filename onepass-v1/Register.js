@@ -70,9 +70,9 @@ export default function Register({ navigation }) {
               password: input.password,
               hint: input.hint,
             };
-          
+
             // axios
-            //   .post("http://10.0.0.4:3000/register", data, {
+            //   .post("http://10.0.0.7:3000/register", data, {
             //     headers: {
             //       "Access-Control-Allow-Headers":
             //         "Access-Control-Allow-Headers, Authorization",

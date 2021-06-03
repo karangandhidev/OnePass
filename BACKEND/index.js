@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const {decrypt} = require('./hash')
+const { decrypt } = require("./hash");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const user = require("./users");
@@ -18,7 +18,7 @@ const app = express();
 const secondfactor = require("./2ndfactorauth");
 const port = process.env.port || 3000;
 var corsoption = {
-  origin: ["http://10.0.0.4:19006", "http://localhost:19006"],
+  origin: ["http://10.0.0.7:19006", "http://localhost:19006"],
 };
 
 app.use(express.static(path.join(__dirname, "static")));
@@ -53,25 +53,25 @@ app.get("/alldata", async (req, res) => {
       let Cards = await cards.model.find({});
       let Passwords = await passwords.model.find({});
       const Notes = await notes.notes.find({});
-           Bank.map((bank) => {
-             bank.telephone = decrypt(bank.telephone);
-             bank.ifsc = decrypt(bank.ifsc);
-             bank.acc_no = decrypt(bank.acc_no);
-           });
-           Cards.map((card) => {
-             card.number = decrypt(card.number);
-             card.cvv = decrypt(card.cvv);
-             card.password = decrypt(card.password);
-             card.moe = decrypt(card.moe);
-           });
-            Passwords.map((pass) => {
-              pass.username = decrypt(pass.username);
-              pass.email = decrypt(pass.email);
-              pass.password = decrypt(pass.password);
-            });
+      Bank.map((bank) => {
+        bank.telephone = decrypt(bank.telephone);
+        bank.ifsc = decrypt(bank.ifsc);
+        bank.acc_no = decrypt(bank.acc_no);
+      });
+      Cards.map((card) => {
+        card.number = decrypt(card.number);
+        card.cvv = decrypt(card.cvv);
+        card.password = decrypt(card.password);
+        card.moe = decrypt(card.moe);
+      });
+      Passwords.map((pass) => {
+        pass.username = decrypt(pass.username);
+        pass.email = decrypt(pass.email);
+        pass.password = decrypt(pass.password);
+      });
       const data = [Address, Bank, Cards, Passwords, Notes];
       const merged = [].concat.apply([], data);
-      console.log(merged)
+      console.log(merged);
       res.status(200).json(merged);
     } else {
       res.status(200).json({ message: "User Unauthorized" });
