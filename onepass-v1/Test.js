@@ -6,9 +6,12 @@ import { newcss } from "./newcss";
 import { StyleSheet, TouchableOpacity, Button, View, Text } from "react-native";
 import Bottomnavbar from "./Bottomnavbar";
 import { fonts } from "./fonts";
+import Icons from "react-native-vector-icons/MaterialIcons";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { Dimensions } from "react-native";
 export default function Test() {
+  const deviceWindow = Dimensions.get("window");
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
   if (!isLoaded) {
@@ -24,8 +27,42 @@ export default function Test() {
         </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
+            <TouchableOpacity
+              style={{
+                marginTop: 25,
+                alignItems: "center",
+                backgroundColor: "red",
+                flex: 1,
+                justifyContent: "space-between",
+                borderRadius: 15,
+                borderWidth: 0.75,
+                elevation: 10,
+                width: deviceWindow.width * 0.97,
+                height: deviceWindow.height * 0.08,
+                maxHeight: deviceWindow.height * 0.08,
+              }}
+            >
+              <Icons
+                name={"public"}
+                size={40}
+                color="#F0F5F9"
+                // style={{ flex: 1 }}
+              />
+              <Icons
+                name={"chevron-right"}
+                size={50}
+                color="#F0F5F9"
+                // style={{ flex: 1, marginLeft: 20 }}
+              />
+              <Icons
+                name={"chevron-right"}
+                size={50}
+                color="#F0F5F9"
+                // style={{ flex: 1, marginLeft: 20 }}
+              />
+            </TouchableOpacity>
             {/* <View style={styles.popupwindow}> */}
-            <View style={styles.popupbox}>
+            {/* <View style={styles.popupbox}>
               <View style={styles.popupboxtext}>
                 <Text style={styles.popuptitle}>Title</Text>
                 <Text style={styles.popupcontent}>Some text here</Text>
@@ -41,7 +78,7 @@ export default function Test() {
                   <Text style={styles.popupbuttoncontent}>Confirm</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>

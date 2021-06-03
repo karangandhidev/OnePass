@@ -28,7 +28,7 @@ export const css = {
     backgroundColor: "#1E2022",
     alignItems: "center",
     width: deviceWindow.width,
-    // position: "absolute",
+    height: deviceWindow.height,
   },
   container: {
     // flex: 1,
@@ -147,7 +147,7 @@ export const css = {
     fontSize: 25,
     height: "50%",
   },
-  header: {
+  loginheader: {
     marginTop: 30,
     color: "#F0F5F9",
     fontFamily: "RobotoCondensed-Light",

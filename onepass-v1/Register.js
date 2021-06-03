@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -6,7 +5,8 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Button,
+  KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -14,13 +14,20 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { fonts } from "./fonts";
 import axios from "react-native-axios";
-import { css } from "./css";
+import { newcss } from "./newcss";
 import { useDispatch, useSelector } from "react-redux";
 import PassMeter from "react-native-passmeter";
 // import { NavigationActions,StackActions } from '@react-navigation/native'
-
+import { Dimensions } from "react-native";
 export default function Register({ navigation }) {
   const dispatch = useDispatch();
+  const [isLoaded] = useFonts(fonts);
+  const deviceWindow = Dimensions.get("window");
+  const styles = StyleSheet.create(newcss);
+  const MAX_LEN = 22,
+    MIN_LEN = 8,
+    PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
+
   const [input, setInput] = useState({
     name: "",
     password: "",
@@ -28,7 +35,7 @@ export default function Register({ navigation }) {
     hint: "No Hint Available",
   });
 
-  const [color, setColor] = useState("#F0F5F9");
+  // const [color, setColor] = useState("#F0F5F9");
   const [message, setMessage] = useState({
     creds: "Please enter all the credentials",
     password: "Please enter a longer password",
@@ -70,31 +77,6 @@ export default function Register({ navigation }) {
               password: input.password,
               hint: input.hint,
             };
-
-            // axios
-            //   .post("http://10.0.0.7:3000/register", data, {
-            //     headers: {
-            //       "Access-Control-Allow-Headers":
-            //         "Access-Control-Allow-Headers, Authorization",
-            //       "Access-Control-Allow-Origin": "*",
-            //       "Access-Control-Allow-Methods":
-            //         "PUT, DELETE, POST, GET, OPTIONS",
-            //     },
-            //   })
-            //   .then(() => {
-            //     dispatch({
-            //       type: "GET_DATA",
-            //       data: { username: input.name, hint: input.hint },
-            //     });
-            //     navigation.navigate("Login", {
-            //       username: input.name,
-            //       hint: input.hint,
-            //       flag: true,
-            //     });
-            //   })
-            //   .catch((er) => {
-            //     alert(er);
-            //   });
             navigation.navigate("Register2FA", { data: data });
           } else {
             alert(message.badpass);
@@ -115,49 +97,35 @@ export default function Register({ navigation }) {
     register();
   };
 
-  const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(css);
-  const MAX_LEN = 22,
-    MIN_LEN = 8,
-    PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
-
   if (!isLoaded) {
     return <AppLoading />;
   } else {
     return (
-      <ScrollView style={{ height: "100%" }}>
-        <View style={styles.logincontainer}>
-          <Text style={styles.header}>{"\n"}One-Pass</Text>
-          <Text style={styles.bodytext}>
-            Keep your credentials to yourself!{"\n"}
-            {"\n"}
-          </Text>
-          <View style={styles.form}>
-            <Text style={styles.bodytext}>{"\n"}Name</Text>
+      <ScrollView style={styles.scroll}>
+        <KeyboardAvoidingView
+          style={styles.background}
+          behavior="padding"
+          keyboardVerticalOffset="20"
+        >
+          <StatusBar barStyle="light-content" backgroundColor="#000000" />
+
+          <View style={styles.background}>
+            <Text style={styles.loginheader}>One-Pass</Text>
+            <Text style={styles.slogan}>
+              Keep your credentials to yourself!
+            </Text>
+            <Text style={styles.bodytext}>Name</Text>
             <TextInput
-              style={[styles.inputbox, { width: 300 }]}
+              style={styles.passwordinputbox}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Enter Name"
               placeholderTextColor="#F0F5F9"
             />
-            <Text style={styles.bodytext}>{"\n"}Set Password</Text>
+            <Text style={styles.bodytext}>Set Password</Text>
             <TextInput
-              style={[
-                {
-                  width: 300,
-                  fontFamily: "RobotoCondensed-Light",
-                  borderColor: "#F0F5F9",
-                  borderWidth: 1,
-                  alignItems: "center",
-                  // outline:'none',
-                  borderRadius: 7,
-                  textAlign: "center",
-                  height: 40,
-                  color: "#F0F5F9",
-                },
-              ]}
+              style={styles.passwordinputbox}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "password" })
               }
@@ -165,7 +133,7 @@ export default function Register({ navigation }) {
               secureTextEntry={true}
               placeholderTextColor="#F0F5F9"
             />
-            <View style={{ borderRadius: 7, width: 300 }}>
+            <View style={styles.passmeter}>
               <PassMeter
                 showLabels
                 password={input.password}
@@ -174,9 +142,9 @@ export default function Register({ navigation }) {
                 labels={PASS_LABELS}
               />
             </View>
-            <Text style={styles.bodytext}>{"\n"}Confirm Password</Text>
+            <Text style={styles.bodytext}>Confirm Password</Text>
             <TextInput
-              style={styles.loginpass}
+              style={styles.passwordinputbox}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "confirm_password" })
               }
@@ -184,40 +152,39 @@ export default function Register({ navigation }) {
               secureTextEntry={true}
               placeholderTextColor="#F0F5F9"
             />
-            <Text style={styles.bodytext}>{"\n"}Password Hint</Text>
+            <Text style={styles.bodytext}>Password Hint</Text>
             <TextInput
-              style={[styles.inputbox, { width: 300 }]}
+              style={styles.passwordinputbox}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "hint" })
               }
               placeholder="Hint to remember"
               placeholderTextColor="#F0F5F9"
             />
-          </View>
-          <Text>
-            {"\n"}
-            {"\n"}
-          </Text>
-          {/* <Button onPress = {register}></Button> */}
-          <TouchableOpacity style={styles.button} onPress={combined}>
-            <Text style={styles.loginbuttontext}>Register</Text>
-          </TouchableOpacity>
-          <Text style={styles.bodytext}>
-            {"\n"}
-            {"\n"}
-            {"\n"}Already Registered? Login{"\n"}
-          </Text>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          >
-            <Text style={styles.loginbuttontext}>Login</Text>
-          </TouchableOpacity>
-          <StatusBar style="auto" />
-        </View>
+            {/* <Button onPress = {register}></Button> */}
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { marginTop: deviceWindow.height * 0.042 },
+              ]}
+              onPress={combined}
+            >
+              <Text style={styles.loginbuttontext}>Register</Text>
+            </TouchableOpacity>
+            <Text style={styles.slogan}>Already Registered? Login</Text>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
+            >
+              <Text style={styles.loginbuttontext}>Login</Text>
+            </TouchableOpacity>
+            <StatusBar style="auto" />
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     );
   }

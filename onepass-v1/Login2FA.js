@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -6,21 +5,22 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Switch,
-  DevSettings,
+  KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
-import { css } from "./css";
+import { newcss } from "./newcss";
 import { fonts } from "./fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
+import Icons from "react-native-vector-icons/MaterialIcons";
 
 export default function Login2FA({ navigation }) {
   const [input, setInput] = useState("");
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(css);
+  const styles = StyleSheet.create(newcss);
   const [display, setDisplay] = useState(null);
   const [questions, setQuestions] = useState([]);
   const creds = useSelector((state) => state.reducer.creds);
@@ -78,51 +78,46 @@ export default function Login2FA({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <ScrollView style={{ height: "100%" }}>
-        <View style={styles.logincontainer}>
-          <Text>
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-          </Text>
-          <Text style={styles.bodytext}>
-            {display ? display.question : ""}?
-          </Text>
-          <View style={styles.form}>
-            <Text style={styles.bodytext}>{"\n"}Answer</Text>
+      <ScrollView style={styles.scroll}>
+        <KeyboardAvoidingView
+          style={styles.background}
+          behavior="padding"
+          keyboardVerticalOffset="20"
+        >
+          <StatusBar barStyle="light-content" backgroundColor="#000000" />
+
+          <View style={styles.background}>
+            <Text style={styles.loginheader}>One-Pass</Text>
+            <Text style={styles.slogan}>
+              Keep your credentials to yourself!
+            </Text>
+            <Text style={styles.username}>
+              {display ? display.question : ""}?
+            </Text>
+
+            <Text style={styles.bodytext}>Answer</Text>
             <TextInput
-              style={[styles.inputbox, { width: 300 }]}
+              style={styles.passwordinputbox}
               onChangeText={(text) => setInput(text)}
               value={input}
             />
+            <Text style={styles.bodytext}>{"\n"} </Text>
+
+            <TouchableOpacity style={styles.button} onPress={(e) => login(e)}>
+              <Text style={styles.loginbuttontext}>Login</Text>
+            </TouchableOpacity>
+            <Text style={styles.bodytext}>{"\n"} </Text>
+            <Text style={styles.bodytext}>{"\n"} </Text>
+
+            <Icons
+              onPress={() => navigation.goBack()}
+              name={"arrow-back"}
+              size={50}
+              color="#F0F5F9"
+              style={{ color: "#F0F5F9" }}
+            />
           </View>
-          <Text style={styles.bodytext}>
-            {"\n"}
-            {"\n"}
-          </Text>
-
-          <TouchableOpacity style={styles.button} onPress={(e) => login(e)}>
-            <Text style={styles.loginbuttontext}>Login</Text>
-          </TouchableOpacity>
-          <Text style={styles.bodytext}>
-            {"\n"}
-            {"\n"}
-            {"\n"}Go Back
-          </Text>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <Text style={styles.loginbuttontext}>BACK ICON HERE{"\n"}</Text>
-          </TouchableOpacity>
-          <StatusBar style="auto" />
-        </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     );
   }

@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -7,12 +6,13 @@ import {
   View,
   TouchableOpacity,
   Switch,
-  DevSettings,
+  KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
-import { css } from "./css";
+import { newcss } from "./newcss";
 import { fonts } from "./fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
@@ -20,7 +20,7 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Login({ navigation }) {
   const [input, setInput] = useState("");
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(css);
+  const styles = StyleSheet.create(newcss);
 
   const creds = useSelector((state) => state.reducer.creds);
 
@@ -70,69 +70,58 @@ export default function Login({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <ScrollView>
-        <View style={styles.logincontainer}>
-          <Text style={styles.header}>{"\n"}One-Pass</Text>
-          <Text style={styles.bodytext}>
-            Keep your credentials to yourself!{"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-          </Text>
-          <Text style={styles.bodytext}>
-            {creds.username ? `Hello ${creds.username}` : null}
-          </Text>
-          <View style={styles.form}>
-            <Text style={styles.bodytext}>{"\n"}Password</Text>
+      <ScrollView style={styles.scroll}>
+        <KeyboardAvoidingView
+          style={styles.background}
+          behavior="padding"
+          keyboardVerticalOffset="20"
+        >
+          <StatusBar barStyle="light-content" backgroundColor="#000000" />
+          <View style={styles.background}>
+            <Text style={styles.loginheader}>One-Pass</Text>
+            <Text style={styles.slogan}>
+              Keep your credentials to yourself!
+            </Text>
+            <Text style={styles.username}>
+              {creds.username ? `Hello ${creds.username}` : null}
+            </Text>
+            <Text style={styles.bodytext}>Password</Text>
             <TextInput
-              style={[styles.inputbox, { width: 300 }]}
+              style={styles.passwordinputbox}
               onChangeText={(text) => setInput(text)}
               value={input}
               secureTextEntry={true}
             />
+            <View style={styles.hinttoggle}>
+              <Text style={styles.hinttext}>Enable Hint</Text>
+              <Switch
+                trackColor={{ false: "#F0F5F9", true: "#5970ce" }}
+                thumbColor="#F0F5F9"
+                onValueChange={(value) => setToggle(value)}
+                value={toggle}
+              />
+            </View>
+            <View style={styles.empty}>
+              {toggle ? <Text style={styles.hint}>{creds.hint}</Text> : null}
+            </View>
+            <TouchableOpacity style={styles.button} onPress={(e) => login(e)}>
+              <Text style={styles.loginbuttontext}>Continue</Text>
+            </TouchableOpacity>
+            <Text style={styles.slogan}>
+              Not registered? Create account now
+            </Text>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("Register");
+              }}
+            >
+              <Text style={styles.loginbuttontext}>Register</Text>
+            </TouchableOpacity>
+            <StatusBar style="auto" />
           </View>
-          <View style={styles.hinttoggle}>
-            <Text style={styles.hinttext}>Enable Hint</Text>
-            <Switch
-              style={{ marginTop: 16 }}
-              trackColor={{ false: "#F0F5F9", true: "#4dd163" }}
-              thumbColor="#F0F5F9"
-              // onTintColor='#F0F5F9'
-              // ios_backgroundColor="#F0F5F9"
-              onValueChange={(value) => setToggle(value)}
-              value={toggle}
-            />
-          </View>
-          {toggle ? <Text style={styles.hint}>{creds.hint}</Text> : null}
-
-          <Text style={styles.bodytext}>
-            {"\n"}
-            {"\n"}
-          </Text>
-
-          <TouchableOpacity style={styles.button} onPress={(e) => login(e)}>
-            <Text style={styles.loginbuttontext}>Login</Text>
-          </TouchableOpacity>
-          <Text style={styles.bodytext}>
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}Not registered? Create account now{"\n"}
-          </Text>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("Register");
-            }}
-          >
-            <Text style={styles.loginbuttontext}>Register{"\n"}</Text>
-          </TouchableOpacity>
-          <StatusBar style="auto" />
-        </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     );
   }

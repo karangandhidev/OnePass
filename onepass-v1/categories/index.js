@@ -1,5 +1,4 @@
 import Icons from "react-native-vector-icons/MaterialIcons";
-import { StatusBar } from "expo-status-bar";
 import {
   Button,
   StyleSheet,
@@ -7,6 +6,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
@@ -181,6 +181,7 @@ export function Homepage({ navigation }) {
   } else {
     return (
       <View style={styles.background}>
+        <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
         {visible ? (
           <View style={styles.overlay}>
             <TouchableOpacity
@@ -249,20 +250,30 @@ export function Homepage({ navigation }) {
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
             <TouchableOpacity
-              style={styles.datacard}
+              style={[
+                styles.datacard,
+                {
+                  marginTop: 25,
+                },
+              ]}
               onPress={() => {
                 navigation.navigate("Alldata");
               }}
             >
+              <Icons name={"public"} size={40} color="#F0F5F9" />
               <Text style={styles.datacardtext}>All Data</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
+
             <TouchableOpacity
               style={styles.datacard}
               onPress={() => {
                 navigation.navigate("Passwords");
               }}
             >
+              <Icons name={"language"} size={40} color="#F0F5F9" />
               <Text style={styles.datacardtext}>Passwords</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.datacard}
@@ -270,7 +281,9 @@ export function Homepage({ navigation }) {
                 navigation.navigate("Notes");
               }}
             >
+              <Icons name={"description"} size={40} color="#F0F5F9" />
               <Text style={styles.datacardtext}>Notes</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.datacard}
@@ -278,7 +291,9 @@ export function Homepage({ navigation }) {
                 navigation.navigate("Addresses");
               }}
             >
+              <Icons name={"apartment"} size={40} color="#F0F5F9" />
               <Text style={styles.datacardtext}>Addresses</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.datacard}
@@ -286,7 +301,9 @@ export function Homepage({ navigation }) {
                 navigation.navigate("CardDetails");
               }}
             >
+              <Icons name={"payment"} size={40} color="#F0F5F9" />
               <Text style={styles.datacardtext}>Card Details</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.datacard}
@@ -294,7 +311,9 @@ export function Homepage({ navigation }) {
                 navigation.navigate("BankDetails");
               }}
             >
+              <Icons name={"payments"} size={40} color="#F0F5F9" />
               <Text style={styles.datacardtext}>Bank Details</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
           </View>
         </ScrollView>
