@@ -37,9 +37,20 @@ function Generator() {
   const [parenthesis, setParenthesis] = useState(preference.parenthesis);
   const [disablecolor, setDisablecolor] = useState("#f0f5f9");
   const [password, setPassword] = useState("defaultvalue");
+  const [degree, setDegree] = useState("90deg");
+  let passPoint = 0;
+  const [passStat, setPassStat] = useState("Weak");
+  const regexArr = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^A-Za-z0-9]/];
+  const PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
   useEffect(() => {
-    console.log("GETTING PREF");
-
+    if (password.length > 0 && password.length < password.MIN_LEN)
+      setPassStat(PASS_LABELS[0]);
+    else {
+      regexArr.forEach((rgx) => (rgx.test(password) ? (passPoint += 1) : null));
+      setPassStat(PASS_LABELS[passPoint]);
+    }
+  }, [password]);
+  useEffect(() => {
     axios
       .get("http://10.0.0.3:3000/preference")
       .then((res) => dispatch({ type: "GETPREFERENCE", data: res.data }))
@@ -96,6 +107,7 @@ function Generator() {
       setDisablecolor("#f0f5f9");
     }
   };
+
   const touchspecial = () => {
     dispatch({
       type: "CHANGEPREF",
@@ -171,6 +183,14 @@ function Generator() {
   const symbolsetting = () => {
     setCharacters(!characters);
   };
+  useEffect(() => {
+    if (!characters) {
+      setDegree("270deg");
+    } else {
+      setDegree("90deg");
+    }
+  }),
+    [characters];
   if (!isSpecial && characters) {
     setCharacters(!characters);
   }
@@ -189,11 +209,9 @@ function Generator() {
       <TouchableOpacity style={styles.overlaycard} onPress={generatePassword}>
         <Text style={styles.overlaytext}>Generate Password</Text>
       </TouchableOpacity>
-
       <TouchableOpacity style={styles.overlaycard} onPress={copyPass}>
         <Text style={styles.overlaytext}>Copy Password</Text>
       </TouchableOpacity>
-
       <Slider
         style={styles.passwordslider}
         minimumValue={8}
@@ -205,14 +223,18 @@ function Generator() {
         step={1}
         onValueChange={(value) => changeLength(value)}
       />
-
       <View style={styles.generatorpreference}>
         <View style={styles.generatorpreference}>
           <Text style={styles.generatorcardtext}>Password Length</Text>
           <Text style={styles.generatorcardtext}>{slider}</Text>
         </View>
       </View>
-
+      <View style={styles.generatorpreference}>
+        <View style={styles.generatorpreference}>
+          <Text style={styles.generatorcardtext}>Password Strength</Text>
+          <Text style={styles.generatorcardtext}>{passStat}</Text>
+        </View>
+      </View>
       <View style={styles.generatorpreference}>
         <TouchableOpacity
           id="isUpper"
@@ -227,18 +249,6 @@ function Generator() {
             value={isUpper}
             style={styles.generatorcardtext}
           />
-          {/* <Checkbox
-            style={
-              (styles.checkbox,
-              {
-                marginTop: "0.7%",
-                marginRight: "4.7%",
-              })
-            }
-            value={isUpper}
-            onValueChange={setUpper}
-            color={isUpper ? "#5970ce" : undefined}
-          /> */}
         </TouchableOpacity>
       </View>
       <View style={styles.generatorpreference}>
@@ -254,18 +264,6 @@ function Generator() {
             value={isLower}
             style={styles.generatorcardtext}
           />
-          {/* <Checkbox
-            style={
-              (styles.checkbox,
-              {
-                marginTop: "0.7%",
-                marginRight: "4.7%",
-              })
-            }
-            value={isLower}
-            onValueChange={setLower}
-            color={isLower ? "#5970ce" : undefined}
-          /> */}
         </TouchableOpacity>
       </View>
       <View style={styles.generatorpreference}>
@@ -281,18 +279,6 @@ function Generator() {
             value={isNumber}
             style={styles.generatorcardtext}
           />
-          {/* <Checkbox
-            style={
-              (styles.checkbox,
-              {
-                marginTop: "0.7%",
-                marginRight: "4.7%",
-              })
-            }
-            value={isNumber}
-            onValueChange={setNumber}
-            color={isNumber ? "#5970ce" : undefined}
-          /> */}
         </TouchableOpacity>
       </View>
       <View style={styles.generatorpreference}>
@@ -308,18 +294,6 @@ function Generator() {
             value={isSpecial}
             style={styles.generatorcardtext}
           />
-          {/* <Checkbox
-            style={
-              (styles.checkbox,
-              {
-                marginTop: "0.7%",
-                marginRight: "4.7%",
-              })
-            }
-            value={isSpecial}
-            onValueChange={setSpecial}
-            color={isSpecial ? "#5970ce" : undefined}
-          /> */}
         </TouchableOpacity>
       </View>
       <View style={styles.generatorpreference}>
@@ -331,27 +305,16 @@ function Generator() {
           <Text style={[styles.generatorcardtext, { color: disablecolor }]}>
             Special Character Preference
           </Text>
-          {characters ? (
-            <Icons
-              name={"chevron-left"}
-              size={50}
-              color="#F0F5F9"
-              style={[
-                styles.generatorcardtext,
-                { rotation: 90, color: disablecolor },
-              ]}
-            />
-          ) : (
-            <Icons
-              name={"chevron-right"}
-              size={50}
-              color="#F0F5F9"
-              style={[
-                styles.generatorcardtext,
-                { rotation: 90, color: disablecolor },
-              ]}
-            />
-          )}
+
+          <Icons
+            name={"chevron-left"}
+            size={50}
+            color="#F0F5F9"
+            style={[
+              styles.generatorcardtext,
+              { transform: [{ rotate: degree }], color: disablecolor },
+            ]}
+          />
         </TouchableOpacity>
       </View>
       {characters ? (
@@ -371,18 +334,6 @@ function Generator() {
                 value={generalchar}
                 style={styles.generatorcardtext}
               />
-              {/* <Checkbox
-                style={
-                  (styles.checkbox,
-                  {
-                    marginTop: "0.7%",
-                    marginRight: "4.7%",
-                  })
-                }
-                value={generalchar}
-                onValueChange={setGeneralchar}
-                color={generalchar ? "#5970ce" : undefined}
-              /> */}
             </TouchableOpacity>
           </View>
           <View style={styles.generatorpreference}>
@@ -400,18 +351,6 @@ function Generator() {
                 value={specialchar}
                 style={styles.generatorcardtext}
               />
-              {/* <Checkbox
-                style={
-                  (styles.checkbox,
-                  {
-                    marginTop: "0.7%",
-                    marginRight: "4.7%",
-                  })
-                }
-                value={specialchar}
-                onValueChange={setSpecialchar}
-                color={specialchar ? "#5970ce" : undefined}
-              /> */}
             </TouchableOpacity>
           </View>
           <View style={styles.generatorpreference}>
@@ -427,18 +366,6 @@ function Generator() {
                 value={parenthesis}
                 style={styles.generatorcardtext}
               />
-              {/* <Checkbox
-                style={
-                  (styles.checkbox,
-                  {
-                    marginTop: "0.7%",
-                    marginRight: "4.7%",
-                  })
-                }
-                value={parenthesis}
-                onValueChange={setParenthesis}
-                color={parenthesis ? "#5970ce" : undefined}
-              /> */}
             </TouchableOpacity>
           </View>
         </>

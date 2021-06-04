@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   TextInput,
   View,
   TouchableOpacity,
+  StatusBar,
   Button,
   Linking,
 } from "react-native";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
+import Icons from "react-native-vector-icons/MaterialIcons";
 import { newcss } from "./newcss";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,9 +21,10 @@ function Profile({ navigation }) {
   const styles = StyleSheet.create(newcss);
   const [settings, setSettings] = useState(false);
   const [aboutus, setAboutus] = useState(false);
+  const [degree, setDegree] = useState("270deg");
+  const [degree2, setDegree2] = useState("270deg");
   const dispatch = useDispatch();
   const prefs = useSelector((state) => state.preference.preference);
-
   const masterdelete = () => {
     axios
       .post("http://10.0.0.3:3000/masterdelete", { password: "some pass" })
@@ -30,7 +33,6 @@ function Profile({ navigation }) {
       })
       .catch((e) => console.log(e));
   };
-
   const logout = () => {
     axios.post("http://10.0.0.3:3000/preference", prefs);
     navigation.navigate("Login");
@@ -38,6 +40,19 @@ function Profile({ navigation }) {
   const showSettings = () => {
     setSettings(!settings);
   };
+  useEffect(() => {
+    if (!settings) {
+      setDegree("270deg");
+    } else {
+      setDegree("90deg");
+    }
+    if (!aboutus) {
+      setDegree2("270deg");
+    } else {
+      setDegree2("90deg");
+    }
+  }),
+    [settings];
   const showAboutus = () => {
     setAboutus(!aboutus);
   };
@@ -48,64 +63,93 @@ function Profile({ navigation }) {
     navigation.navigate("Changetfa");
   };
   return (
-    <View style={styles.background}>
+    <ScrollView style={styles.scroll}>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <View style={styles.header2}>
-        <Text style={styles.heading}>Password</Text>
+        <Text style={styles.heading}>Profile</Text>
       </View>
-      <ScrollView
-        style={
-          ([styles.scroll], { align: "center", backgroundColor: "#c3ccea" })
-        }
-      >
-        <TouchableOpacity style={styles.profilecard} onPress={showSettings}>
-          <Text style={[styles.profilecardtext]}>Settings</Text>
-        </TouchableOpacity>
-        {settings && (
-          <>
-            <TouchableOpacity
-              style={styles.profilesubmenutouch}
-              onPress={preference}
-            >
-              <Text style={styles.profilesubmenu}>Change Credentials</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.profilesubmenutouch} onPress={tfa}>
-              <Text style={styles.profilesubmenu}>Change 2FA</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        <TouchableOpacity style={styles.profilecard} onPress={showAboutus}>
-          <Text style={styles.profilecardtext}>About Us</Text>
-        </TouchableOpacity>
-        {aboutus && (
-          <>
-            <TouchableOpacity
-              style={styles.profilesubmenutouch}
-              onPress={() => {
-                Linking.openURL(
-                  "https://www.linkedin.com/in/samarth-aher-sa09/"
-                );
-              }}
-            >
-              <Text style={styles.profilesubmenu}>Samarth Aher</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.profilesubmenutouch}
-              onPress={() => {
-                Linking.openURL("https://www.linkedin.com/in/karangandhi97");
-              }}
-            >
-              <Text style={styles.profilesubmenu}>Karan Gandhi</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        <TouchableOpacity onPress={logout} style={styles.profilecard}>
-          <Text style={styles.profilecardtext}>Logout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={masterdelete} style={styles.profilecard}>
-          <Text style={styles.profilecardtext}>Delete Account</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+      <View style={styles.screenview}>
+        <View style={styles.profilecardview}>
+          <TouchableOpacity style={styles.profilecard} onPress={showSettings}>
+            <Icons name={"public"} size={40} color="#F0F5F9" />
+            <Text style={styles.datacardtext}>Settings</Text>
+            <Icons
+              name={"chevron-left"}
+              size={50}
+              color="#F0F5F9"
+              style={[styles.datacardtext, { transform: [{ rotate: degree }] }]}
+            />
+          </TouchableOpacity>
+          {settings && (
+            <>
+              <TouchableOpacity
+                style={styles.profilesubcard}
+                onPress={preference}
+              >
+                <Text style={styles.datacardtext}>Change Credentials</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.profilesubcard} onPress={tfa}>
+                <Text style={styles.datacardtext}>Change 2FA</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+        <View style={styles.profilecardview}>
+          <TouchableOpacity style={styles.profilecard} onPress={showAboutus}>
+            <Icons name={"people"} size={40} color="#F0F5F9" />
+            <Text style={styles.datacardtext}>About Us</Text>
+            <Icons
+              name={"chevron-left"}
+              size={50}
+              color="#F0F5F9"
+              style={[
+                styles.datacardtext,
+                { transform: [{ rotate: degree2 }] },
+              ]}
+            />
+          </TouchableOpacity>
+          {aboutus && (
+            <>
+              <TouchableOpacity
+                style={styles.profilesubcard}
+                onPress={() => {
+                  Linking.openURL(
+                    "https://www.linkedin.com/in/samarth-aher-sa09/"
+                  );
+                }}
+              >
+                <Text style={styles.datacardtext}>Samarth Aher</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.profilesubcard}
+                onPress={() => {
+                  Linking.openURL("https://www.linkedin.com/in/karangandhi97");
+                }}
+              >
+                <Text style={styles.datacardtext}>Karan Gandhi</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+        <View style={styles.profilecardview}>
+          <TouchableOpacity onPress={logout} style={styles.profilecard}>
+            <Icons name={"logout"} size={40} color="#F0F5F9" />
+            <Text style={styles.datacardtext}>Logout</Text>
+
+            <Text style={{ color: "#1E2022" }}> texth</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.profilecardview}>
+          <TouchableOpacity onPress={masterdelete} style={styles.profilecard}>
+            <Icons name={"delete"} size={40} color="#E4252D" />
+            <Text style={[styles.datacardtext, { color: "#E4252D" }]}>
+              Delete Account
+            </Text>
+            <Text style={{ color: "#1E2022" }}> texth</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 export default Profile;
