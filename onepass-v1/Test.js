@@ -6,14 +6,24 @@ import { newcss } from "./newcss";
 import { StyleSheet, TouchableOpacity, Button, View, Text } from "react-native";
 import Bottomnavbar from "./Bottomnavbar";
 import { fonts } from "./fonts";
-import Icons from "react-native-vector-icons/MaterialIcons";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
-import { Dimensions } from "react-native";
+import { Dimensions, Switch } from "react-native";
+
 export default function Test() {
   const deviceWindow = Dimensions.get("window");
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
+  const [isSpecial, setSpecial] = useState(true);
+  const [disablecolor, setDisablecolor] = useState("#f0f5f9");
+  const func = () => {
+    setSpecial(!isSpecial);
+    if (isSpecial) {
+      setDisablecolor("#333333");
+    } else {
+      setDisablecolor("#f0f5f9");
+    }
+  };
   if (!isLoaded) {
     return <AppLoading />;
   } else {
@@ -27,58 +37,18 @@ export default function Test() {
         </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
-            <TouchableOpacity
-              style={{
-                marginTop: 25,
-                alignItems: "center",
-                backgroundColor: "red",
-                flex: 1,
-                justifyContent: "space-between",
-                borderRadius: 15,
-                borderWidth: 0.75,
-                elevation: 10,
-                width: deviceWindow.width * 0.97,
-                height: deviceWindow.height * 0.08,
-                maxHeight: deviceWindow.height * 0.08,
-              }}
-            >
-              <Icons
-                name={"public"}
-                size={40}
-                color="#F0F5F9"
-                // style={{ flex: 1 }}
-              />
-              <Icons
-                name={"chevron-right"}
-                size={50}
-                color="#F0F5F9"
-                // style={{ flex: 1, marginLeft: 20 }}
-              />
-              <Icons
-                name={"chevron-right"}
-                size={50}
-                color="#F0F5F9"
-                // style={{ flex: 1, marginLeft: 20 }}
+            <TouchableOpacity style={styles.generatorpreference} onPress={func}>
+              <Text style={[styles.generatorcardtext, { color: disablecolor }]}>
+                Special Character Preference
+              </Text>
+              <Switch
+                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+                thumbColor="#F0F5F9"
+                onValueChange={func}
+                value={isSpecial}
+                style={styles.generatorcardtext}
               />
             </TouchableOpacity>
-            {/* <View style={styles.popupwindow}> */}
-            {/* <View style={styles.popupbox}>
-              <View style={styles.popupboxtext}>
-                <Text style={styles.popuptitle}>Title</Text>
-                <Text style={styles.popupcontent}>Some text here</Text>
-              </View>
-              <View style={styles.popupbuttonbox}>
-                <TouchableOpacity style={styles.popupLeftbutton}>
-                  <Text style={styles.popupbuttoncontent}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => alert("TEST")}
-                  style={styles.popupRightbutton}
-                >
-                  <Text style={styles.popupbuttoncontent}>Confirm</Text>
-                </TouchableOpacity>
-              </View>
-            </View> */}
           </View>
         </ScrollView>
       </View>

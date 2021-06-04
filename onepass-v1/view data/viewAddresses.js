@@ -43,7 +43,7 @@ export default function viewaddresses({ navigation }) {
 
   const del = () => {
     axios
-      .delete(`http://10.0.0.7:3000/address/${data._id}`, data, {
+      .delete(`http://10.0.0.3:3000/address/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -55,7 +55,7 @@ export default function viewaddresses({ navigation }) {
   };
   const submit = () => {
     axios
-      .put(`http://10.0.0.7:3000/address/${data._id}`, data, {
+      .put(`http://10.0.0.3:3000/address/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",

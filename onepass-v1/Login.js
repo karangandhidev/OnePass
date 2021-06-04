@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      await axios.get("http://10.0.0.7:3000/creds").then((res) => {
+      await axios.get("http://10.0.0.3:3000/creds").then((res) => {
         dispatch({ type: "GET_DATA", data: res.data });
       });
     };
@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
     if (input !== "") {
       axios
         .post(
-          "http://10.0.0.7:3000/login",
+          "http://10.0.0.3:3000/login",
           {
             username: creds.username,
             password: input,
@@ -95,7 +95,7 @@ export default function Login({ navigation }) {
             <View style={styles.hinttoggle}>
               <Text style={styles.hinttext}>Enable Hint</Text>
               <Switch
-                trackColor={{ false: "#F0F5F9", true: "#5970ce" }}
+                trackColor={{ false: "#1E2022", true: "#F0F5F9" }}
                 thumbColor="#F0F5F9"
                 onValueChange={(value) => setToggle(value)}
                 value={toggle}

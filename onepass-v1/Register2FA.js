@@ -64,7 +64,7 @@ export default function Register2FA({ navigation }) {
   const register = () => {
     if (formValidation()) {
       axios
-        .post("http://10.0.0.7:3000/register", data, {
+        .post("http://10.0.0.3:3000/register", data, {
           headers: {
             "Access-Control-Allow-Headers":
               "Access-Control-Allow-Headers, Authorization",
@@ -87,7 +87,7 @@ export default function Register2FA({ navigation }) {
           alert(er);
         });
       input.map((inp) => {
-        axios.post("http://10.0.0.7:3000/questions", inp).then(() => {
+        axios.post("http://10.0.0.3:3000/questions", inp).then(() => {
           console.log(inp);
         });
       });

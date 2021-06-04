@@ -24,7 +24,7 @@ function Profile({ navigation }) {
 
   const masterdelete = () => {
     axios
-      .post("http://10.0.0.7:3000/masterdelete", { password: "some pass" })
+      .post("http://10.0.0.3:3000/masterdelete", { password: "some pass" })
       .then(() => {
         navigation.navigate("Register");
       })
@@ -32,7 +32,7 @@ function Profile({ navigation }) {
   };
 
   const logout = () => {
-    axios.post("http://10.0.0.7:3000/preference", prefs);
+    axios.post("http://10.0.0.3:3000/preference", prefs);
     navigation.navigate("Login");
   };
   const showSettings = () => {

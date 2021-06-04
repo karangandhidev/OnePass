@@ -18,7 +18,7 @@ const app = express();
 const secondfactor = require("./2ndfactorauth");
 const port = process.env.port || 3000;
 var corsoption = {
-  origin: ["http://10.0.0.7:19006", "http://localhost:19006"],
+  origin: ["http://10.0.0.3:19006", "http://localhost:19006"],
 };
 
 app.use(express.static(path.join(__dirname, "static")));

@@ -13,7 +13,7 @@ import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "react-native-root-modal";
+// import Modal from "react-native-root-modal";
 import { newcss } from "../newcss";
 import { fonts } from "../fonts";
 import { ScrollView } from "react-native-gesture-handler";
@@ -164,7 +164,7 @@ export function Homepage({ navigation }) {
   const jwt = useSelector((state) => state.reducer.user);
   useEffect(() => {
     axios
-      .get("http://10.0.0.7:3000/preference")
+      .get("http://10.0.0.3:3000/preference")
       .then((res) => {
         console.log(res.data);
         dispatch({ type: "GETPREFERENCE", data: res.data });
@@ -230,7 +230,13 @@ export function Homepage({ navigation }) {
               <Text style={styles.overlaytext}>Bank Details</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.overlaycard} onPress={visis}>
-              <Icons onPress={visis} name={"close"} size={30} color="#000000" />
+              <Icons
+                onPress={visis}
+                name={"close"}
+                size={40}
+                color="#F0F5F9"
+                style={styles.canceloverlaybutton}
+              />
             </TouchableOpacity>
           </View>
         ) : (
@@ -238,7 +244,14 @@ export function Homepage({ navigation }) {
             <View style={styles.header}>
               <Text style={styles.fakeheading}></Text>
               <TouchableOpacity style={styles.addbutton} onPress={visis}>
-                <Text style={styles.addbuttontext}>Add Data</Text>
+                {/* <Text style={styles.addbuttontext}>Add Data</Text> */}
+                <Icons
+                  onPress={visis}
+                  class="material-icons-round"
+                  name={"add"}
+                  size={45}
+                  color="#1E2022"
+                />
               </TouchableOpacity>
             </View>
             <View style={styles.textheading}>

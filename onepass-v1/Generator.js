@@ -6,8 +6,11 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Button,
+  StatusBar,
+  Switch,
 } from "react-native";
+import Icons from "react-native-vector-icons/MaterialIcons";
+
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
 import { fonts } from "./fonts";
@@ -32,12 +35,13 @@ function Generator() {
   const [generalchar, setGeneralchar] = useState(preference.generalChar);
   const [specialchar, setSpecialchar] = useState(preference.specialChar);
   const [parenthesis, setParenthesis] = useState(preference.parenthesis);
+  const [disablecolor, setDisablecolor] = useState("#f0f5f9");
   const [password, setPassword] = useState("defaultvalue");
-
   useEffect(() => {
     console.log("GETTING PREF");
+
     axios
-      .get("http://10.0.0.7:3000/preference")
+      .get("http://10.0.0.3:3000/preference")
       .then((res) => dispatch({ type: "GETPREFERENCE", data: res.data }))
       .catch((e) => console.log(e));
   }, [dispatch]);
@@ -84,22 +88,30 @@ function Generator() {
     });
     setParenthesis(!parenthesis);
   };
+  const specialchange = () => {
+    setSpecial(!isSpecial);
+    if (isSpecial) {
+      setDisablecolor("#333333");
+    } else {
+      setDisablecolor("#f0f5f9");
+    }
+  };
   const touchspecial = () => {
     dispatch({
       type: "CHANGEPREF",
       data: { key: "isSpecial", value: !isSpecial },
     });
-    setSpecial(!isSpecial);
-    if (length == null) {
-      setSlider(8);
-      setNumber(true);
-      setLower(true);
-      setUpper(true);
-      setSpecial(true);
-      setSpecialchar(true);
-      setGeneralchar(true);
-      setParenthesis(true);
-    }
+    specialchange();
+    // if (length == null) {
+    //   setSlider(8);
+    //   setNumber(true);
+    //   setLower(true);
+    //   setUpper(true);
+    //   setSpecial(true);
+    //   setSpecialchar(true);
+    //   setGeneralchar(true);
+    //   setParenthesis(true);
+    // }
   };
 
   useEffect(() => {
@@ -116,7 +128,7 @@ function Generator() {
     console.log("generate hua");
 
     axios
-      .post("http://10.0.0.7:3000/generatepass", {
+      .post("http://10.0.0.3:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -131,7 +143,7 @@ function Generator() {
   useEffect(() => {
     console.log("USEEFFECT");
     axios
-      .post("http://10.0.0.7:3000/generatepass", {
+      .post("http://10.0.0.3:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -163,243 +175,279 @@ function Generator() {
     setCharacters(!characters);
   }
   return (
-    <View style={styles.background}>
-      <ScrollView
-        style={
-          ([styles.scroll], { align: "center", backgroundColor: "#c3ccea" })
-        }
+    <ScrollView style={styles.scroll}>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+      <View style={styles.header2}>
+        <Text style={styles.heading}>Generator</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.generatedpasswordspace}
+        onPress={copyPass}
       >
-        <View style={styles.header2}>
-          <Text style={styles.heading}>Generator</Text>
-        </View>
-        {/* 1. slider value is stored inside 'slider'
-                 2. each checkbox has different states. at least 1 checkbox has to be
-                checked by default. (lowercase). 
-                DONE AT END: User cannot uncheck all boxes. 
-                3. Click on generate password to generate password and store it inside 'password'
-                4. click on copy password to copy the password.
-                5. Click on the password itself to copy password.*/}
+        <Text style={styles.generatedpassword}>{password}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.overlaycard} onPress={generatePassword}>
+        <Text style={styles.overlaytext}>Generate Password</Text>
+      </TouchableOpacity>
 
+      <TouchableOpacity style={styles.overlaycard} onPress={copyPass}>
+        <Text style={styles.overlaytext}>Copy Password</Text>
+      </TouchableOpacity>
+
+      <Slider
+        style={styles.passwordslider}
+        minimumValue={8}
+        maximumValue={128}
+        minimumTrackTintColor="#6bf060"
+        maximumTrackTintColor="#F0F5F9"
+        thumbTintColor="#f0f5f9"
+        value={preference.length}
+        step={1}
+        onValueChange={(value) => changeLength(value)}
+      />
+
+      <View style={styles.generatorpreference}>
+        <View style={styles.generatorpreference}>
+          <Text style={styles.generatorcardtext}>Password Length</Text>
+          <Text style={styles.generatorcardtext}>{slider}</Text>
+        </View>
+      </View>
+
+      <View style={styles.generatorpreference}>
         <TouchableOpacity
-          style={styles.generatedpasswordspace}
-          onPress={copyPass}
+          id="isUpper"
+          style={styles.generatorpreference}
+          onPress={touchupper}
         >
-          <Text style={styles.generatedpassword}>{password}</Text>
+          <Text style={styles.generatorcardtext}>Upper Case</Text>
+          <Switch
+            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+            thumbColor="#F0F5F9"
+            onValueChange={setUpper}
+            value={isUpper}
+            style={styles.generatorcardtext}
+          />
+          {/* <Checkbox
+            style={
+              (styles.checkbox,
+              {
+                marginTop: "0.7%",
+                marginRight: "4.7%",
+              })
+            }
+            value={isUpper}
+            onValueChange={setUpper}
+            color={isUpper ? "#5970ce" : undefined}
+          /> */}
         </TouchableOpacity>
+      </View>
+      <View style={styles.generatorpreference}>
         <TouchableOpacity
-          style={[
-            styles.profilecard,
-            {
-              backgroundColor: "#b99aff",
-              borderRadius: 1,
-              borderBottomWidth: 1,
-            },
-          ]}
-          onPress={generatePassword}
+          style={styles.generatorpreference}
+          onPress={touchlower}
         >
-          <Text style={styles.profilecardtext}>Generate Password</Text>
+          <Text style={styles.generatorcardtext}>Lower Case</Text>
+          <Switch
+            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+            thumbColor="#F0F5F9"
+            onValueChange={setLower}
+            value={isLower}
+            style={styles.generatorcardtext}
+          />
+          {/* <Checkbox
+            style={
+              (styles.checkbox,
+              {
+                marginTop: "0.7%",
+                marginRight: "4.7%",
+              })
+            }
+            value={isLower}
+            onValueChange={setLower}
+            color={isLower ? "#5970ce" : undefined}
+          /> */}
         </TouchableOpacity>
-
+      </View>
+      <View style={styles.generatorpreference}>
         <TouchableOpacity
-          style={[
-            styles.profilecard,
-            {
-              backgroundColor: "#b99aff",
-              borderRadius: 1,
-              borderBottomWidth: 1,
-            },
-          ]}
-          onPress={copyPass}
+          style={styles.generatorpreference}
+          onPress={touchnumber}
         >
-          <Text style={styles.profilecardtext}>Copy Password</Text>
+          <Text style={styles.generatorcardtext}>Number</Text>
+          <Switch
+            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+            thumbColor="#F0F5F9"
+            onValueChange={setNumber}
+            value={isNumber}
+            style={styles.generatorcardtext}
+          />
+          {/* <Checkbox
+            style={
+              (styles.checkbox,
+              {
+                marginTop: "0.7%",
+                marginRight: "4.7%",
+              })
+            }
+            value={isNumber}
+            onValueChange={setNumber}
+            color={isNumber ? "#5970ce" : undefined}
+          /> */}
         </TouchableOpacity>
-
-        <Slider
-          style={styles.passwordslider}
-          minimumValue={8}
-          maximumValue={128}
-          minimumTrackTintColor="#b99aff"
-          maximumTrackTintColor="#949494"
-          thumbTintColor="#5970ce"
-          value={preference.length}
-          step={1}
-          onValueChange={(value) => changeLength(value)}
-        />
-
-        <View style={styles.generatorpreference}>
-          <Text style={styles.profilecardtext}>Password Length</Text>
-          <Text style={styles.profilecardtext}>{slider}</Text>
-        </View>
-
-        <View style={styles.generatorpreference}>
-          <TouchableOpacity
-            id="isUpper"
-            style={styles.generatorpreference}
-            onPress={touchupper}
-          >
-            <Text style={styles.profilecardtext}>Upper Case</Text>
-
-            <Checkbox
-              style={
-                (styles.checkbox,
-                {
-                  marginTop: "0.7%",
-                  marginRight: "4.7%",
-                })
-              }
-              value={isUpper}
-              onValueChange={setUpper}
-              color={isUpper ? "#5970ce" : undefined}
+      </View>
+      <View style={styles.generatorpreference}>
+        <TouchableOpacity
+          style={styles.generatorpreference}
+          onPress={touchspecial}
+        >
+          <Text style={styles.generatorcardtext}>Characters</Text>
+          <Switch
+            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+            thumbColor="#F0F5F9"
+            onValueChange={specialchange}
+            value={isSpecial}
+            style={styles.generatorcardtext}
+          />
+          {/* <Checkbox
+            style={
+              (styles.checkbox,
+              {
+                marginTop: "0.7%",
+                marginRight: "4.7%",
+              })
+            }
+            value={isSpecial}
+            onValueChange={setSpecial}
+            color={isSpecial ? "#5970ce" : undefined}
+          /> */}
+        </TouchableOpacity>
+      </View>
+      <View style={styles.generatorpreference}>
+        <TouchableOpacity
+          style={styles.generatorpreference}
+          onPress={symbolsetting}
+          disabled={!isSpecial}
+        >
+          <Text style={[styles.generatorcardtext, { color: disablecolor }]}>
+            Special Character Preference
+          </Text>
+          {characters ? (
+            <Icons
+              name={"chevron-left"}
+              size={50}
+              color="#F0F5F9"
+              style={[
+                styles.generatorcardtext,
+                { rotation: 90, color: disablecolor },
+              ]}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.generatorpreference}>
-          <TouchableOpacity
-            style={styles.generatorpreference}
-            onPress={touchlower}
-          >
-            <Text style={styles.profilecardtext}>Lower Case</Text>
-            <Checkbox
-              style={
-                (styles.checkbox,
-                {
-                  marginTop: "0.7%",
-                  marginRight: "4.7%",
-                })
-              }
-              value={isLower}
-              onValueChange={setLower}
-              color={isLower ? "#5970ce" : undefined}
+          ) : (
+            <Icons
+              name={"chevron-right"}
+              size={50}
+              color="#F0F5F9"
+              style={[
+                styles.generatorcardtext,
+                { rotation: 90, color: disablecolor },
+              ]}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.generatorpreference}>
-          <TouchableOpacity
-            style={styles.generatorpreference}
-            onPress={touchnumber}
-          >
-            <Text style={styles.profilecardtext}>Number</Text>
-            <Checkbox
-              style={
-                (styles.checkbox,
-                {
-                  marginTop: "0.7%",
-                  marginRight: "4.7%",
-                })
-              }
-              value={isNumber}
-              onValueChange={setNumber}
-              color={isNumber ? "#5970ce" : undefined}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.generatorpreference}>
-          <TouchableOpacity
-            style={styles.generatorpreference}
-            onPress={touchspecial}
-          >
-            <Text style={styles.profilecardtext}>Special Characters</Text>
-            <Checkbox
-              style={
-                (styles.checkbox,
-                {
-                  marginTop: "0.7%",
-                  marginRight: "4.7%",
-                })
-              }
-              value={isSpecial}
-              onValueChange={setSpecial}
-              color={isSpecial ? "#5970ce" : undefined}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.generatorpreference}>
-          <TouchableOpacity
-            style={[styles.profilecard, { flex: 1 }]}
-            onPress={symbolsetting}
-            disabled={!isSpecial}
-          >
-            <Text style={styles.profilecardtext}>
-              Special Character Preference
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {characters ? (
-          <>
-            <View style={styles.generatorpreference}>
-              <TouchableOpacity
-                style={styles.generatorpreference}
-                onPress={touchgeneralchar}
-              >
-                <Text style={styles.profilecardtext}>
-                  General Characters (!@#$%^&*)
-                </Text>
-                <Checkbox
-                  style={
-                    (styles.checkbox,
-                    {
-                      marginTop: "0.7%",
-                      marginRight: "4.7%",
-                    })
-                  }
-                  value={generalchar}
-                  onValueChange={setGeneralchar}
-                  color={generalchar ? "#5970ce" : undefined}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.generatorpreference}>
-              <TouchableOpacity
-                style={styles.generatorpreference}
-                onPress={touchspecialchar}
-              >
-                <Text style={styles.profilecardtext}>
-                  Special Characters (-.?_`~;:+=)
-                </Text>
-                <Checkbox
-                  style={
-                    (styles.checkbox,
-                    {
-                      marginTop: "0.7%",
-                      marginRight: "4.7%",
-                    })
-                  }
-                  value={specialchar}
-                  onValueChange={setSpecialchar}
-                  color={specialchar ? "#5970ce" : undefined}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.generatorpreference}>
-              <TouchableOpacity
-                style={styles.generatorpreference}
-                onPress={touchbrackets}
-              >
-                <Text style={styles.profilecardtext}>Parenthesis ((){}[])</Text>
-                <Checkbox
-                  style={
-                    (styles.checkbox,
-                    {
-                      marginTop: "0.7%",
-                      marginRight: "4.7%",
-                    })
-                  }
-                  value={parenthesis}
-                  onValueChange={setParenthesis}
-                  color={parenthesis ? "#5970ce" : undefined}
-                />
-              </TouchableOpacity>
-            </View>
-          </>
-        ) : null}
-        {!isUpper && !isLower && !isNumber && !isSpecial
-          ? setLower(true)
-          : null}
-        {!generalchar && !specialchar && !parenthesis
-          ? setGeneralchar(true)
-          : null}
-      </ScrollView>
-    </View>
+          )}
+        </TouchableOpacity>
+      </View>
+      {characters ? (
+        <>
+          <View style={styles.generatorpreference}>
+            <TouchableOpacity
+              style={styles.generatorpreference}
+              onPress={touchgeneralchar}
+            >
+              <Text style={styles.generatorcardtext}>
+                General Characters (!@#$%^&*)
+              </Text>
+              <Switch
+                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+                thumbColor="#F0F5F9"
+                onValueChange={setGeneralchar}
+                value={generalchar}
+                style={styles.generatorcardtext}
+              />
+              {/* <Checkbox
+                style={
+                  (styles.checkbox,
+                  {
+                    marginTop: "0.7%",
+                    marginRight: "4.7%",
+                  })
+                }
+                value={generalchar}
+                onValueChange={setGeneralchar}
+                color={generalchar ? "#5970ce" : undefined}
+              /> */}
+            </TouchableOpacity>
+          </View>
+          <View style={styles.generatorpreference}>
+            <TouchableOpacity
+              style={styles.generatorpreference}
+              onPress={touchspecialchar}
+            >
+              <Text style={styles.generatorcardtext}>
+                Special Characters (-.?_`~;:+=)
+              </Text>
+              <Switch
+                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+                thumbColor="#F0F5F9"
+                onValueChange={setSpecialchar}
+                value={specialchar}
+                style={styles.generatorcardtext}
+              />
+              {/* <Checkbox
+                style={
+                  (styles.checkbox,
+                  {
+                    marginTop: "0.7%",
+                    marginRight: "4.7%",
+                  })
+                }
+                value={specialchar}
+                onValueChange={setSpecialchar}
+                color={specialchar ? "#5970ce" : undefined}
+              /> */}
+            </TouchableOpacity>
+          </View>
+          <View style={styles.generatorpreference}>
+            <TouchableOpacity
+              style={styles.generatorpreference}
+              onPress={touchbrackets}
+            >
+              <Text style={styles.generatorcardtext}>Parenthesis ((){}[])</Text>
+              <Switch
+                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+                thumbColor="#F0F5F9"
+                onValueChange={setParenthesis}
+                value={parenthesis}
+                style={styles.generatorcardtext}
+              />
+              {/* <Checkbox
+                style={
+                  (styles.checkbox,
+                  {
+                    marginTop: "0.7%",
+                    marginRight: "4.7%",
+                  })
+                }
+                value={parenthesis}
+                onValueChange={setParenthesis}
+                color={parenthesis ? "#5970ce" : undefined}
+              /> */}
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : null}
+      {!isUpper && !isLower && !isNumber && !isSpecial ? setLower(true) : null}
+      {!generalchar && !specialchar && !parenthesis
+        ? setGeneralchar(true)
+        : null}
+    </ScrollView>
   );
 }
 export default Generator;

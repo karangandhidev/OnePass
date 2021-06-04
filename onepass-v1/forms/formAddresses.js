@@ -31,7 +31,7 @@ export default function Addresses({ navigation }) {
   };
   const submit = () => {
     axios
-      .post("http://10.0.0.7:3000/address", input, {
+      .post("http://10.0.0.3:3000/address", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
