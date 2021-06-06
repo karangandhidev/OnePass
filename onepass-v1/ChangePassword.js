@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
-import { newcss } from "./newcss";
+import { css } from "./css";
 import { useDispatch } from "react-redux";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -20,7 +20,7 @@ export default function ChangePassword({ navigation }) {
   const [password, setPassword] = useState(false);
   const [hint, setHint] = useState(false);
   const [input, setInput] = useState({});
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [isLoaded] = useFonts(fonts);
   // const [flaguser, setFlaguser] = useState(false);
   // const [flaghint, setFlaghint] = useState(false);
@@ -48,7 +48,7 @@ export default function ChangePassword({ navigation }) {
     if (username) {
       if (input.Username) {
         axios
-          .put("http://10.0.0.3:3000/changeusername", {
+          .put("http://10.0.0.2:3000/changeusername", {
             Username: input.Username,
           })
           .then(() => {
@@ -64,7 +64,7 @@ export default function ChangePassword({ navigation }) {
     if (hint) {
       if (input.Hint) {
         axios
-          .put("http://10.0.0.3:3000/changehint", {
+          .put("http://10.0.0.2:3000/changehint", {
             hint: input.Hint,
           })
           .then(() =>
@@ -78,7 +78,7 @@ export default function ChangePassword({ navigation }) {
     }
     if (input.OldPassword && input.NewPassword)
       if (input.ConfirmNewPassword === input.NewPassword) {
-        axios.post("http://10.0.0.3:3000/changepass", {
+        axios.post("http://10.0.0.2:3000/changepass", {
           OldPassword: input.OldPassword,
           NewPassword: input.NewPassword,
         });
@@ -121,9 +121,9 @@ export default function ChangePassword({ navigation }) {
           </TouchableOpacity>
           {username && (
             <>
-              <Text style={styles.credentialsname}>New Username</Text>
+              <Text style={styles.fieldname}>New Username</Text>
               <TextInput
-                style={styles.credentialsinput}
+                style={styles.fieldinput}
                 onChangeText={(text) =>
                   handleInput({ value: text, name: "Username" })
                 }
@@ -140,9 +140,9 @@ export default function ChangePassword({ navigation }) {
           </TouchableOpacity>
           {hint && (
             <>
-              <Text style={styles.credentialsname}>New Hint</Text>
+              <Text style={styles.fieldname}>New Hint</Text>
               <TextInput
-                style={styles.credentialsinput}
+                style={styles.fieldinput}
                 onChangeText={(text) =>
                   handleInput({ value: text, name: "Hint" })
                 }
@@ -160,27 +160,27 @@ export default function ChangePassword({ navigation }) {
           </TouchableOpacity>
           {password && (
             <>
-              <Text style={styles.credentialsname}>Old Password</Text>
+              <Text style={styles.fieldname}>Old Password</Text>
               <TextInput
-                style={styles.credentialsinput}
+                style={styles.fieldinput}
                 onChangeText={(text) =>
                   handleInput({ value: text, name: "OldPassword" })
                 }
                 placeholder="Old Password"
                 placeholderTextColor="#000000"
               />
-              <Text style={styles.credentialsname}>New Password</Text>
+              <Text style={styles.fieldname}>New Password</Text>
               <TextInput
-                style={styles.credentialsinput}
+                style={styles.fieldinput}
                 onChangeText={(text) =>
                   handleInput({ value: text, name: "NewPassword" })
                 }
                 placeholder="New Password"
                 placeholderTextColor="#000000"
               />
-              <Text style={styles.credentialsname}>Confirm New Password</Text>
+              <Text style={styles.fieldname}>Confirm New Password</Text>
               <TextInput
-                style={styles.credentialsinput}
+                style={styles.fieldinput}
                 onChangeText={(text) =>
                   handleInput({ value: text, name: "ConfirmNewPassword" })
                 }

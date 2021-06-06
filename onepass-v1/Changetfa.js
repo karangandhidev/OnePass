@@ -11,19 +11,19 @@ import {
 import axios from "axios";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
-import { newcss } from "./newcss";
+import { css } from "./css";
 import { useDispatch } from "react-redux";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
 export default function Changetfa({ navigation }) {
   const [tfa, setTfa] = useState(false);
   const [input, setInput] = useState([]);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [isLoaded] = useFonts(fonts);
 
   useEffect(() => {
     axios
-      .get("http://10.0.0.3:3000/questions")
+      .get("http://10.0.0.2:3000/questions")
       .then((res) => {
         setInput(res.data);
       })
@@ -32,7 +32,7 @@ export default function Changetfa({ navigation }) {
 
   const changeQuestions = () => {
     input.map((i) => {
-      axios.put("http://10.0.0.3:3000/questions", i).then(() => {
+      axios.put("http://10.0.0.2:3000/questions", i).then(() => {
         console.log(i);
       });
       navigation.navigate("Login");
@@ -40,7 +40,7 @@ export default function Changetfa({ navigation }) {
   };
 
   const addPass = (text) => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < input.length; i++) {
       let array = input;
       array[i]["password"] = text;
       setInput(array);

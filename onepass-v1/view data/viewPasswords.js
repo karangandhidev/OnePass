@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -7,12 +6,14 @@ import {
   TouchableOpacity,
   Clipboard,
   Linking,
+  KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { Component, useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
-import { newcss } from "../newcss";
+import { css } from "../css";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { store } from "../Redux/globalReducer";
@@ -20,11 +21,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 export default function Password({ navigation }) {
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const preference = useSelector((state) => state.preference.preference);
   const [editable, setEditable] = useState(false);
   const [deleteable, setdelete] = useState(true);
-  const [confirm, setConfirm] = useState(false);
+  const [popup, setPopup] = useState(false);
+
   const [data, setData] = useState(navigation.state.params.key);
   const [password, setPassword] = useState(data.password);
   const handleInput = (e) => {
@@ -39,7 +41,7 @@ export default function Password({ navigation }) {
 
   const genPass = () => {
     axios
-      .post("http://10.0.0.3:3000/generatepass", {
+      .post("http://10.0.0.2:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -64,7 +66,7 @@ export default function Password({ navigation }) {
   const del = () => {
     axios
       .delete(
-        `http://10.0.0.3:3000/passwords/${data._id}`,
+        `http://10.0.0.2:3000/passwords/${data._id}`,
         {
           name: data.name,
           category: data.category,
@@ -95,7 +97,7 @@ export default function Password({ navigation }) {
 
   const submit = () => {
     axios
-      .put(`http://10.0.0.3:3000/passwords/${data._id}`, data, {
+      .put(`http://10.0.0.2:3000/passwords/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -179,7 +181,7 @@ export default function Password({ navigation }) {
                 </View>
               </View>
             ) : null}
-            <Text style={styles.fieldname}>{"\n"}Name</Text>
+            <Text style={styles.fieldname}>Name</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
@@ -191,7 +193,7 @@ export default function Password({ navigation }) {
               editable={editable}
             />
 
-            <Text style={styles.fieldname}>{"\n"}Category</Text>
+            <Text style={styles.fieldname}>Category</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
@@ -203,10 +205,8 @@ export default function Password({ navigation }) {
               placeholderTextColor="#000000"
             />
             <View style={styles.generateinform}>
-              <Text style={styles.fieldname}>{"\n"}URL</Text>
+              <Text style={styles.fieldname}>URL</Text>
               <Text>
-                {"\n"}
-                {"\n"}
                 <Icons
                   onPress={() => {
                     Linking.openURL(data.url);
@@ -225,7 +225,7 @@ export default function Password({ navigation }) {
               editable={editable}
               placeholderTextColor="#000000"
             />
-            <Text style={styles.fieldname}>{"\n"}User Name</Text>
+            <Text style={styles.fieldname}>User Name</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
@@ -237,7 +237,7 @@ export default function Password({ navigation }) {
               placeholderTextColor="#000000"
             />
 
-            <Text style={styles.fieldname}>{"\n"}Email</Text>
+            <Text style={styles.fieldname}>Email</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
@@ -250,10 +250,8 @@ export default function Password({ navigation }) {
             />
 
             <View style={styles.generateinform}>
-              <Text style={styles.generatename}>{"\n"}Password</Text>
+              <Text style={styles.generatename}>Password</Text>
               <Text>
-                {"\n"}
-                {"\n"}
                 <Icons
                   onPress={() => {
                     copy(password);
@@ -264,7 +262,6 @@ export default function Password({ navigation }) {
                 />
                 {editable ? (
                   <>
-                    {" "}
                     <Icons
                       onPress={genPass}
                       name={"autorenew"}
@@ -286,7 +283,7 @@ export default function Password({ navigation }) {
               placeholder="Password"
               placeholderTextColor="#000000"
             />
-            <Text style={styles.fieldname}>{"\n"}Note</Text>
+            <Text style={styles.fieldname}>Note</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
@@ -298,10 +295,7 @@ export default function Password({ navigation }) {
               placeholderTextColor="#000000"
             />
             <View style={styles.deletebuttonview}>
-              <Text>
-                {"\n"}
-                {"\n"}
-              </Text>
+              <Text></Text>
               {deleteable ? null : (
                 <>
                   <TouchableOpacity
@@ -313,11 +307,7 @@ export default function Password({ navigation }) {
                 </>
               )}
             </View>
-            <Text>
-              {"\n"}
-              {"\n"}
-              {"\n"}
-            </Text>
+            <Text></Text>
           </View>
         </ScrollView>
       </View>

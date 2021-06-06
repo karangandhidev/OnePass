@@ -13,31 +13,30 @@ const screens = {
   //     headerShown: false,
   //   },
   // },
-  // Login: {
-  //   screen: Login,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-  // Login2FA: {
-  //   screen: Login2FA,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-  // Register: {
-  //   screen: Register,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-
-  // Register2FA: {
-  //   screen: Register2FA,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Login2FA: {
+    screen: Login2FA,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Register2FA: {
+    screen: Register2FA,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
   Bottomnavbar: {
     screen: Bottomnavbar,
     navigationOptions: {

@@ -9,21 +9,19 @@ import {
   StatusBar,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { fonts } from "./fonts";
-import axios from "react-native-axios";
-import { newcss } from "./newcss";
-import { useDispatch, useSelector } from "react-redux";
+import { css } from "./css";
+import { useDispatch } from "react-redux";
 import PassMeter from "react-native-passmeter";
-// import { NavigationActions,StackActions } from '@react-navigation/native'
 import { Dimensions } from "react-native";
+
 export default function Register({ navigation }) {
   const dispatch = useDispatch();
   const [isLoaded] = useFonts(fonts);
   const deviceWindow = Dimensions.get("window");
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const MAX_LEN = 22,
     MIN_LEN = 8,
     PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
@@ -105,7 +103,7 @@ export default function Register({ navigation }) {
         <KeyboardAvoidingView
           style={styles.background}
           behavior="padding"
-          keyboardVerticalOffset="20"
+          keyboardVerticalOffset="45"
         >
           <StatusBar barStyle="light-content" backgroundColor="#000000" />
 

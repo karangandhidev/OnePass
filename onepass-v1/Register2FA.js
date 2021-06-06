@@ -12,15 +12,14 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { fonts } from "./fonts";
 import axios from "react-native-axios";
-import { newcss } from "./newcss";
+import { css } from "./css";
 import { useDispatch } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Icons from "react-native-vector-icons/MaterialIcons";
-// import { e } from "express";
 
 export default function Register2FA({ navigation }) {
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const dispatch = useDispatch();
 
   const data = navigation.state.params.data;
@@ -64,7 +63,7 @@ export default function Register2FA({ navigation }) {
   const register = () => {
     if (formValidation()) {
       axios
-        .post("http://10.0.0.3:3000/register", data, {
+        .post("http://10.0.0.2:3000/register", data, {
           headers: {
             "Access-Control-Allow-Headers":
               "Access-Control-Allow-Headers, Authorization",
@@ -80,14 +79,13 @@ export default function Register2FA({ navigation }) {
           navigation.navigate("Login", {
             username: data.username,
             hint: data.hint,
-            flag: true,
           });
         })
         .catch((er) => {
           alert(er);
         });
       input.map((inp) => {
-        axios.post("http://10.0.0.3:3000/questions", inp).then(() => {
+        axios.post("http://10.0.0.2:3000/questions", inp).then(() => {
           console.log(inp);
         });
       });
@@ -104,7 +102,7 @@ export default function Register2FA({ navigation }) {
         <KeyboardAvoidingView
           style={styles.background}
           behavior="padding"
-          keyboardVerticalOffset="20"
+          keyboardVerticalOffset="45"
         >
           <StatusBar barStyle="light-content" backgroundColor="#000000" />
           <View style={styles.background}>

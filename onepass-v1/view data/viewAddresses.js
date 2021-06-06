@@ -4,11 +4,14 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Clipboard,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
 import axios from "react-native-axios";
-import { newcss } from "../newcss";
+import { css } from "../css";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,12 +19,13 @@ import AppLoading from "expo-app-loading";
 
 export default function viewaddresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [editable, setEditable] = useState(false);
-  const [confirm, setConfirm] = useState(false);
+  const [popup, setPopup] = useState(false);
+
   const [deleteable, setdelete] = useState(true);
   const [data, setData] = useState(navigation.state.params.key);
-  const [deletepopup, setDeletepopup] = useState(false);
+  // const [deletepopup, setDeletepopup] = useState(false);
 
   const handleInput = (e) => {
     const { name, value } = e;
@@ -43,7 +47,7 @@ export default function viewaddresses({ navigation }) {
 
   const del = () => {
     axios
-      .delete(`http://10.0.0.3:3000/address/${data._id}`, data, {
+      .delete(`http://10.0.0.2:3000/address/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -53,9 +57,12 @@ export default function viewaddresses({ navigation }) {
       })
       .then(navigation.navigate("Homepage"));
   };
+  const copy = (text) => {
+    Clipboard.setString(text);
+  };
   const submit = () => {
     axios
-      .put(`http://10.0.0.3:3000/address/${data._id}`, data, {
+      .put(`http://10.0.0.2:3000/address/${data._id}`, data, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -70,7 +77,13 @@ export default function viewaddresses({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.background}>
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="45"
+      >
+        <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
+
         <View style={styles.view_headerbg}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -89,170 +102,288 @@ export default function viewaddresses({ navigation }) {
             <>
               <Icons
                 onPress={() => navigation.goBack()}
-                name={"arrow-back"}
-                size={30}
+                name={"chevron-left"}
+                size={50}
                 color="#F0F5F9"
                 style={styles.editbackicon}
               />
-              <TouchableOpacity style={styles.editbutton} onPress={changeState}>
-                <Text style={styles.editbuttontext}>Edit</Text>
+              <TouchableOpacity
+                style={[
+                  styles.addbutton,
+                  { backgroundColor: "transparent", borderWidth: 0 },
+                ]}
+                onPress={changeState}
+              >
+                <Icons
+                  onPress={changeState}
+                  name={"edit"}
+                  size={38}
+                  color="#f0f5f9"
+                />
               </TouchableOpacity>
             </>
           ) : (
             <>
-              <TouchableOpacity
-                style={styles.cancelbutton}
+              <Icons
                 onPress={changeState}
-              >
-                <Text style={styles.cancelbuttontext}>Cancel</Text>
-              </TouchableOpacity>
+                name={"close"}
+                size={40}
+                color="#F0F5F9"
+                style={styles.cancelediticon}
+              />
 
-              <TouchableOpacity
-                style={styles.submitbutton}
-                onPress={() => setConfirm(!confirm)}
-              >
-                <Text style={styles.deletebuttontext}>Delete</Text>
-              </TouchableOpacity>
+              <Icons
+                style={styles.deletedataicon}
+                name={"delete"}
+                onPress={() => setPopup(!popup)}
+                size={43}
+                color="#E4252D"
+              />
             </>
           )}
         </View>
-        <ScrollView style={styles.scroll}>
-          <View style={([styles.screenview], { alignItems: "flex-start" })}>
-            {confirm ? (
-              <View style={styles.popupbox}>
-                <View style={styles.popupboxtext}>
-                  <Text style={styles.popuptitle}>Delete</Text>
-                  <Text style={styles.popupcontent}>Confirm Deletion</Text>
-                </View>
-                <View style={styles.popupbuttonbox}>
+        <View style={styles.screenview}>
+          <ScrollView style={styles.scroll}>
+            {popup ? (
+              <View style={styles.editpopupbox}>
+                <View style={styles.editpopupheader}>
+                  <Icons
+                    class="material-icons-round"
+                    name={"close"}
+                    style={styles.editclosebutton}
+                    size={30}
+                    color="transparent"
+                  />
+
+                  <Text style={styles.editpopuptitle}>Confirm Delete</Text>
                   <TouchableOpacity
-                    onPress={() => setConfirm(!confirm)}
-                    style={styles.popupLeftbutton}
+                    style={styles.editclosebutton}
+                    onPress={() => {
+                      setPopup(!popup);
+                    }}
                   >
-                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={del}
-                    style={styles.popupRightbutton}
-                  >
-                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
+                    <Icons
+                      class="material-icons-round"
+                      name={"close"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
                   </TouchableOpacity>
                 </View>
+                <Text style={styles.editpopupcontent}>
+                  Are you sure you want to delete?
+                </Text>
+                <TouchableOpacity
+                  onPress={del}
+                  style={styles.editpopupRightbutton}
+                >
+                  <Text style={styles.editpopupbuttoncontent}>Confirm</Text>
+                </TouchableOpacity>
               </View>
-            ) : null}
-            <Text style={styles.fieldname}>{"\n"}Name</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "name" })
-              }
-              defaultValue={data.name}
-              editable={editable}
-              placeholder="Name"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}Apartment/Flat</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "apartment" })
-              }
-              defaultValue={data.apartment}
-              editable={editable}
-              placeholder="Aparthment / Flat"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}Street</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "street" })
-              }
-              defaultValue={data.street}
-              editable={editable}
-              placeholder="Street"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}Landmark</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "landmark" })
-              }
-              defaultValue={data.landmark}
-              editable={editable}
-              placeholder="Landmark"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}City</Text>
-            <TextInput
-              style={styles.fieldinput}
-              defaultValue={data.city}
-              editable={editable}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "city" })
-              }
-              placeholder="City"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}State</Text>
-            <TextInput
-              style={styles.fieldinput}
-              defaultValue={data.state}
-              editable={editable}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "state" })
-              }
-              placeholder="State"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}Country</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "country" })
-              }
-              placeholder="Country"
-              defaultValue={data.country}
-              editable={editable}
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>{"\n"}Pin-Code</Text>
-            <TextInput
-              style={styles.fieldinput}
-              defaultValue={data.pincode}
-              editable={editable}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "pincode" })
-              }
-              keyboardType="number-pad"
-              placeholder="Pin-Code"
-              placeholderTextColor="#000000"
-            />
-            <View style={styles.deletebuttonview}>
-              <Text>
-                {"\n"}
-                {"\n"}
-              </Text>
-              {deleteable ? null : (
-                <>
-                  <TouchableOpacity
-                    style={styles.deletebutton}
-                    onPress={submit}
-                  >
-                    <Text style={styles.submitbuttontext}>Submit</Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </View>
-            <Text>
-              {"\n"}
-              {"\n"}
-              {"\n"}
-            </Text>
-          </View>
-        </ScrollView>
-      </View>
+            ) : (
+              <>
+                <View style={styles.formview}>
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Name</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.name);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "name" })
+                    }
+                    defaultValue={data.name}
+                    editable={editable}
+                    placeholder="Name"
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Apartment / Flat</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.apartment);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "apartment" })
+                    }
+                    defaultValue={data.apartment}
+                    editable={editable}
+                    placeholder="Apartment / Flat"
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Street</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.street);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "street" })
+                    }
+                    defaultValue={data.street}
+                    editable={editable}
+                    placeholder="Street"
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Landmark</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.landmark);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "landmark" })
+                    }
+                    defaultValue={data.landmark}
+                    editable={editable}
+                    placeholder="Landmark"
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>City</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.city);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    defaultValue={data.city}
+                    editable={editable}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "city" })
+                    }
+                    placeholder="City"
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>State</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.state);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    defaultValue={data.state}
+                    editable={editable}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "state" })
+                    }
+                    placeholder="State"
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Country</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.country);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "country" })
+                    }
+                    placeholder="Country"
+                    defaultValue={data.country}
+                    editable={editable}
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Pin-Code</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.pincode);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    defaultValue={data.pincode}
+                    editable={editable}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "pincode" })
+                    }
+                    keyboardType="number-pad"
+                    placeholder="Pin-Code"
+                    placeholderTextColor="#000000"
+                  />
+                </View>
+                {deleteable ? null : (
+                  <View style={styles.formsubmitview}>
+                    <TouchableOpacity
+                      style={styles.submitdata}
+                      onPress={submit}
+                    >
+                      <Text style={styles.submitdatatext}>Submit</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </>
+            )}
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }

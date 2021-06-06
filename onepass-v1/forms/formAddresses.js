@@ -5,11 +5,12 @@ import {
   View,
   TouchableOpacity,
   KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
 import axios from "react-native-axios";
-import { newcss } from "../newcss";
+import { css } from "../css";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import AppLoading from "expo-app-loading";
@@ -17,7 +18,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 export default function Addresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [input, setInput] = useState({});
 
   const handleInput = (e) => {
@@ -31,7 +32,7 @@ export default function Addresses({ navigation }) {
   };
   const submit = () => {
     axios
-      .post("http://10.0.0.3:3000/address", input, {
+      .post("http://10.0.0.2:3000/address", input, {
         headers: {
           "Access-Control-Allow-Headers":
             "Access-Control-Allow-Headers, Authorization",
@@ -48,95 +49,94 @@ export default function Addresses({ navigation }) {
       <KeyboardAvoidingView
         style={styles.background}
         behavior="padding"
-        keyboardVerticalOffset="20"
+        keyboardVerticalOffset="45"
       >
+        <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
+        {/* <View style={styles.background}> */}
         <View style={styles.header}>
-          <Text style={styles.fakeheading}></Text>
-        </View>
-        <View style={styles.formheaders}>
           <Icons
             onPress={() => navigation.goBack()}
-            name={"arrow-back"}
-            size={30}
+            name={"chevron-left"}
+            size={50}
             color="#F0F5F9"
-            style={styles.formheadericon}
+            style={styles.editbackicon}
           />
         </View>
-        <View style={styles.formheaders2}>
-          <Text style={styles.formheading}>Addresses</Text>
+        <View style={styles.formheadingview}>
+          <Text style={styles.formheading}>Address</Text>
         </View>
         <ScrollView style={styles.scroll}>
-          <View style={([styles.screenview], { alignItems: "flex-start" })}>
-            <Text style={styles.fieldname}>{"\n"}Name</Text>
+          <View style={styles.formview}>
+            <Text style={styles.fieldname}>Name</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Name"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
-            <Text style={styles.fieldname}>{"\n"}Apartment/Flat</Text>
+            <Text style={styles.fieldname}>Apartment/Flat</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "apartment" })
               }
-              placeholder="Aparthment / Flat"
-              placeholderTextColor="#000000"
+              placeholder="Apartment / Flat"
+              placeholderTextColor="#F0F5F9"
             />
 
-            <Text style={styles.fieldname}>{"\n"}Street</Text>
+            <Text style={styles.fieldname}>Street</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "street" })
               }
               placeholder="Street"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
 
-            <Text style={styles.fieldname}>{"\n"}Landmark</Text>
+            <Text style={styles.fieldname}>Landmark</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "landmark" })
               }
               placeholder="Landmark"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
 
-            <Text style={styles.fieldname}>{"\n"}City</Text>
+            <Text style={styles.fieldname}>City</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "city" })
               }
               placeholder="City"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
 
-            <Text style={styles.fieldname}>{"\n"}State</Text>
+            <Text style={styles.fieldname}>State</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "state" })
               }
               placeholder="State"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
 
-            <Text style={styles.fieldname}>{"\n"}Country</Text>
+            <Text style={styles.fieldname}>Country</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "country" })
               }
               placeholder="Country"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
 
-            <Text style={styles.fieldname}>{"\n"}Pin-Code</Text>
+            <Text style={styles.fieldname}>Pin-Code</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
@@ -144,23 +144,16 @@ export default function Addresses({ navigation }) {
               }
               keyboardType="numeric"
               placeholder="Pin-Code"
-              placeholderTextColor="#000000"
+              placeholderTextColor="#F0F5F9"
             />
-            <View style={styles.deletebuttonview}>
-              <Text>
-                {"\n"}
-                {"\n"}
-              </Text>
-              <TouchableOpacity style={styles.submitdata} onPress={submit}>
-                <Text style={styles.deletebuttontext}>Submit</Text>
-              </TouchableOpacity>
-            </View>
-            <Text>
-              {"\n"}
-              {"\n"}
-            </Text>
+          </View>
+          <View style={styles.formsubmitview}>
+            <TouchableOpacity style={styles.submitdata} onPress={submit}>
+              <Text style={styles.submitdatatext}>Submit</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
+        {/* </View> */}
       </KeyboardAvoidingView>
     );
   }

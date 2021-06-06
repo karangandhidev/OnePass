@@ -1,9 +1,7 @@
 import Icons from "react-native-vector-icons/MaterialIcons";
 import {
-  Button,
   StyleSheet,
   Text,
-  TextInput,
   View,
   TouchableOpacity,
   StatusBar,
@@ -13,8 +11,7 @@ import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
 import { useDispatch, useSelector } from "react-redux";
-// import Modal from "react-native-root-modal";
-import { newcss } from "../newcss";
+import { css } from "../css";
 import { fonts } from "../fonts";
 import { ScrollView } from "react-native-gesture-handler";
 import { createStackNavigator } from "react-navigation-stack";
@@ -35,7 +32,8 @@ import Cardsview from "../view data/viewCards";
 import Bankview from "../view data/viewBank";
 import Notesview from "../view data/viewNotes";
 import ChangePassword from "../ChangePassword";
-// import Changetfa from "../Changetfa";
+import Changetfa from "../Changetfa";
+
 export default createStackNavigator({
   Homepage: {
     screen: Homepage,
@@ -80,19 +78,19 @@ export default createStackNavigator({
       headerShown: false,
     },
   },
-
-  formPasswords: {
-    screen: Passform,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
   formAddress: {
     screen: Addressform,
     navigationOptions: {
       headerShown: false,
     },
   },
+  formPasswords: {
+    screen: Passform,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+
   formBank: {
     screen: Bankform,
     navigationOptions: {
@@ -147,24 +145,24 @@ export default createStackNavigator({
       headerShown: false,
     },
   },
-  // Changetfa: {
-  //   screen: Changetfa,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
+  Changetfa: {
+    screen: Changetfa,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
 });
 
 export function Homepage({ navigation }) {
   const dispatch = useDispatch();
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [visible, setVisible] = useState(false);
 
   const jwt = useSelector((state) => state.reducer.user);
   useEffect(() => {
     axios
-      .get("http://10.0.0.3:3000/preference")
+      .get("http://10.0.0.2:3000/preference")
       .then((res) => {
         console.log(res.data);
         dispatch({ type: "GETPREFERENCE", data: res.data });
@@ -188,38 +186,12 @@ export function Homepage({ navigation }) {
               style={styles.overlaycard}
               onPress={() => {
                 visis();
-                navigation.navigate("formPasswords");
-              }}
-            >
-              <Text style={styles.overlaytext}>Passwords</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                visis();
-                navigation.navigate("formNotes");
-              }}
-            >
-              <Text style={styles.overlaytext}>Notes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                visis();
                 navigation.navigate("formAddress");
               }}
             >
-              <Text style={styles.overlaytext}>Addresses</Text>
+              <Text style={styles.overlaytext}>Address</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.overlaycard}
-              onPress={() => {
-                visis();
-                navigation.navigate("formCards");
-              }}
-            >
-              <Text style={styles.overlaytext}>Card Details</Text>
-            </TouchableOpacity>
+
             <TouchableOpacity
               style={styles.overlaycard}
               onPress={() => {
@@ -227,8 +199,39 @@ export function Homepage({ navigation }) {
                 navigation.navigate("formBank");
               }}
             >
-              <Text style={styles.overlaytext}>Bank Details</Text>
+              <Text style={styles.overlaytext}>Bank Detail</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.overlaycard}
+              onPress={() => {
+                visis();
+                navigation.navigate("formPasswords");
+              }}
+            >
+              <Text style={styles.overlaytext}>Credential</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.overlaycard}
+              onPress={() => {
+                visis();
+                navigation.navigate("formCards");
+              }}
+            >
+              <Text style={styles.overlaytext}>Card Detail</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.overlaycard}
+              onPress={() => {
+                visis();
+                navigation.navigate("formNotes");
+              }}
+            >
+              <Text style={styles.overlaytext}>Note</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={styles.overlaycard} onPress={visis}>
               <Icons
                 onPress={visis}
@@ -259,9 +262,8 @@ export function Homepage({ navigation }) {
             </View>
           </>
         )}
-
-        <ScrollView style={styles.scroll}>
-          <View style={styles.screenview}>
+        <View style={styles.screenview}>
+          <ScrollView style={styles.scroll}>
             <TouchableOpacity
               style={[
                 styles.datacard,
@@ -281,13 +283,47 @@ export function Homepage({ navigation }) {
             <TouchableOpacity
               style={styles.datacard}
               onPress={() => {
+                navigation.navigate("Addresses");
+              }}
+            >
+              <Icons name={"apartment"} size={40} color="#F0F5F9" />
+              <Text style={styles.datacardtext}>Addresses</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.datacard}
+              onPress={() => {
+                navigation.navigate("BankDetails");
+              }}
+            >
+              <Icons name={"payments"} size={40} color="#F0F5F9" />
+              <Text style={styles.datacardtext}>Bank Details</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.datacard}
+              onPress={() => {
+                navigation.navigate("CardDetails");
+              }}
+            >
+              <Icons name={"payment"} size={40} color="#F0F5F9" />
+              <Text style={styles.datacardtext}>Card Details</Text>
+              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.datacard}
+              onPress={() => {
                 navigation.navigate("Passwords");
               }}
             >
               <Icons name={"language"} size={40} color="#F0F5F9" />
-              <Text style={styles.datacardtext}>Passwords</Text>
+              <Text style={styles.datacardtext}>Credentials</Text>
               <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
+
             <TouchableOpacity
               style={styles.datacard}
               onPress={() => {
@@ -301,35 +337,15 @@ export function Homepage({ navigation }) {
             <TouchableOpacity
               style={styles.datacard}
               onPress={() => {
-                navigation.navigate("Addresses");
+                navigation.navigate("Notes");
               }}
             >
-              <Icons name={"apartment"} size={40} color="#F0F5F9" />
-              <Text style={styles.datacardtext}>Addresses</Text>
+              <Icons name={"description"} size={40} color="#F0F5F9" />
+              <Text style={styles.datacardtext}>test</Text>
               <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.datacard}
-              onPress={() => {
-                navigation.navigate("CardDetails");
-              }}
-            >
-              <Icons name={"payment"} size={40} color="#F0F5F9" />
-              <Text style={styles.datacardtext}>Card Details</Text>
-              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.datacard}
-              onPress={() => {
-                navigation.navigate("BankDetails");
-              }}
-            >
-              <Icons name={"payments"} size={40} color="#F0F5F9" />
-              <Text style={styles.datacardtext}>Bank Details</Text>
-              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     );
   }

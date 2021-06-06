@@ -4,11 +4,13 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useEffect, useState } from "react";
 import axios from "react-native-axios";
-import { newcss } from "../newcss";
+import { css } from "../css";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { store } from "../Redux/globalReducer";
@@ -16,7 +18,7 @@ import AppLoading from "expo-app-loading";
 import { ScrollView } from "react-native-gesture-handler";
 export default function BankDetails({ navigation }) {
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState([]);
@@ -29,7 +31,7 @@ export default function BankDetails({ navigation }) {
     const getData = async () => {
       const token = store.getState().reducer.user.data;
       await axios
-        .get("http://10.0.0.3:3000/bankview", { headers: { Auth: token } })
+        .get("http://10.0.0.2:3000/bankview", { headers: { Auth: token } })
         .then((res) => {
           setData(res.data);
         });
@@ -61,41 +63,46 @@ export default function BankDetails({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.background}>
-        <View style={styles.view_headerbg}>
-          <Text style={styles.fakeheading}></Text>
-        </View>
-        <View style={styles.view_headingview}>
-          {!searchbar ? (
-            <>
-              <Text style={styles.view_headingtext}>Bank Detail</Text>
-            </>
-          ) : (
-            <Text style={styles.view_headingtext}></Text>
-          )}
-        </View>
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="45"
+      >
+        <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
+        <View style={styles.background}>
+          <View style={styles.view_headerbg}>
+            <Text style={styles.fakeheading}></Text>
+          </View>
+          <View style={styles.view_headingview}>
+            {!searchbar ? (
+              <>
+                <Text style={styles.view_headingtext}>Bank Details</Text>
+              </>
+            ) : (
+              <Text style={styles.view_headingtext}></Text>
+            )}
+          </View>
 
-        <View style={styles.view_actualheading}>
-          {!searchbar ? (
-            <>
-              <Icons
-                onPress={() => navigation.goBack()}
-                name={"arrow-back"}
-                size={30}
-                color="#F0F5F9"
-                style={styles.editbackicon}
-              />
-              <Icons
-                onPress={searchnow}
-                name={"search"}
-                size={30}
-                color="#F0F5F9"
-                style={styles.searchicon}
-              />
-            </>
-          ) : (
-            <>
-              <View style={styles.searchcancel}>
+          <View style={styles.view_actualheading}>
+            {!searchbar ? (
+              <>
+                <Icons
+                  onPress={() => navigation.goBack()}
+                  name={"chevron-left"}
+                  size={50}
+                  color="#F0F5F9"
+                  style={styles.editbackicon}
+                />
+                <Icons
+                  onPress={searchnow}
+                  name={"search"}
+                  size={45}
+                  color="#F0F5F9"
+                  style={styles.searchicon}
+                />
+              </>
+            ) : (
+              <>
                 <TextInput
                   style={styles.searchbar}
                   onChangeText={(text) => setSearch(text)}
@@ -105,25 +112,25 @@ export default function BankDetails({ navigation }) {
                 <Icons
                   onPress={searchnow}
                   name={"close"}
-                  size={30}
+                  size={50}
                   color="#F0F5F9"
-                  style={styles.editbackicon}
+                  style={styles.cancelsearchicon}
                 />
-              </View>
-            </>
-          )}
-        </View>
-
-        <ScrollView style={styles.scroll}>
-          <View style={styles.screenview}>
-            {data.length > 0 ? (
-              filter.map(render)
-            ) : (
-              <Text style={styles.datacardtext}>No data available</Text>
+              </>
             )}
           </View>
-        </ScrollView>
-      </View>
+
+          <ScrollView style={styles.scroll}>
+            <View style={styles.screenview}>
+              {data.length > 0 ? (
+                filter.map(render)
+              ) : (
+                <Text style={styles.nodata}>No data available</Text>
+              )}
+            </View>
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }

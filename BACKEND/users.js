@@ -163,7 +163,9 @@ router.put("/changehint", async (req, res) => {
 });
 router.post("/masterdelete", async (req, res) => {
   const { password } = req.body;
-  const User = await model.findOne({});
+  const User = await model.findOne({}).lean();
+  console.log(User)
+  console.log(password)
   if (password) {
     let ogpass = decrypt(User.password);
     if (password === ogpass) {

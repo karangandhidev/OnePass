@@ -3,29 +3,27 @@ import {
   StyleSheet,
   Clipboard,
   Text,
-  TextInput,
   View,
   TouchableOpacity,
   StatusBar,
   Switch,
 } from "react-native";
 import Icons from "react-native-vector-icons/MaterialIcons";
-
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
 import { fonts } from "./fonts";
-import { newcss } from "./newcss";
+import { css } from "./css";
 import { ScrollView } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
-import Checkbox from "expo-checkbox";
 import axios from "axios";
+
 function Generator() {
   const dispatch = useDispatch();
   const rerender = useSelector((state) => state.reducer.rerender);
   const preference = useSelector((state) => state.preference.preference);
   console.log(preference);
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
   const [slider, setSlider] = useState(preference.length); //size of password
   const [isUpper, setUpper] = useState(preference.isUpper);
   const [isLower, setLower] = useState(preference.isLower);
@@ -52,7 +50,7 @@ function Generator() {
   }, [password]);
   useEffect(() => {
     axios
-      .get("http://10.0.0.3:3000/preference")
+      .get("http://10.0.0.2:3000/preference")
       .then((res) => dispatch({ type: "GETPREFERENCE", data: res.data }))
       .catch((e) => console.log(e));
   }, [dispatch]);
@@ -140,7 +138,7 @@ function Generator() {
     console.log("generate hua");
 
     axios
-      .post("http://10.0.0.3:3000/generatepass", {
+      .post("http://10.0.0.2:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,
@@ -155,7 +153,7 @@ function Generator() {
   useEffect(() => {
     console.log("USEEFFECT");
     axios
-      .post("http://10.0.0.3:3000/generatepass", {
+      .post("http://10.0.0.2:3000/generatepass", {
         length: preference.length,
         numbers: preference.isNumber,
         lowercase: preference.isLower,

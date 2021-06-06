@@ -12,7 +12,7 @@ import {
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
-import { newcss } from "./newcss";
+import { css } from "./css";
 import { fonts } from "./fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
@@ -20,7 +20,7 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Login({ navigation }) {
   const [input, setInput] = useState("");
   const [isLoaded] = useFonts(fonts);
-  const styles = StyleSheet.create(newcss);
+  const styles = StyleSheet.create(css);
 
   const creds = useSelector((state) => state.reducer.creds);
 
@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      await axios.get("http://10.0.0.3:3000/creds").then((res) => {
+      await axios.get("http://10.0.0.2:3000/creds").then((res) => {
         dispatch({ type: "GET_DATA", data: res.data });
       });
     };
@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
     if (input !== "") {
       axios
         .post(
-          "http://10.0.0.3:3000/login",
+          "http://10.0.0.2:3000/login",
           {
             username: creds.username,
             password: input,
@@ -74,7 +74,7 @@ export default function Login({ navigation }) {
         <KeyboardAvoidingView
           style={styles.background}
           behavior="padding"
-          keyboardVerticalOffset="20"
+          keyboardVerticalOffset="45"
         >
           <StatusBar barStyle="light-content" backgroundColor="#000000" />
           <View style={styles.background}>

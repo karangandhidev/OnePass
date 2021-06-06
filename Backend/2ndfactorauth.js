@@ -24,14 +24,13 @@ router.get("/questions", async (req, res) => {
     q.question = decrypt(q.question);
     q.answer = decrypt(q.answer);
   });
-  console.log(questions);
+  
   return res.status(200).json(questions);
 });
 
 router.post("/questions", (req, res) => {
   let { question, answer } = req.body;
-  console.log(question);
-  console.log(answer);
+
 
   question = encrypt(question);
   answer = encrypt(answer);
@@ -57,11 +56,15 @@ router.post("/2ndauth", async (req, res) => {
 
 router.put("/questions", async (req, res) => {
   let { _id, password, question, answer } = req.body;
-  const User = await user.find({});
-  const ogpass = decrypt(User.password);
+  console.log(_id)
+  
+  
+  const User = await user.find({}).lean();
+  console.log(User[0])
+  const ogpass = decrypt(User[0].password);
   if (password === ogpass) {
     question = encrypt(question);
-    answer = encrypt(question);
+    answer = encrypt(answer);
     model.findByIdAndUpdate(
       { _id: _id },
       { $set: { question: question, answer: answer } },

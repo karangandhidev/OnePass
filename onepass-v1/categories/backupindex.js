@@ -149,7 +149,7 @@ export function Homepage({ navigation }) {
 
   useEffect(() => {
     axios
-      .get("http://10.0.0.3:3000/preference")
+      .get("http://10.0.0.2:3000/preference")
       .then((res) => {
         console.log(res.data);
         dispatch({ type: "GETPREFERENCE", data: res.data });
