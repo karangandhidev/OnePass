@@ -16,6 +16,7 @@ import { css } from "./css";
 import { useDispatch } from "react-redux";
 import PassMeter from "react-native-passmeter";
 import { Dimensions } from "react-native";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 export default function Register({ navigation }) {
   const dispatch = useDispatch();
@@ -75,18 +76,51 @@ export default function Register({ navigation }) {
               password: input.password,
               hint: input.hint,
             };
+            console.log(data);
             navigation.navigate("Register2FA", { data: data });
           } else {
-            alert(message.badpass);
+            showMessage({
+              message: "Password & Username cannot be same",
+              color: "#f0f5f9",
+              type: "danger",
+              style: {
+                borderRadius: 20,
+                height: 50,
+              },
+            });
           }
         } else {
-          alert(message.confirm);
+          showMessage({
+            message: "Passwords do not match",
+            color: "#f0f5f9",
+            type: "danger",
+            style: {
+              borderRadius: 20,
+              height: 50,
+            },
+          });
         }
       } else {
-        alert(message.password);
+        showMessage({
+          message: "Password too short",
+          color: "#f0f5f9",
+          type: "danger",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
+        });
       }
     } else {
-      alert(message.creds);
+      showMessage({
+        message: "Credentials cannot be empty",
+        color: "#f0f5f9",
+        type: "danger",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
     }
   };
 

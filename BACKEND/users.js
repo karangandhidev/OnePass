@@ -71,7 +71,6 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   let User = await model.findOne({ username }).lean();
-
   let ogpass = decrypt(User.password);
   if (!User) {
     return res

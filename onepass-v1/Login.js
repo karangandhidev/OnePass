@@ -16,6 +16,7 @@ import { css } from "./css";
 import { fonts } from "./fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 export default function Login({ navigation }) {
   const [input, setInput] = useState("");
@@ -34,6 +35,7 @@ export default function Login({ navigation }) {
     };
     getData();
   }, [dispatch]);
+
   const login = (e) => {
     e.preventDefault();
     if (input !== "") {
@@ -60,10 +62,26 @@ export default function Login({ navigation }) {
           // navigation.navigate("Bottomnavbar");
         })
         .catch((er) => {
-          console.log("error");
+          showMessage({
+            message: "Password Incorrect",
+            color: "#f0f5f9",
+            type: "danger",
+            style: {
+              borderRadius: 20,
+              height: 50,
+            },
+          });
         });
     } else {
-      alert("Credentials cannot be empty");
+      showMessage({
+        message: "Invalid Input",
+        color: "#f0f5f9",
+        type: "danger",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
     }
   };
   if (!isLoaded) {
@@ -77,6 +95,7 @@ export default function Login({ navigation }) {
           keyboardVerticalOffset="45"
         >
           <StatusBar barStyle="light-content" backgroundColor="#000000" />
+
           <View style={styles.background}>
             <Text style={styles.loginheader}>One-Pass</Text>
             <Text style={styles.slogan}>
@@ -119,7 +138,13 @@ export default function Login({ navigation }) {
             >
               <Text style={styles.loginbuttontext}>Register</Text>
             </TouchableOpacity>
-            <StatusBar style="auto" />
+            {/* <StatusBar style="auto" /> */}
+            <FlashMessage
+              position="top"
+              animated={true}
+              autoHide={true}
+              duration={2000}
+            />
           </View>
         </KeyboardAvoidingView>
       </ScrollView>

@@ -11,6 +11,7 @@ import {
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import { css } from "./css";
 import { fonts } from "./fonts";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +27,6 @@ export default function Login2FA({ navigation }) {
   const creds = useSelector((state) => state.reducer.creds);
 
   const dispatch = useDispatch();
-  const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const getData = async () => {
       await axios.get("http://10.0.0.2:3000/questions").then((res) => {
@@ -65,13 +65,38 @@ export default function Login2FA({ navigation }) {
         )
         .then((res) => {
           setInput("");
+          showMessage({
+            message: "Successfully Logged In",
+            color: "#f0f5f9",
+            type: "success",
+            style: {
+              borderRadius: 20,
+              height: 50,
+            },
+          });
           navigation.navigate("Bottomnavbar");
         })
         .catch((er) => {
-          console.log("error");
+          showMessage({
+            message: "Answer Incorrect",
+            color: "#f0f5f9",
+            type: "danger",
+            style: {
+              borderRadius: 20,
+              height: 50,
+            },
+          });
         });
     } else {
-      alert("Credentials cannot be empty");
+      showMessage({
+        message: "Invalid Input",
+        color: "#f0f5f9",
+        type: "danger",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
     }
   };
   if (!isLoaded) {
@@ -92,14 +117,14 @@ export default function Login2FA({ navigation }) {
               Keep your credentials to yourself!
             </Text>
             <Text style={styles.username}>
-              {display ? display.question : ""}?
+              {display ? display.question : null}?
             </Text>
 
             <Text style={styles.bodytext}>Answer</Text>
             <TextInput
               style={styles.passwordinputbox}
               onChangeText={(text) => setInput(text)}
-              value={input}
+              // value={input}
             />
             <Text style={styles.bodytext}>{"\n"} </Text>
 
@@ -115,6 +140,12 @@ export default function Login2FA({ navigation }) {
               size={50}
               color="#F0F5F9"
               style={{ color: "#F0F5F9" }}
+            />
+            <FlashMessage
+              position="top"
+              animated={true}
+              autoHide={true}
+              duration={2000}
             />
           </View>
         </KeyboardAvoidingView>

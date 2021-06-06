@@ -1,3 +1,4 @@
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import {
   StyleSheet,
@@ -336,6 +337,12 @@ export function Homepage({ navigation }) {
             </TouchableOpacity>
           </ScrollView>
         </View>
+        <FlashMessage
+          position="top"
+          animated={true}
+          autoHide={true}
+          duration={2000}
+        />
       </View>
     );
   }

@@ -16,6 +16,7 @@ import { css } from "./css";
 import { useDispatch } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Icons from "react-native-vector-icons/MaterialIcons";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 export default function Register2FA({ navigation }) {
   const [isLoaded] = useFonts(fonts);
@@ -90,7 +91,15 @@ export default function Register2FA({ navigation }) {
         });
       });
     } else {
-      alert("Please fill all questions");
+      showMessage({
+        message: "Data cannot be empty",
+        color: "#f0f5f9",
+        type: "danger",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
     }
   };
 

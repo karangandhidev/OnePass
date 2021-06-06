@@ -11,6 +11,8 @@ import {
   TextInput,
   Text,
 } from "react-native";
+import FlashMessage from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
 import Bottomnavbar from "./Bottomnavbar";
 import { fonts } from "./fonts";
 import { useFonts } from "expo-font";
@@ -18,38 +20,9 @@ import AppLoading from "expo-app-loading";
 import { Dimensions, Switch } from "react-native";
 
 export default function Test() {
-  const deviceWindow = Dimensions.get("window");
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-  const [isSpecial, setSpecial] = useState(true);
-  // const [input, setInput] = useState({
-  //   password: "",
-  // });
-  let passPoint = 0;
-  const [passStat, setPassStat] = useState("Weak");
-  const regexArr = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^A-Za-z0-9]/];
-  const PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
-  const MAX_LEN = 22;
-  const MIN_LEN = 8;
-  // const handleInput = (e) => {
-  //   const { value, name } = e;
-  //   setInput((state) => {
-  //     return { ...state, [name]: value };
-  //   });
-  // };
-  useEffect(() => {
-    if (
-      input.password.length > 0 &&
-      input.password.length < input.password.MIN_LEN
-    )
-      setPassStat(PASS_LABELS[0]);
-    else {
-      regexArr.forEach((rgx) =>
-        rgx.test(input.password) ? (passPoint += 1) : null
-      );
-      setPassStat(PASS_LABELS[passPoint]);
-    }
-  }, [input.password]);
+
   if (!isLoaded) {
     return <AppLoading />;
   } else {
@@ -63,18 +36,27 @@ export default function Test() {
         </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
-            <Text style={styles.bodytext}>{passStat}</Text>
-            <TextInput
-              style={styles.passwordinputbox}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "password" })
-              }
-              placeholder="Enter Password"
-              secureTextEntry={true}
-              placeholderTextColor="#F0F5F9"
-            />
+            <View style={{ flex: 1 }}>
+              <Button
+                onPress={() => {
+                  /* HERE WE GONE SHOW OUR FIRST MESSAGE */
+                  showMessage({
+                    message: "Simple message",
+                    type: "info",
+                  });
+                }}
+                title="Request Details"
+                color="#841584"
+              />
+            </View>
           </View>
         </ScrollView>
+        <FlashMessage
+          position="top"
+          animated={true}
+          autoHide={true}
+          duration={3000}
+        />
       </View>
     );
   }
