@@ -14,6 +14,7 @@ import { css } from "../css";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import AppLoading from "expo-app-loading";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Bank({ navigation }) {
@@ -41,6 +42,15 @@ export default function Bank({ navigation }) {
         },
       })
       .then(navigation.navigate("BankDetails"));
+    showMessage({
+      message: "Data Added",
+      color: "#f0f5f9",
+      type: "success",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   if (!isLoaded) {
     return <AppLoading />;

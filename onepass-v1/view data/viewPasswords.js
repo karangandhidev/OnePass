@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { Component, useState, useEffect } from "react";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import AppLoading from "expo-app-loading";
 import axios from "react-native-axios";
 import { css } from "../css";
@@ -86,6 +87,15 @@ export default function Password({ navigation }) {
         }
       )
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Deleted Successfully",
+      color: "#f0f5f9",
+      type: "danger",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   const changeState = () => {
     setEditable(!editable);
@@ -106,6 +116,15 @@ export default function Password({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Added",
+      color: "#f0f5f9",
+      type: "success",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   if (!isLoaded) {
     return <AppLoading />;
@@ -224,7 +243,7 @@ export default function Password({ navigation }) {
                       handleInput({ value: text, name: "name" })
                     }
                     placeholder="Name"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                     defaultValue={data.name}
                     editable={editable}
                   />
@@ -238,7 +257,7 @@ export default function Password({ navigation }) {
                     placeholder="Category"
                     defaultValue={data.category}
                     editable={editable}
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>URL</Text>
@@ -261,7 +280,7 @@ export default function Password({ navigation }) {
                     placeholder="URL"
                     defaultValue={data.url}
                     editable={editable}
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Username</Text>
@@ -269,6 +288,15 @@ export default function Password({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.username);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -284,7 +312,7 @@ export default function Password({ navigation }) {
                     placeholder="User Name"
                     defaultValue={data.username}
                     editable={editable}
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
 
                   <View style={styles.generateinform}>
@@ -293,6 +321,15 @@ export default function Password({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.email);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -308,7 +345,7 @@ export default function Password({ navigation }) {
                     placeholder="Email"
                     defaultValue={data.email}
                     editable={editable}
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
 
                   <View style={styles.generateinform}>
@@ -317,6 +354,15 @@ export default function Password({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.note);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -340,7 +386,7 @@ export default function Password({ navigation }) {
                       handleInput({ value: text, name: "password" })
                     }
                     placeholder="Password"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <Text style={styles.fieldname}>Note</Text>
                   <TextInput
@@ -351,7 +397,7 @@ export default function Password({ navigation }) {
                     defaultValue={data.note}
                     editable={editable}
                     placeholder="Note"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                 </View>
 

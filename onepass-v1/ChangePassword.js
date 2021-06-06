@@ -16,6 +16,8 @@ import { css } from "./css";
 import { useDispatch } from "react-redux";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
+import FlashMessage, { showMessage } from "react-native-flash-message";
+
 export default function ChangePassword({ navigation }) {
   const [username, setUsername] = useState(false);
   const [password, setPassword] = useState(false);
@@ -76,7 +78,27 @@ export default function ChangePassword({ navigation }) {
               data: { key: "username", value: input.Username },
             });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            showMessage({
+              message: "Invalid Input",
+              color: "#f0f5f9",
+              type: "danger",
+              style: {
+                borderRadius: 20,
+                height: 50,
+              },
+            });
+          });
+        showMessage({
+          message: "Data Updated",
+          color: "#f0f5f9",
+          type: "success",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
+        });
         logout();
       }
     }
@@ -91,15 +113,59 @@ export default function ChangePassword({ navigation }) {
               type: "CHANGEDATA",
               data: { key: "hint", value: input.Hint },
             })
-          );
+          )
+          .catch((err) => {
+            console.log(err);
+            showMessage({
+              message: "Invalid Input",
+              color: "#f0f5f9",
+              type: "danger",
+              style: {
+                borderRadius: 20,
+                height: 50,
+              },
+            });
+          });
+
+        showMessage({
+          message: "Data Updated",
+          color: "#f0f5f9",
+          type: "success",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
+        });
         logout();
       }
     }
     if (input.OldPassword && input.NewPassword)
       if (input.ConfirmNewPassword === input.NewPassword) {
-        axios.post("http://10.0.0.2:3000/changepass", {
-          OldPassword: input.OldPassword,
-          NewPassword: input.NewPassword,
+        axios
+          .post("http://10.0.0.2:3000/changepass", {
+            OldPassword: input.OldPassword,
+            NewPassword: input.NewPassword,
+          })
+          .catch((err) => {
+            console.log(err);
+            showMessage({
+              message: "Invalid Input",
+              color: "#f0f5f9",
+              type: "danger",
+              style: {
+                borderRadius: 20,
+                height: 50,
+              },
+            });
+          });
+        showMessage({
+          message: "Data Updated",
+          color: "#f0f5f9",
+          type: "success",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
         });
         logout();
       }

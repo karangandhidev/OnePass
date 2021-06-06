@@ -53,10 +53,11 @@ export default function Register2FA({ navigation }) {
   };
 
   const formValidation = () => {
-    let valid = false;
+    let valid = true;
     input.map((inp) => {
-      if (inp.question !== "" && inp.answer !== "") {
-        valid = true;
+      console.log(inp.question, inp.answer);
+      if (inp.question == "" || inp.answer == "") {
+        valid = false;
       }
     });
     return valid;
@@ -76,6 +77,15 @@ export default function Register2FA({ navigation }) {
           dispatch({
             type: "GET_DATA",
             data: { username: data.username, hint: data.hint },
+          });
+          showMessage({
+            message: "Successfully Registered",
+            color: "#f0f5f9",
+            type: "success",
+            style: {
+              borderRadius: 20,
+              height: 50,
+            },
           });
           navigation.navigate("Login", {
             username: data.username,
@@ -141,7 +151,7 @@ export default function Register2FA({ navigation }) {
                 placeholderTextColor="#F0F5F9"
               />
             </View>
-            <View kwy={2} style={styles.form}>
+            <View key={2} style={styles.form}>
               <Text style={styles.bodytext}>Question 2</Text>
               <TextInput
                 style={styles.passwordinputbox}

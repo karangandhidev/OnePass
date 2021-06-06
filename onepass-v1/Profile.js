@@ -16,6 +16,7 @@ import { css } from "./css";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 function Profile({ navigation }) {
   const [isLoaded] = useFonts(fonts);
@@ -34,12 +35,41 @@ function Profile({ navigation }) {
       .then(() => {
         dispatch({ type: "GET_DATA", data: { username: "", hint: "" } });
         navigation.navigate("Login");
+        showMessage({
+          message: "User Deleted Successfully",
+          color: "#f0f5f9",
+          type: "success",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
+        });
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        showMessage({
+          message: "Invalid Input",
+          color: "#f0f5f9",
+          type: "danger",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
+        });
+      });
   };
   const logout = () => {
     axios.post("http://10.0.0.2:3000/preference", prefs);
     navigation.navigate("Login", { username: "", hint: "" });
+    showMessage({
+      message: "Logged Out Successfully",
+      color: "#f0f5f9",
+      type: "default",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   const showSettings = () => {
     setSettings(!settings);

@@ -16,6 +16,7 @@ import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 export default function viewaddresses({ navigation }) {
   const [isLoaded] = useFonts(fonts);
@@ -56,6 +57,15 @@ export default function viewaddresses({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Deleted Successfully",
+      color: "#f0f5f9",
+      type: "danger",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   const copy = (text) => {
     Clipboard.setString(text);
@@ -71,6 +81,15 @@ export default function viewaddresses({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Edited Successfully",
+      color: "#f0f5f9",
+      type: "success",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
 
   if (!isLoaded) {
@@ -189,6 +208,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.name);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -204,7 +232,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.name}
                     editable={editable}
                     placeholder="Name"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Apartment / Flat</Text>
@@ -212,6 +240,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.apartment);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -227,7 +264,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.apartment}
                     editable={editable}
                     placeholder="Apartment / Flat"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Street</Text>
@@ -235,6 +272,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.street);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -250,7 +296,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.street}
                     editable={editable}
                     placeholder="Street"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Landmark</Text>
@@ -258,6 +304,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.landmark);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -273,7 +328,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.landmark}
                     editable={editable}
                     placeholder="Landmark"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>City</Text>
@@ -281,6 +336,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.city);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -296,7 +360,7 @@ export default function viewaddresses({ navigation }) {
                       handleInput({ value: text, name: "city" })
                     }
                     placeholder="City"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>State</Text>
@@ -304,6 +368,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.state);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -319,7 +392,7 @@ export default function viewaddresses({ navigation }) {
                       handleInput({ value: text, name: "state" })
                     }
                     placeholder="State"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Country</Text>
@@ -327,6 +400,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.country);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -342,7 +424,7 @@ export default function viewaddresses({ navigation }) {
                     placeholder="Country"
                     defaultValue={data.country}
                     editable={editable}
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Pin-Code</Text>
@@ -350,6 +432,15 @@ export default function viewaddresses({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.pincode);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -366,7 +457,7 @@ export default function viewaddresses({ navigation }) {
                     }
                     keyboardType="number-pad"
                     placeholder="Pin-Code"
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#F0F5F9"
                   />
                 </View>
                 {deleteable ? null : (

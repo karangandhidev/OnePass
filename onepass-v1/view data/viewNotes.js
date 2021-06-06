@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import axios from "react-native-axios";
 import { css } from "../css";
 import { fonts } from "../fonts";
@@ -46,6 +47,15 @@ export default function Notes({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Deleted Successfully",
+      color: "#f0f5f9",
+      type: "danger",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
 
   const changeState = () => {
@@ -69,6 +79,15 @@ export default function Notes({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Added",
+      color: "#f0f5f9",
+      type: "success",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   if (!isLoaded) {
     return <AppLoading />;
@@ -197,6 +216,15 @@ export default function Notes({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.note);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}

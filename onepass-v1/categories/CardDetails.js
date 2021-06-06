@@ -38,6 +38,7 @@ export default function CardDetails({ navigation }) {
     };
     getData();
   }, [setData]);
+  
   useEffect(() => {
     setFilter(
       data.filter(

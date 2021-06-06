@@ -625,6 +625,7 @@ export const css = {
     paddingLeft: 15,
     paddingRight: 15,
     fontFamily: "RobotoCondensed-Light",
+    color: "#f0f5f9",
     fontSize: 23,
     borderColor: "#F0F5F9",
     borderWidth: 1,

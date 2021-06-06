@@ -13,10 +13,10 @@ import axios from "axios";
 import { useFonts } from "expo-font";
 import { fonts } from "./fonts";
 import { css } from "./css";
-import { useDispatch } from "react-redux";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
-import { KeyboardAvoidingViewComponent } from "react-native";
+import FlashMessage, { showMessage } from "react-native-flash-message";
+
 export default function Changetfa({ navigation }) {
   const [tfa, setTfa] = useState(false);
   const [input, setInput] = useState([]);
@@ -32,10 +32,33 @@ export default function Changetfa({ navigation }) {
   }, [setInput]);
   const changeQuestions = () => {
     input.map((i) => {
-      axios.put("http://10.0.0.2:3000/questions", i).then(() => {
-        console.log(i);
-      });
+      axios
+        .put("http://10.0.0.2:3000/questions", i)
+        .then(() => {
+          console.log(i);
+        })
+        .catch((err) => {
+          console.log(err);
+          showMessage({
+            message: "Invalid Input",
+            color: "#f0f5f9",
+            type: "danger",
+            style: {
+              borderRadius: 20,
+              height: 50,
+            },
+          });
+        });
       navigation.navigate("Login");
+      showMessage({
+        message: "Data Updated",
+        color: "#f0f5f9",
+        type: "success",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
     });
   };
 
@@ -140,7 +163,7 @@ export default function Changetfa({ navigation }) {
             placeholderTextColor="#F0F5F9"
           />
           <TouchableOpacity
-            onPress={masterdelete}
+            onPress={changeQuestions}
             style={styles.popupRightbutton}
           >
             <Text style={styles.popupbuttoncontent}>Confirm</Text>

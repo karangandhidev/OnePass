@@ -16,6 +16,7 @@ import { css } from "./css";
 import { ScrollView } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
 import axios from "axios";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 function Generator() {
   const dispatch = useDispatch();
@@ -203,6 +204,15 @@ function Generator() {
       alert("Please Generate a password first");
     } else {
       Clipboard.setString(password);
+      showMessage({
+        message: "Password Copied!",
+        color: "#f0f5f9",
+        type: "default",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
     }
   };
   const symbolsetting = () => {

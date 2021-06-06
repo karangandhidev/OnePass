@@ -71,13 +71,25 @@ export default function Register({ navigation }) {
       if (length) {
         if (confirm) {
           if (input.password != input.name) {
-            const data = {
-              username: input.name,
-              password: input.password,
-              hint: input.hint,
-            };
-            console.log(data);
-            navigation.navigate("Register2FA", { data: data });
+            if (input.password != input.hint) {
+              const data = {
+                username: input.name,
+                password: input.password,
+                hint: input.hint,
+              };
+              console.log(data);
+              navigation.navigate("Register2FA", { data: data });
+            } else {
+              showMessage({
+                message: "Hint & Password cannot be same",
+                color: "#f0f5f9",
+                type: "danger",
+                style: {
+                  borderRadius: 20,
+                  height: 50,
+                },
+              });
+            }
           } else {
             showMessage({
               message: "Password & Username cannot be same",

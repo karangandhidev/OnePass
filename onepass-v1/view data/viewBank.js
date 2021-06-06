@@ -15,6 +15,7 @@ import { css } from "../css";
 import { fonts } from "../fonts";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import AppLoading from "expo-app-loading";
 
 export default function Viewbank({ navigation }) {
@@ -45,6 +46,15 @@ export default function Viewbank({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Deleted Successfully",
+      color: "#f0f5f9",
+      type: "danger",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   const changeState = () => {
     setEditable(!editable);
@@ -67,6 +77,15 @@ export default function Viewbank({ navigation }) {
         },
       })
       .then(navigation.navigate("Homepage"));
+    showMessage({
+      message: "Data Added",
+      color: "#f0f5f9",
+      type: "success",
+      style: {
+        borderRadius: 20,
+        height: 50,
+      },
+    });
   };
   if (!isLoaded) {
     return <AppLoading />;
@@ -195,6 +214,15 @@ export default function Viewbank({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.acc_no);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
@@ -219,6 +247,15 @@ export default function Viewbank({ navigation }) {
                       <Icons
                         onPress={() => {
                           copy(data.ifsc);
+                          showMessage({
+                            message: "Data Copied!",
+                            color: "#f0f5f9",
+                            type: "default",
+                            style: {
+                              borderRadius: 20,
+                              height: 50,
+                            },
+                          });
                         }}
                         name={"content-copy"}
                         size={30}
