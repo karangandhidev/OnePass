@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import axios from "react-native-axios";
 import { css } from "../css";
 import { fonts } from "../fonts";

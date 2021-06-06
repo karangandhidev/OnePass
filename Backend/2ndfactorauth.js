@@ -56,11 +56,11 @@ router.post("/2ndauth", async (req, res) => {
 
 router.put("/questions", async (req, res) => {
   let { _id, password, question, answer } = req.body;
-  console.log(_id)
+  // console.log(_id)
   
   
   const User = await user.find({}).lean();
-  console.log(User[0])
+  // console.log(User[0])
   const ogpass = decrypt(User[0].password);
   if (password === ogpass) {
     question = encrypt(question);

@@ -182,7 +182,7 @@ export const css = {
     alignItems: "center",
   },
   generatorpreference: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
@@ -453,7 +453,7 @@ export const css = {
     width: deviceWindow.width,
     alignItems: "center",
     elevation: 5,
-    paddingRight: deviceWindow.width * 0.04,
+    // paddingRight: deviceWindow.width * 0.04,
   },
   submitdata: {
     // flex: 1,
@@ -563,7 +563,7 @@ export const css = {
     borderWidth: 2,
     backgroundColor: "#1E2022",
     borderRadius: 15,
-    borderColor: "red",
+    borderColor: "#E4252D",
     width: deviceWindow.width * 0.8,
     height: deviceWindow.height * 0.32,
     top: deviceWindow.height * 0.22,
@@ -661,6 +661,7 @@ export const css = {
     borderWidth: 2,
     backgroundColor: "#1E2022",
     borderRadius: 15,
+    borderColor: "#E4252D",
     width: deviceWindow.width * 0.8,
     height: deviceWindow.height * 0.22,
     top: deviceWindow.height * 0.22,
@@ -717,5 +718,18 @@ export const css = {
   editpopupheader: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+
+  // EDIT SETTINGS
+  questioncard: {
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: "#1e2022",
+    marginTop: deviceWindow.height * 0.02,
+    alignItems: "flex-start",
+    paddingLeft: deviceWindow.width * 0.03,
+    width: deviceWindow.width * 0.98,
+    marginLeft: deviceWindow.width * 0.1,
+    marginRight: deviceWindow.width * 0.1,
   },
 };

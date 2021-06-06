@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // name  = Hint for hint text input in onChange
 import {
   StyleSheet,
   Text,
   TextInput,
   View,
+  KeyboardAvoidingView,
   TouchableOpacity,
-  Button,
+  StatusBar,
 } from "react-native";
 import axios from "axios";
 import { useFonts } from "expo-font";
@@ -22,9 +23,9 @@ export default function ChangePassword({ navigation }) {
   const [input, setInput] = useState({});
   const styles = StyleSheet.create(css);
   const [isLoaded] = useFonts(fonts);
-  // const [flaguser, setFlaguser] = useState(false);
-  // const [flaghint, setFlaghint] = useState(false);
-  // const [flagpass, setflagpass] = useState(false);
+  const [degree1, setDegree1] = useState("90deg");
+  const [degree2, setDegree2] = useState("90deg");
+  const [degree3, setDegree3] = useState("90deg");
 
   const dispatch = useDispatch();
 
@@ -44,6 +45,24 @@ export default function ChangePassword({ navigation }) {
       flag: true,
     });
   };
+  useEffect(() => {
+    if (!username) {
+      setDegree1("270deg");
+    } else {
+      setDegree1("90deg");
+    }
+    if (!password) {
+      setDegree2("270deg");
+    } else {
+      setDegree2("90deg");
+    }
+    if (!hint) {
+      setDegree3("270deg");
+    } else {
+      setDegree3("90deg");
+    }
+  }),
+    [username, password, hint];
   const changeCreds = () => {
     if (username) {
       if (input.Username) {
@@ -85,126 +104,147 @@ export default function ChangePassword({ navigation }) {
         logout();
       }
   };
-  const changeusername = () => {
-    setUsername(!username);
-  };
-  const changehint = () => {
-    setHint(!hint);
-  };
-  const changepassword = () => {
-    setPassword(!password);
-  };
+
   return (
-    <View style={styles.background}>
+    <KeyboardAvoidingView
+      style={styles.background}
+      behavior="padding"
+      keyboardVerticalOffset="45"
+    >
+      <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
       <View style={styles.header}>
-        <Text style={styles.fakeheading}></Text>
-      </View>
-      <View style={styles.formheaders}>
         <Icons
           onPress={() => navigation.goBack()}
-          name={"arrow-back"}
-          size={30}
-          color="#ffffff"
-          style={styles.formheadericon}
+          name={"chevron-left"}
+          size={50}
+          color="#F0F5F9"
+          style={styles.editbackicon}
         />
       </View>
-      <View style={styles.formheaders2}>
-        <Text style={styles.formheading}>Change Credentials</Text>
+      <View style={styles.formheadingview}>
+        <Text style={styles.formheading}>Edit Settings</Text>
       </View>
       <ScrollView style={styles.scroll}>
-        <View style={styles.credentialsview}>
+        <View style={styles.screenview}>
           <TouchableOpacity
-            style={styles.credentialstouchable}
-            onPress={changeusername}
+            style={styles.generatorpreference}
+            onPress={() => setUsername(!username)}
           >
-            <Text style={styles.credentialstouchabletext}>Change Username</Text>
+            <Text style={styles.generatorcardtext}>Edit Username</Text>
+            <Icons
+              name={"chevron-left"}
+              size={50}
+              color="#F0F5F9"
+              style={[
+                styles.generatorcardtext,
+                { transform: [{ rotate: degree1 }], color: "#f0f5f9" },
+              ]}
+            />
           </TouchableOpacity>
+
           {username && (
             <>
-              <Text style={styles.fieldname}>New Username</Text>
-              <TextInput
-                style={styles.fieldinput}
-                onChangeText={(text) =>
-                  handleInput({ value: text, name: "Username" })
-                }
-                placeholder="New Username"
-                placeholderTextColor="#000000"
-              />
+              <View style={styles.formview}>
+                <Text style={styles.fieldname}>New Username</Text>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "Username" })
+                  }
+                  placeholder="New Username"
+                  placeholderTextColor="#F0F5F9"
+                />
+              </View>
             </>
           )}
           <TouchableOpacity
-            style={styles.credentialstouchable}
-            onPress={changehint}
+            style={styles.generatorpreference}
+            onPress={() => setHint(!hint)}
           >
-            <Text style={styles.credentialstouchabletext}>Change Hint</Text>
+            <Text style={styles.generatorcardtext}>Edit Hint</Text>
+
+            <Icons
+              name={"chevron-left"}
+              size={50}
+              color="#F0F5F9"
+              style={[
+                styles.generatorcardtext,
+                { transform: [{ rotate: degree3 }], color: "#f0f5f9" },
+              ]}
+            />
           </TouchableOpacity>
+
           {hint && (
             <>
-              <Text style={styles.fieldname}>New Hint</Text>
-              <TextInput
-                style={styles.fieldinput}
-                onChangeText={(text) =>
-                  handleInput({ value: text, name: "Hint" })
-                }
-                placeholder="New Hint"
-                placeholderTextColor="#000000"
-              />
+              <View style={styles.formview}>
+                <Text style={styles.fieldname}>New Hint</Text>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "Hint" })
+                  }
+                  placeholder="New Hint"
+                  placeholderTextColor="#F0F5F9"
+                />
+              </View>
             </>
           )}
-
           <TouchableOpacity
-            style={styles.credentialstouchable}
-            onPress={changepassword}
+            style={styles.generatorpreference}
+            onPress={() => setPassword(!password)}
           >
-            <Text style={styles.credentialstouchabletext}>Change Password</Text>
+            <Text style={styles.generatorcardtext}>Edit Password</Text>
+
+            <Icons
+              name={"chevron-left"}
+              size={50}
+              color="#F0F5F9"
+              style={[
+                styles.generatorcardtext,
+                { transform: [{ rotate: degree2 }], color: "#f0f5f9" },
+              ]}
+            />
           </TouchableOpacity>
           {password && (
             <>
-              <Text style={styles.fieldname}>Old Password</Text>
-              <TextInput
-                style={styles.fieldinput}
-                onChangeText={(text) =>
-                  handleInput({ value: text, name: "OldPassword" })
-                }
-                placeholder="Old Password"
-                placeholderTextColor="#000000"
-              />
-              <Text style={styles.fieldname}>New Password</Text>
-              <TextInput
-                style={styles.fieldinput}
-                onChangeText={(text) =>
-                  handleInput({ value: text, name: "NewPassword" })
-                }
-                placeholder="New Password"
-                placeholderTextColor="#000000"
-              />
-              <Text style={styles.fieldname}>Confirm New Password</Text>
-              <TextInput
-                style={styles.fieldinput}
-                onChangeText={(text) =>
-                  handleInput({ value: text, name: "ConfirmNewPassword" })
-                }
-                placeholder="Confirm New Password"
-                placeholderTextColor="#000000"
-              />
+              <View style={styles.formview}>
+                <Text style={styles.fieldname}>Old Password</Text>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "OldPassword" })
+                  }
+                  placeholder="Old Password"
+                  placeholderTextColor="#F0F5F9"
+                />
+                <Text style={styles.fieldname}>New Password</Text>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "NewPassword" })
+                  }
+                  placeholder="New Password"
+                  placeholderTextColor="#F0F5F9"
+                />
+                <Text style={styles.fieldname}>Confirm New Password</Text>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "ConfirmNewPassword" })
+                  }
+                  placeholder="Confirm New Password"
+                  placeholderTextColor="#F0F5F9"
+                />
+              </View>
             </>
           )}
-          <View style={styles.deletebuttonview}>
-            <Text>
-              {"\n"}
-              {"\n"}
-            </Text>
+          <View style={styles.formsubmitview}>
             <TouchableOpacity style={styles.submitdata} onPress={changeCreds}>
-              <Text style={styles.submitdatatext}>Confirm</Text>
+              <Text style={styles.submitdatatext}>Submit</Text>
             </TouchableOpacity>
           </View>
-          <Text>
-            {"\n"}
-            {"\n"}
-            {"\n"}
-          </Text>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

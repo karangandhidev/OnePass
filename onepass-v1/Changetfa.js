@@ -6,7 +6,8 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Button,
+  KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import axios from "axios";
 import { useFonts } from "expo-font";
@@ -15,12 +16,12 @@ import { css } from "./css";
 import { useDispatch } from "react-redux";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from "react-native-gesture-handler";
+import { KeyboardAvoidingViewComponent } from "react-native";
 export default function Changetfa({ navigation }) {
   const [tfa, setTfa] = useState(false);
   const [input, setInput] = useState([]);
   const styles = StyleSheet.create(css);
   const [isLoaded] = useFonts(fonts);
-
   useEffect(() => {
     axios
       .get("http://10.0.0.2:3000/questions")
@@ -29,7 +30,6 @@ export default function Changetfa({ navigation }) {
       })
       .catch((e) => console.log(e));
   }, [setInput]);
-
   const changeQuestions = () => {
     input.map((i) => {
       axios.put("http://10.0.0.2:3000/questions", i).then(() => {
@@ -56,31 +56,25 @@ export default function Changetfa({ navigation }) {
     };
 
     return (
-      <View key={index}>
+      <View key={index} style={styles.questioncard}>
+        <Text style={styles.fieldname}>Question {index + 1}</Text>
+        {console.log(index)}
         <TextInput
-          style={styles.credentialsinput}
+          style={styles.fieldinput}
           onChangeText={(text) => handleInput(text, "question", index)}
           defaultValue={obj.question}
-          placeholder="question 2"
-          placeholderTextColor="#000000"
+          placeholder="Question"
+          placeholderTextColor="#F0F5F9"
         />
-        <Text>
-          {"\n"}
-          {"\n"}
-          {"\n"}
-        </Text>
+        <Text style={styles.fieldname}>Answer {index + 1}</Text>
+
         <TextInput
-          style={styles.credentialsinput}
+          style={styles.fieldinput}
           defaultValue={obj.answer}
           onChangeText={(text) => handleInput(text, "answer", index)}
-          placeholder="Answer 2"
-          placeholderTextColor="#000000"
+          placeholder="Answer"
+          placeholderTextColor="#F0F5F9"
         />
-        <Text>
-          {"\n"}
-          {"\n"}
-          {"\n"}
-        </Text>
       </View>
     );
   };
@@ -91,75 +85,80 @@ export default function Changetfa({ navigation }) {
   };
 
   return (
-    <View style={styles.background}>
+    <KeyboardAvoidingView
+      style={styles.background}
+      behavior="padding"
+      keyboardVerticalOffset="45"
+    >
+      <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
       <View style={styles.header}>
-        <Text style={styles.fakeheading}></Text>
-      </View>
-      <View style={styles.formheaders}>
         <Icons
           onPress={() => navigation.goBack()}
-          name={"arrow-back"}
-          size={30}
-          color="#ffffff"
-          style={styles.formheadericon}
+          name={"chevron-left"}
+          size={50}
+          color="#F0F5F9"
+          style={styles.editbackicon}
         />
       </View>
-      <View style={styles.formheaders2}>
-        <Text style={styles.formheading}>Change 2FA</Text>
+      <View style={styles.formheadingview}>
+        <Text style={styles.formheading}>Edit 2FA</Text>
       </View>
+
       {tfa ? (
         <View style={styles.popupbox}>
-          <View style={styles.popupboxtext}>
-            <Text style={styles.popuptitle}>Confirmation</Text>
-            <Text style={styles.popupcontent}>
-              Enter password to confirm update
-            </Text>
-            <TextInput
-              style={styles.credentialsinput}
-              onChangeText={(text) => addPass(text)}
-              placeholder="Password"
-              placeholderTextColor="#000000"
+          <View style={styles.popupheader}>
+            <Icons
+              class="material-icons-round"
+              name={"close"}
+              style={styles.closebutton}
+              size={30}
+              color="transparent"
             />
-          </View>
 
-          <View style={styles.popupbuttonbox}>
+            <Text style={styles.popuptitle}>Confirmation</Text>
             <TouchableOpacity
-              onPress={changetfa}
-              style={styles.popupLeftbutton}
+              style={styles.closebutton}
+              onPress={() => {
+                setPopup(!popup);
+              }}
             >
-              <Text style={styles.popupbuttoncontent}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={changeQuestions}
-              style={styles.popupRightbutton}
-            >
-              <Text style={styles.popupbuttoncontent}>Confirm</Text>
+              <Icons
+                class="material-icons-round"
+                name={"close"}
+                size={30}
+                color="#F0F5F9"
+              />
             </TouchableOpacity>
           </View>
+          <Text style={styles.popupcontent}>
+            Enter password to delete account
+          </Text>
+          <TextInput
+            style={styles.fieldinput}
+            onChangeText={(text) => addPass(text)}
+            placeholder="Password"
+            placeholderTextColor="#F0F5F9"
+          />
+          <TouchableOpacity
+            onPress={masterdelete}
+            style={styles.popupRightbutton}
+          >
+            <Text style={styles.popupbuttoncontent}>Confirm</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <ScrollView style={styles.scroll}>
-          <View style={styles.credentialsview}>
+          <View style={styles.screenview}>
             {input.map(render)}
 
-            <View style={styles.deletebuttonview}>
-              <Text>
-                {"\n"}
-                {"\n"} {"\n"}
-                {"\n"}
-              </Text>
+            <View style={styles.formsubmitview}>
               <TouchableOpacity style={styles.submitdata} onPress={changetfa}>
-                <Text style={styles.submitdatatext}>Update</Text>
+                <Text style={styles.submitdatatext}>Submit</Text>
               </TouchableOpacity>
             </View>
-            <Text>
-              {"\n"}
-              {"\n"}
-              {"\n"}
-            </Text>
           </View>
         </ScrollView>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 }

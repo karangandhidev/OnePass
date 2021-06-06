@@ -71,7 +71,7 @@ app.get("/alldata", async (req, res) => {
       });
       const data = [Address, Bank, Cards, Passwords, Notes];
       const merged = [].concat.apply([], data);
-      console.log(merged);
+      // console.log(merged);
       res.status(200).json(merged);
     } else {
       res.status(200).json({ message: "User Unauthorized" });

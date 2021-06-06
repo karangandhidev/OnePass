@@ -135,35 +135,62 @@ function Generator() {
   }, [generalchar, specialchar, parenthesis, dispatch]);
 
   const generatePassword = () => {
-    console.log("generate hua");
-
-    axios
-      .post("http://10.0.0.2:3000/generatepass", {
-        length: preference.length,
-        numbers: preference.isNumber,
-        lowercase: preference.isLower,
-        uppercase: preference.isUpper,
-        symbols: preference.isSpecial,
-        exclude: preference.exclusion,
-      })
-      .then((res) => {
-        setPassword(res.data);
-      });
+    if (
+      preference.isNumber ||
+      preference.isLower ||
+      preference.isUpper ||
+      preference.isSpecial ||
+      preference.exclusion
+    ) {
+      axios
+        .post("http://10.0.0.2:3000/generatepass", {
+          length: preference.length,
+          numbers: preference.isNumber,
+          lowercase: preference.isLower,
+          uppercase: preference.isUpper,
+          symbols: preference.isSpecial,
+          exclude: preference.exclusion,
+        })
+        .then((res) => {
+          setPassword(res.data);
+        });
+    }
   };
   useEffect(() => {
     console.log("USEEFFECT");
-    axios
-      .post("http://10.0.0.2:3000/generatepass", {
-        length: preference.length,
-        numbers: preference.isNumber,
-        lowercase: preference.isLower,
-        uppercase: preference.isUpper,
-        symbols: preference.isSpecial,
-        exclude: preference.exclusion,
-      })
-      .then((res) => {
-        setPassword(res.data);
-      });
+    if (
+      (preference.isNumber == false,
+      preference.isLower == false,
+      preference.isUpper == false,
+      preference.isSpecial == false,
+      preference.exclusion == false)
+    ) {
+      axios
+        .post("http://10.0.0.2:3000/generatepass", {
+          length: preference.length,
+          numbers: preference.isNumber,
+          lowercase: true,
+          uppercase: preference.isUpper,
+          symbols: preference.isSpecial,
+          exclude: preference.exclusion,
+        })
+        .then((res) => {
+          setPassword(res.data);
+        });
+    } else {
+      axios
+        .post("http://10.0.0.2:3000/generatepass", {
+          length: preference.length,
+          numbers: preference.isNumber,
+          lowercase: preference.isLower,
+          uppercase: preference.isUpper,
+          symbols: preference.isSpecial,
+          exclude: preference.exclusion,
+        })
+        .then((res) => {
+          setPassword(res.data);
+        });
+    }
   }, [setPassword, preference]);
   useEffect(() => {
     if (rerender) {

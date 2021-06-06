@@ -114,7 +114,7 @@ export default function Password({ navigation }) {
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
-              placeholder="URL"
+              placeholder="https://www.example.com"
               placeholderTextColor="#F0F5F9"
             />
 

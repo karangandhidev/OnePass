@@ -74,7 +74,7 @@ router.post("/address", async (req, res) => {
 router.get("/address", async (req, res) => {
   const token = req.header("Auth");
   if (token) {
-    console.log("TOKEN", token);
+    // console.log("TOKEN", token);
     const verification = jwt.verify(token, secret);
     if (verification) {
       const Address = await model.find({});

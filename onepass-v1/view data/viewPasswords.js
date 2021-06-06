@@ -111,7 +111,13 @@ export default function Password({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.background}>
+      <KeyboardAvoidingView
+        style={styles.background}
+        behavior="padding"
+        keyboardVerticalOffset="45"
+      >
+        <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
+
         <View style={styles.view_headerbg}>
           <Text style={styles.fakeheading}></Text>
         </View>
@@ -130,187 +136,240 @@ export default function Password({ navigation }) {
             <>
               <Icons
                 onPress={() => navigation.goBack()}
-                name={"arrow-back"}
-                size={30}
+                name={"chevron-left"}
+                size={50}
                 color="#F0F5F9"
                 style={styles.editbackicon}
               />
-              <TouchableOpacity style={styles.editbutton} onPress={changeState}>
-                <Text style={styles.editbuttontext}>Edit</Text>
+              <TouchableOpacity
+                style={[
+                  styles.addbutton,
+                  { backgroundColor: "transparent", borderWidth: 0 },
+                ]}
+                onPress={changeState}
+              >
+                <Icons
+                  onPress={changeState}
+                  name={"edit"}
+                  size={38}
+                  color="#f0f5f9"
+                />
               </TouchableOpacity>
             </>
           ) : (
             <>
-              <TouchableOpacity
-                style={styles.cancelbutton}
+              <Icons
                 onPress={changeState}
-              >
-                <Text style={styles.cancelbuttontext}>Cancel</Text>
-              </TouchableOpacity>
+                name={"close"}
+                size={40}
+                color="#F0F5F9"
+                style={styles.cancelediticon}
+              />
 
-              <TouchableOpacity
-                style={styles.submitbutton}
-                onPress={() => setConfirm(!confirm)}
-              >
-                <Text style={styles.deletebuttontext}>Delete</Text>
-              </TouchableOpacity>
+              <Icons
+                style={styles.deletedataicon}
+                name={"delete"}
+                onPress={() => setPopup(!popup)}
+                size={43}
+                color="#E4252D"
+              />
             </>
           )}
         </View>
         <ScrollView style={styles.scroll}>
-          <View style={([styles.screenview], { alignItems: "flex-start" })}>
-            {confirm ? (
-              <View style={styles.popupbox}>
-                <View style={styles.popupboxtext}>
-                  <Text style={styles.popuptitle}>Delete</Text>
-                  <Text style={styles.popupcontent}>Confirm Deletion</Text>
-                </View>
-                <View style={styles.popupbuttonbox}>
+          <View style={styles.screenview}>
+            {popup ? (
+              <View style={styles.editpopupbox}>
+                <View style={styles.editpopupheader}>
+                  <Icons
+                    class="material-icons-round"
+                    name={"close"}
+                    style={styles.editclosebutton}
+                    size={30}
+                    color="transparent"
+                  />
+
+                  <Text style={styles.editpopuptitle}>Confirm Delete</Text>
                   <TouchableOpacity
-                    onPress={() => setConfirm(!confirm)}
-                    style={styles.popupLeftbutton}
+                    style={styles.editclosebutton}
+                    onPress={() => {
+                      setPopup(!popup);
+                    }}
                   >
-                    <Text style={styles.popupbuttoncontent}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={del}
-                    style={styles.popupRightbutton}
-                  >
-                    <Text style={styles.popupbuttoncontent}>Confirm</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ) : null}
-            <Text style={styles.fieldname}>Name</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "name" })
-              }
-              placeholder="Name"
-              placeholderTextColor="#000000"
-              defaultValue={data.name}
-              editable={editable}
-            />
-
-            <Text style={styles.fieldname}>Category</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "category" })
-              }
-              placeholder="Category"
-              defaultValue={data.category}
-              editable={editable}
-              placeholderTextColor="#000000"
-            />
-            <View style={styles.generateinform}>
-              <Text style={styles.fieldname}>URL</Text>
-              <Text>
-                <Icons
-                  onPress={() => {
-                    Linking.openURL(data.url);
-                  }}
-                  name={"autorenew"}
-                  size={30}
-                  color="#000000"
-                />
-              </Text>
-            </View>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) => handleInput({ value: text, name: "url" })}
-              placeholder="URL"
-              defaultValue={data.url}
-              editable={editable}
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>User Name</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "username" })
-              }
-              placeholder="User Name"
-              defaultValue={data.username}
-              editable={editable}
-              placeholderTextColor="#000000"
-            />
-
-            <Text style={styles.fieldname}>Email</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "email" })
-              }
-              placeholder="Email"
-              defaultValue={data.email}
-              editable={editable}
-              placeholderTextColor="#000000"
-            />
-
-            <View style={styles.generateinform}>
-              <Text style={styles.generatename}>Password</Text>
-              <Text>
-                <Icons
-                  onPress={() => {
-                    copy(password);
-                  }}
-                  name={"content-copy"}
-                  size={30}
-                  color="#000000"
-                />
-                {editable ? (
-                  <>
                     <Icons
-                      onPress={genPass}
-                      name={"autorenew"}
+                      class="material-icons-round"
+                      name={"close"}
                       size={30}
-                      color="#000000"
+                      color="#F0F5F9"
                     />
-                  </>
-                ) : null}
-              </Text>
-            </View>
-            <TextInput
-              key={password}
-              style={styles.fieldinput}
-              editable={editable}
-              defaultValue={password}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "password" })
-              }
-              placeholder="Password"
-              placeholderTextColor="#000000"
-            />
-            <Text style={styles.fieldname}>Note</Text>
-            <TextInput
-              style={styles.fieldinput}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "note" })
-              }
-              defaultValue={data.note}
-              editable={editable}
-              placeholder="Note"
-              placeholderTextColor="#000000"
-            />
-            <View style={styles.deletebuttonview}>
-              <Text></Text>
-              {deleteable ? null : (
-                <>
-                  <TouchableOpacity
-                    style={styles.deletebutton}
-                    onPress={submit}
-                  >
-                    <Text style={styles.submitbuttontext}>Submit</Text>
                   </TouchableOpacity>
-                </>
-              )}
-            </View>
-            <Text></Text>
+                </View>
+                <Text style={styles.editpopupcontent}>
+                  Are you sure you want to delete?
+                </Text>
+                <TouchableOpacity
+                  onPress={del}
+                  style={styles.editpopupRightbutton}
+                >
+                  <Text style={styles.editpopupbuttoncontent}>Confirm</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <>
+                <View style={styles.formview}>
+                  <Text style={styles.fieldname}>Name</Text>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "name" })
+                    }
+                    placeholder="Name"
+                    placeholderTextColor="#000000"
+                    defaultValue={data.name}
+                    editable={editable}
+                  />
+
+                  <Text style={styles.fieldname}>Category</Text>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "category" })
+                    }
+                    placeholder="Category"
+                    defaultValue={data.category}
+                    editable={editable}
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>URL</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          Linking.openURL(data.url);
+                        }}
+                        name={"launch"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "url" })
+                    }
+                    placeholder="URL"
+                    defaultValue={data.url}
+                    editable={editable}
+                    placeholderTextColor="#000000"
+                  />
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Username</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.username);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "username" })
+                    }
+                    placeholder="User Name"
+                    defaultValue={data.username}
+                    editable={editable}
+                    placeholderTextColor="#000000"
+                  />
+
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Email</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.email);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : null}
+                  </View>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "email" })
+                    }
+                    placeholder="Email"
+                    defaultValue={data.email}
+                    editable={editable}
+                    placeholderTextColor="#000000"
+                  />
+
+                  <View style={styles.generateinform}>
+                    <Text style={styles.generatename}>Password</Text>
+                    {!editable ? (
+                      <Icons
+                        onPress={() => {
+                          copy(data.note);
+                        }}
+                        name={"content-copy"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    ) : (
+                      <Icons
+                        onPress={genPass}
+                        name={"autorenew"}
+                        size={30}
+                        color="#F0F5F9"
+                      />
+                    )}
+                  </View>
+                  <TextInput
+                    key={password}
+                    style={styles.fieldinput}
+                    editable={editable}
+                    defaultValue={password}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "password" })
+                    }
+                    placeholder="Password"
+                    placeholderTextColor="#000000"
+                  />
+                  <Text style={styles.fieldname}>Note</Text>
+                  <TextInput
+                    style={styles.fieldinput}
+                    onChangeText={(text) =>
+                      handleInput({ value: text, name: "note" })
+                    }
+                    defaultValue={data.note}
+                    editable={editable}
+                    placeholder="Note"
+                    placeholderTextColor="#000000"
+                  />
+                </View>
+
+                {deleteable ? null : (
+                  <View style={styles.formsubmitview}>
+                    <TouchableOpacity
+                      style={styles.submitdata}
+                      onPress={submit}
+                    >
+                      <Text style={styles.submitdatatext}>Submit</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </>
+            )}
           </View>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

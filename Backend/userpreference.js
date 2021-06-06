@@ -48,7 +48,7 @@ const userPreferenceSchema = new mongoose.Schema(
 const model = mongoose.model("passpreference", userPreferenceSchema);
 router.get("/preference", async (req, res) => {
   const preference = await model.findOne({}).lean();
-  console.log(preference);
+  // console.log(preference);
   res.status(200).json(preference);
 });
 router.post("/preference", async (req, res) => {

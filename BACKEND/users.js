@@ -87,7 +87,7 @@ router.post("/login", async (req, res) => {
     res.status(403);
     res.json({ error: "Invalid username or password" });
   }
-  console.log(username);
+  // console.log(username);
 });
 router.get("/creds", async (req, res) => {
   const User = await model.findOne({});
@@ -96,7 +96,7 @@ router.get("/creds", async (req, res) => {
 
 router.post("/changepass", async (req, res) => {
   const { OldPassword, NewPassword } = req.body;
-
+  console.log(OldPassword, NewPassword);
   const User = await model.findOne({}).lean();
   let ogpass = decrypt(User.password);
   if (OldPassword === ogpass) {
@@ -164,8 +164,8 @@ router.put("/changehint", async (req, res) => {
 router.post("/masterdelete", async (req, res) => {
   const { password } = req.body;
   const User = await model.findOne({}).lean();
-  console.log(User)
-  console.log(password)
+  // console.log(User)
+  // console.log(password)
   if (password) {
     let ogpass = decrypt(User.password);
     if (password === ogpass) {

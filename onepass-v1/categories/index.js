@@ -334,16 +334,6 @@ export function Homepage({ navigation }) {
               <Text style={styles.datacardtext}>Notes</Text>
               <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.datacard}
-              onPress={() => {
-                navigation.navigate("Notes");
-              }}
-            >
-              <Icons name={"description"} size={40} color="#F0F5F9" />
-              <Text style={styles.datacardtext}>test</Text>
-              <Icons name={"chevron-right"} size={50} color="#F0F5F9" />
-            </TouchableOpacity>
           </ScrollView>
         </View>
       </View>
