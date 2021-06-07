@@ -294,7 +294,7 @@ export const css = {
     borderWidth: 0.75,
     paddingLeft: deviceWindow.width * 0.03,
     paddingRight: deviceWindow.width * 0.03,
-    width: deviceWindow.width * 0.97,
+    width: deviceWindow.width * 0.94,
     height: deviceWindow.height * 0.08,
     maxHeight: deviceWindow.height * 0.08,
     margin: "3%",

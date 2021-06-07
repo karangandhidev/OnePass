@@ -31,35 +31,34 @@ export default function Changetfa({ navigation }) {
       .catch((e) => console.log(e));
   }, [setInput]);
   const changeQuestions = () => {
-    input.map((i) => {
-      axios
-        .put("http://10.0.0.2:3000/questions", i)
-        .then(() => {
+    input
+      .map((i) => {
+        axios.put("http://10.0.0.2:3000/questions", i).then(() => {
           console.log(i);
-        })
-        .catch((err) => {
-          console.log(err);
+          navigation.navigate("Login");
           showMessage({
-            message: "Invalid Input",
+            message: "Data Updated",
             color: "#f0f5f9",
-            backgroundColor: "#E4252D",
+            backgroundColor: "#6bf060",
             style: {
               borderRadius: 20,
               height: 50,
             },
           });
         });
-      navigation.navigate("Login");
-      showMessage({
-        message: "Data Updated",
-        color: "#f0f5f9",
-        backgroundColor: "#6bf060",
-        style: {
-          borderRadius: 20,
-          height: 50,
-        },
+      })
+      .catch((err) => {
+        console.log(err);
+        showMessage({
+          message: "Invalid Input",
+          color: "#f0f5f9",
+          backgroundColor: "#E4252D",
+          style: {
+            borderRadius: 20,
+            height: 50,
+          },
+        });
       });
-    });
   };
 
   const addPass = (text) => {
@@ -149,7 +148,7 @@ export default function Changetfa({ navigation }) {
             </TouchableOpacity>
           </View>
           <Text style={styles.popupcontent}>
-            Enter password to delete account
+            Enter password to confirm
           </Text>
           <TextInput
             style={styles.credentialsinput}
