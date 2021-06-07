@@ -38,7 +38,7 @@ function Profile({ navigation }) {
         showMessage({
           message: "User Deleted Successfully",
           color: "#f0f5f9",
-          type: "success",
+          backgroundColor: "#6bf060",
           style: {
             borderRadius: 20,
             height: 50,
@@ -50,7 +50,7 @@ function Profile({ navigation }) {
         showMessage({
           message: "Invalid Input",
           color: "#f0f5f9",
-          type: "danger",
+          backgroundColor: "#E4252D",
           style: {
             borderRadius: 20,
             height: 50,
@@ -64,7 +64,7 @@ function Profile({ navigation }) {
     showMessage({
       message: "Logged Out Successfully",
       color: "#f0f5f9",
-      type: "default",
+      backgroundColor: "#000000",
       style: {
         borderRadius: 20,
         height: 50,
@@ -137,7 +137,8 @@ function Profile({ navigation }) {
               style={styles.credentialsinput}
               onChangeText={(text) => setPassword(text)}
               placeholder="Password"
-              placeholderTextColor="#F0F5F9"
+              secureTextEntry={true}
+              placeholderTextColor="#858282"
             />
             <TouchableOpacity
               onPress={masterdelete}

@@ -42,7 +42,7 @@ export default function Changetfa({ navigation }) {
           showMessage({
             message: "Invalid Input",
             color: "#f0f5f9",
-            type: "danger",
+            backgroundColor: "#E4252D",
             style: {
               borderRadius: 20,
               height: 50,
@@ -53,7 +53,7 @@ export default function Changetfa({ navigation }) {
       showMessage({
         message: "Data Updated",
         color: "#f0f5f9",
-        type: "success",
+        backgroundColor: "#6bf060",
         style: {
           borderRadius: 20,
           height: 50,
@@ -87,7 +87,7 @@ export default function Changetfa({ navigation }) {
           onChangeText={(text) => handleInput(text, "question", index)}
           defaultValue={obj.question}
           placeholder="Question"
-          placeholderTextColor="#F0F5F9"
+          placeholderTextColor="#858282"
         />
         <Text style={styles.fieldname}>Answer {index + 1}</Text>
 
@@ -96,7 +96,7 @@ export default function Changetfa({ navigation }) {
           defaultValue={obj.answer}
           onChangeText={(text) => handleInput(text, "answer", index)}
           placeholder="Answer"
-          placeholderTextColor="#F0F5F9"
+          placeholderTextColor="#858282"
         />
       </View>
     );
@@ -139,12 +139,7 @@ export default function Changetfa({ navigation }) {
             />
 
             <Text style={styles.popuptitle}>Confirmation</Text>
-            <TouchableOpacity
-              style={styles.closebutton}
-              onPress={() => {
-                setPopup(!popup);
-              }}
-            >
+            <TouchableOpacity style={styles.closebutton} onPress={changetfa}>
               <Icons
                 class="material-icons-round"
                 name={"close"}
@@ -157,10 +152,11 @@ export default function Changetfa({ navigation }) {
             Enter password to delete account
           </Text>
           <TextInput
-            style={styles.fieldinput}
+            style={styles.credentialsinput}
             onChangeText={(text) => addPass(text)}
             placeholder="Password"
-            placeholderTextColor="#F0F5F9"
+            secureTextEntry={true}
+            placeholderTextColor="#858282"
           />
           <TouchableOpacity
             onPress={changeQuestions}

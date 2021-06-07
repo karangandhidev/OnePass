@@ -44,10 +44,11 @@ const SocialSchema = mongoose.Schema(
 const model = mongoose.model("Social Schema", SocialSchema);
 router.post("/passwords", async (req, res) => {
   let { name, category, url, username, email, password, note } = req.body;
-  username = encrypt(username);
-  email = encrypt(email);
-  password = encrypt(password);
+
   try {
+    username = encrypt(username);
+    email = encrypt(email);
+    password = encrypt(password);
     const response = await model.create({
       name,
       category,
@@ -60,9 +61,7 @@ router.post("/passwords", async (req, res) => {
     res.json({ status: "okay" });
   } catch (error) {
     console.log(error);
-    return res.json({
-      status: "error",
-    });
+    res.status(400).json(error);
   }
 });
 

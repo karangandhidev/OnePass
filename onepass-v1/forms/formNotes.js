@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "react-native-axios";
 import { css } from "../css";
 import { fonts } from "../fonts";
@@ -20,7 +20,21 @@ export default function Notes({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(css);
   const [input, setInput] = useState({});
-
+  const [validate, setValidate] = useState(false);
+  useEffect(() => {
+    console.log(input);
+    if (
+      input.note === undefined ||
+      input.topic === undefined ||
+      input.note === "" ||
+      input.topic === ""
+    ) {
+      setValidate(false);
+    } else {
+      setValidate(true);
+    }
+  }),
+    [input];
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -31,25 +45,40 @@ export default function Notes({ navigation }) {
     });
   };
   const submit = () => {
-    axios
-      .post("http://10.0.0.2:3000/notes", input, {
-        headers: {
-          "Access-Control-Allow-Headers":
-            "Access-Control-Allow-Headers, Authorization",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+    if (validate) {
+      axios
+        .post("http://10.0.0.2:3000/notes", input, {
+          headers: {
+            "Access-Control-Allow-Headers":
+              "Access-Control-Allow-Headers, Authorization",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+          },
+        })
+        .then(navigation.navigate("Homepage"))
+        .catch((err) => {
+          console.log(err);
+        });
+      showMessage({
+        message: "Data Added",
+        color: "#f0f5f9",
+        backgroundColor: "#6bf060",
+        style: {
+          borderRadius: 20,
+          height: 50,
         },
-      })
-      .then(navigation.navigate("Notes"));
-    showMessage({
-      message: "Data Added",
-      color: "#f0f5f9",
-      type: "success",
-      style: {
-        borderRadius: 20,
-        height: 50,
-      },
-    });
+      });
+    } else {
+      showMessage({
+        message: "Invalid Input",
+        color: "#f0f5f9",
+        backgroundColor: "#E4252D",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
+    }
   };
   if (!isLoaded) {
     return <AppLoading />;
@@ -82,7 +111,7 @@ export default function Notes({ navigation }) {
                 handleInput({ value: text, name: "topic" })
               }
               placeholder="Topic"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
             <Text style={styles.fieldname}>Note</Text>
             <TextInput
@@ -93,7 +122,7 @@ export default function Notes({ navigation }) {
               multiline={true}
               numberOfLines={12}
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
           </View>
 

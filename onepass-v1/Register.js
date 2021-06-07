@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -23,10 +23,22 @@ export default function Register({ navigation }) {
   const [isLoaded] = useFonts(fonts);
   const deviceWindow = Dimensions.get("window");
   const styles = StyleSheet.create(css);
-  const MAX_LEN = 22,
-    MIN_LEN = 8,
-    PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
-
+  const [password, setPassword] = useState("");
+  let passPoint = 0;
+  const [passStat, setPassStat] = useState("Weak");
+  const regexArr = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^A-Za-z0-9]/];
+  const PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
+  const MAX_LEN = 22;
+  const MIN_LEN = 8;
+  useEffect(() => {
+    if (password.length > 0 && password.length < password.MIN_LEN)
+      setPassStat(PASS_LABELS[0]);
+    else {
+      regexArr.forEach((rgx) => (rgx.test(password) ? (passPoint += 1) : null));
+      setPassStat(PASS_LABELS[passPoint]);
+    }
+    console.log(passStat);
+  }, [password]);
   const [input, setInput] = useState({
     name: "",
     password: "",
@@ -35,12 +47,12 @@ export default function Register({ navigation }) {
   });
 
   // const [color, setColor] = useState("#F0F5F9");
-  const [message, setMessage] = useState({
-    creds: "Please enter all the credentials",
-    password: "Please enter a longer password",
-    confirm: "Passwords donot match",
-    badpass: "Password cannot be username",
-  });
+  // const [message, setMessage] = useState({
+  //   creds: "Please enter all the credentials",
+  //   password: "Please enter a longer password",
+  //   confirm: "Passwords donot match",
+  //   badpass: "Password cannot be username",
+  // });
 
   let valid = false;
   let length = false;
@@ -70,18 +82,30 @@ export default function Register({ navigation }) {
     if (valid) {
       if (length) {
         if (confirm) {
-          if (input.password != input.name) {
-            if (input.password != input.hint) {
-              const data = {
-                username: input.name,
-                password: input.password,
-                hint: input.hint,
-              };
-              console.log(data);
-              navigation.navigate("Register2FA", { data: data });
+          if (passStat === "Secure") {
+            if (input.password != input.name) {
+              if (input.password != input.hint) {
+                const data = {
+                  username: input.name,
+                  password: input.password,
+                  hint: input.hint,
+                };
+                console.log(data);
+                navigation.navigate("Register2FA", { data: data });
+              } else {
+                showMessage({
+                  message: "Hint & Password cannot be same",
+                  color: "#f0f5f9",
+                  type: "danger",
+                  style: {
+                    borderRadius: 20,
+                    height: 50,
+                  },
+                });
+              }
             } else {
               showMessage({
-                message: "Hint & Password cannot be same",
+                message: "Password & Username cannot be same",
                 color: "#f0f5f9",
                 type: "danger",
                 style: {
@@ -92,7 +116,7 @@ export default function Register({ navigation }) {
             }
           } else {
             showMessage({
-              message: "Password & Username cannot be same",
+              message: "Password not secure",
               color: "#f0f5f9",
               type: "danger",
               style: {
@@ -170,9 +194,10 @@ export default function Register({ navigation }) {
             <Text style={styles.bodytext}>Set Password</Text>
             <TextInput
               style={styles.passwordinputbox}
-              onChangeText={(text) =>
-                handleInput({ value: text, name: "password" })
-              }
+              onChangeText={(text) => {
+                handleInput({ value: text, name: "password" });
+                setPassword(text);
+              }}
               placeholder="Enter Password"
               secureTextEntry={true}
               placeholderTextColor="#F0F5F9"

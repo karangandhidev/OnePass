@@ -22,7 +22,20 @@ import { Dimensions, Switch } from "react-native";
 export default function Test() {
   const [isLoaded] = useFonts(fonts);
   const styles = StyleSheet.create(newcss);
-
+  const [password, setPassword] = useState("defaultvalue");
+  const [degree, setDegree] = useState("90deg");
+  let passPoint = 0;
+  const [passStat, setPassStat] = useState("Weak");
+  const regexArr = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^A-Za-z0-9]/];
+  const PASS_LABELS = ["Too Short", "Weak", "Average", "Strong", "Secure"];
+  useEffect(() => {
+    if (password.length > 0 && password.length < password.MIN_LEN)
+      setPassStat(PASS_LABELS[0]);
+    else {
+      regexArr.forEach((rgx) => (rgx.test(password) ? (passPoint += 1) : null));
+      setPassStat(PASS_LABELS[passPoint]);
+    }
+  }, [password]);
   if (!isLoaded) {
     return <AppLoading />;
   } else {
@@ -36,27 +49,14 @@ export default function Test() {
         </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.screenview}>
-            <View style={{ flex: 1 }}>
-              <Button
-                onPress={() => {
-                  /* HERE WE GONE SHOW OUR FIRST MESSAGE */
-                  showMessage({
-                    message: "Simple message",
-                    type: "info",
-                  });
-                }}
-                title="Request Details"
-                color="#841584"
-              />
-            </View>
+            <TextInput
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
+            />
+            <Text>{passStat}</Text>
           </View>
         </ScrollView>
-        <FlashMessage
-          position="top"
-          animated={true}
-          autoHide={true}
-          duration={3000}
-        />
       </View>
     );
   }

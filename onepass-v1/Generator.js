@@ -113,16 +113,6 @@ function Generator() {
       data: { key: "isSpecial", value: !isSpecial },
     });
     specialchange();
-    // if (length == null) {
-    //   setSlider(8);
-    //   setNumber(true);
-    //   setLower(true);
-    //   setUpper(true);
-    //   setSpecial(true);
-    //   setSpecialchar(true);
-    //   setGeneralchar(true);
-    //   setParenthesis(true);
-    // }
   };
 
   useEffect(() => {
@@ -159,13 +149,28 @@ function Generator() {
   };
   useEffect(() => {
     console.log("USEEFFECT");
+    if (slider == null) {
+      axios
+        .post("http://10.0.0.2:3000/generatepass", {
+          length: 8,
+          numbers: preference.isNumber,
+          lowercase: preference.isLower,
+          uppercase: preference.isUpper,
+          symbols: preference.isSpecial,
+          exclude: preference.exclusion,
+        })
+        .then((res) => {
+          setPassword(res.data);
+        });
+    }
     if (
-      (preference.isNumber == false,
-      preference.isLower == false,
-      preference.isUpper == false,
-      preference.isSpecial == false,
-      preference.exclusion == false)
+      preference.isNumber == false &&
+      preference.isLower == false &&
+      preference.isUpper == false &&
+      preference.isSpecial == false &&
+      preference.exclusion == false
     ) {
+      console.log("false mei aagaya");
       axios
         .post("http://10.0.0.2:3000/generatepass", {
           length: preference.length,
@@ -207,7 +212,7 @@ function Generator() {
       showMessage({
         message: "Password Copied!",
         color: "#f0f5f9",
-        type: "default",
+        backgroundColor: "#000000",
         style: {
           borderRadius: 20,
           height: 50,
@@ -258,151 +263,137 @@ function Generator() {
         step={1}
         onValueChange={(value) => changeLength(value)}
       />
-      <View style={styles.generatorpreference}>
-        <View style={styles.generatorpreference}>
-          <Text style={styles.generatorcardtext}>Password Length</Text>
-          <Text style={styles.generatorcardtext}>{slider}</Text>
-        </View>
-      </View>
-      <View style={styles.generatorpreference}>
-        <View style={styles.generatorpreference}>
-          <Text style={styles.generatorcardtext}>Password Strength</Text>
-          <Text style={styles.generatorcardtext}>{passStat}</Text>
-        </View>
-      </View>
-      <View style={styles.generatorpreference}>
-        <TouchableOpacity
-          id="isUpper"
-          style={styles.generatorpreference}
-          onPress={touchupper}
-        >
-          <Text style={styles.generatorcardtext}>Upper Case</Text>
-          <Switch
-            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-            thumbColor="#F0F5F9"
-            onValueChange={setUpper}
-            value={isUpper}
-            style={styles.generatorcardtext}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.generatorpreference}>
-        <TouchableOpacity
-          style={styles.generatorpreference}
-          onPress={touchlower}
-        >
-          <Text style={styles.generatorcardtext}>Lower Case</Text>
-          <Switch
-            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-            thumbColor="#F0F5F9"
-            onValueChange={setLower}
-            value={isLower}
-            style={styles.generatorcardtext}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.generatorpreference}>
-        <TouchableOpacity
-          style={styles.generatorpreference}
-          onPress={touchnumber}
-        >
-          <Text style={styles.generatorcardtext}>Number</Text>
-          <Switch
-            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-            thumbColor="#F0F5F9"
-            onValueChange={setNumber}
-            value={isNumber}
-            style={styles.generatorcardtext}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.generatorpreference}>
-        <TouchableOpacity
-          style={styles.generatorpreference}
-          onPress={touchspecial}
-        >
-          <Text style={styles.generatorcardtext}>Characters</Text>
-          <Switch
-            trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-            thumbColor="#F0F5F9"
-            onValueChange={specialchange}
-            value={isSpecial}
-            style={styles.generatorcardtext}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.generatorpreference}>
-        <TouchableOpacity
-          style={styles.generatorpreference}
-          onPress={symbolsetting}
-          disabled={!isSpecial}
-        >
-          <Text style={[styles.generatorcardtext, { color: disablecolor }]}>
-            Special Character Preference
-          </Text>
 
-          <Icons
-            name={"chevron-left"}
-            size={50}
-            color="#F0F5F9"
-            style={[
-              styles.generatorcardtext,
-              { transform: [{ rotate: degree }], color: disablecolor },
-            ]}
-          />
-        </TouchableOpacity>
+      <View style={styles.generatorpreference}>
+        <Text style={styles.generatorcardtext}>Password Length</Text>
+        <Text style={styles.generatorcardtext}>{slider}</Text>
       </View>
+
+      <View style={styles.generatorpreference}>
+        <Text style={styles.generatorcardtext}>Password Strength</Text>
+        <Text style={styles.generatorcardtext}>{passStat}</Text>
+      </View>
+
+      <TouchableOpacity
+        id="isUpper"
+        style={styles.generatorpreference}
+        onPress={touchupper}
+      >
+        <Text style={styles.generatorcardtext}>Upper Case</Text>
+        <Switch
+          trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+          thumbColor="#F0F5F9"
+          onValueChange={setUpper}
+          value={isUpper}
+          style={styles.generatorcardtext}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.generatorpreference} onPress={touchlower}>
+        <Text style={styles.generatorcardtext}>Lower Case</Text>
+        <Switch
+          trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+          thumbColor="#F0F5F9"
+          onValueChange={setLower}
+          value={isLower}
+          style={styles.generatorcardtext}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.generatorpreference}
+        onPress={touchnumber}
+      >
+        <Text style={styles.generatorcardtext}>Number</Text>
+        <Switch
+          trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+          thumbColor="#F0F5F9"
+          onValueChange={setNumber}
+          value={isNumber}
+          style={styles.generatorcardtext}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.generatorpreference}
+        onPress={touchspecial}
+      >
+        <Text style={styles.generatorcardtext}>Characters</Text>
+        <Switch
+          trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+          thumbColor="#F0F5F9"
+          onValueChange={specialchange}
+          value={isSpecial}
+          style={styles.generatorcardtext}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.generatorpreference}
+        onPress={symbolsetting}
+        disabled={!isSpecial}
+      >
+        <Text style={[styles.generatorcardtext, { color: disablecolor }]}>
+          Special Character Preference
+        </Text>
+
+        <Icons
+          name={"chevron-left"}
+          size={50}
+          color="#F0F5F9"
+          style={[
+            styles.generatorcardtext,
+            { transform: [{ rotate: degree }], color: disablecolor },
+          ]}
+        />
+      </TouchableOpacity>
+
       {characters ? (
         <>
-          <View style={styles.generatorpreference}>
-            <TouchableOpacity
-              style={styles.generatorpreference}
-              onPress={touchgeneralchar}
-            >
-              <Text style={styles.generatorcardtext}>
-                General Characters (!@#$%^&*)
-              </Text>
-              <Switch
-                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-                thumbColor="#F0F5F9"
-                onValueChange={setGeneralchar}
-                value={generalchar}
-                style={styles.generatorcardtext}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.generatorpreference}>
-            <TouchableOpacity
-              style={styles.generatorpreference}
-              onPress={touchspecialchar}
-            >
-              <Text style={styles.generatorcardtext}>
-                Special Characters (-.?_`~;:+=)
-              </Text>
-              <Switch
-                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-                thumbColor="#F0F5F9"
-                onValueChange={setSpecialchar}
-                value={specialchar}
-                style={styles.generatorcardtext}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.generatorpreference}>
-            <TouchableOpacity
-              style={styles.generatorpreference}
-              onPress={touchbrackets}
-            >
-              <Text style={styles.generatorcardtext}>Parenthesis ((){}[])</Text>
-              <Switch
-                trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
-                thumbColor="#F0F5F9"
-                onValueChange={setParenthesis}
-                value={parenthesis}
-                style={styles.generatorcardtext}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.generatorpreference}
+            onPress={touchgeneralchar}
+          >
+            <Text style={styles.generatorcardtext}>
+              General Characters (!@#$%^&*)
+            </Text>
+            <Switch
+              trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+              thumbColor="#F0F5F9"
+              onValueChange={setGeneralchar}
+              value={generalchar}
+              style={styles.generatorcardtext}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.generatorpreference}
+            onPress={touchspecialchar}
+          >
+            <Text style={styles.generatorcardtext}>
+              Special Characters (-.?_`~;:+=)
+            </Text>
+            <Switch
+              trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+              thumbColor="#F0F5F9"
+              onValueChange={setSpecialchar}
+              value={specialchar}
+              style={styles.generatorcardtext}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.generatorpreference}
+            onPress={touchbrackets}
+          >
+            <Text style={styles.generatorcardtext}>Parenthesis ((){}[])</Text>
+            <Switch
+              trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
+              thumbColor="#F0F5F9"
+              onValueChange={setParenthesis}
+              value={parenthesis}
+              style={styles.generatorcardtext}
+            />
+          </TouchableOpacity>
         </>
       ) : null}
       {!isUpper && !isLower && !isNumber && !isSpecial ? setLower(true) : null}

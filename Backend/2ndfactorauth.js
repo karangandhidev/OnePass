@@ -30,7 +30,7 @@ router.get("/questions", async (req, res) => {
 
 router.post("/questions", (req, res) => {
   let { question, answer } = req.body;
-
+  console.log(question, answer);
   question = encrypt(question);
   answer = encrypt(answer);
 

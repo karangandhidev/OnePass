@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "react-native-axios";
 import { css } from "../css";
 import { fonts } from "../fonts";
@@ -24,6 +24,33 @@ export default function CardDetails({ navigation }) {
   const [input, setInput] = useState({});
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState(0);
+  const [validate, setValidate] = useState(false);
+  const [validmonth, setvalidMonth] = useState(false);
+  const [validyear, setvalidYear] = useState(false);
+  useEffect(() => {
+    if (month < 13 && month > 0) {
+      setvalidMonth(true);
+    } else {
+      setvalidMonth(false);
+    }
+    if (year < 3000 && year > 2020) {
+      setvalidYear(true);
+    } else {
+      setvalidYear(false);
+    }
+    if (
+      input.bank_name === "" ||
+      input.name === "" ||
+      input.password === "" ||
+      String(input.number).length !== 16 ||
+      String(input.cvv).length !== 3
+    ) {
+      setValidate(false);
+    } else {
+      setValidate(true);
+    }
+  }),
+    [input];
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -36,37 +63,52 @@ export default function CardDetails({ navigation }) {
 
   const moe = `${month}/${year}`;
   const submit = () => {
-    axios
-      .post(
-        "http://10.0.0.2:3000/cards",
-        {
-          name: input.name,
-          number: input.number,
-          cvv: input.cvv,
-          moe: moe,
-          bankname: input.bankname,
-          password: input.password,
-          notes: input.notes,
-        },
-        {
-          headers: {
-            "Access-Control-Allow-Headers":
-              "Access-Control-Allow-Headers, Authorization",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+    if (validate && validmonth && validyear) {
+      axios
+        .post(
+          "http://10.0.0.2:3000/cards",
+          {
+            name: input.name,
+            number: input.number,
+            cvv: input.cvv,
+            moe: moe,
+            bankname: input.bankname,
+            password: input.password,
+            notes: input.notes,
           },
-        }
-      )
-      .then(navigation.navigate("CardDetails"));
-    showMessage({
-      message: "Data Added",
-      color: "#f0f5f9",
-      type: "success",
-      style: {
-        borderRadius: 20,
-        height: 50,
-      },
-    });
+          {
+            headers: {
+              "Access-Control-Allow-Headers":
+                "Access-Control-Allow-Headers, Authorization",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+            },
+          }
+        )
+        .then(navigation.navigate("Homepage"))
+        .catch((err) => {
+          console.log(err);
+        });
+      showMessage({
+        message: "Data Added",
+        color: "#f0f5f9",
+        backgroundColor: "#6bf060",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
+    } else {
+      showMessage({
+        message: "Invalid Input",
+        color: "#f0f5f9",
+        backgroundColor: "#E4252D",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
+    }
   };
   if (!isLoaded) {
     return <AppLoading />;
@@ -99,7 +141,7 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Card Holder Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>Card Number</Text>
@@ -110,7 +152,7 @@ export default function CardDetails({ navigation }) {
               }
               keyboardType="numeric"
               placeholder="Card Number"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>CVV</Text>
@@ -119,7 +161,7 @@ export default function CardDetails({ navigation }) {
               onChangeText={(text) => handleInput({ value: text, name: "cvv" })}
               placeholder="CVV"
               keyboardType="numeric"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
             <Text style={styles.fieldname}>Month Of Expiry</Text>
             <View style={styles.moeform}>
@@ -128,7 +170,7 @@ export default function CardDetails({ navigation }) {
                 onChangeText={(text) => setMonth(text)}
                 placeholder="MM"
                 keyboardType="numeric"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
               />
               <Text style={styles.moename}>/</Text>
               <TextInput
@@ -136,7 +178,7 @@ export default function CardDetails({ navigation }) {
                 onChangeText={(text) => setYear(text)}
                 placeholder="YYYY"
                 keyboardType="numeric"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
               />
             </View>
             <Text style={styles.fieldname}>Bank Name</Text>
@@ -146,17 +188,17 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "bankname" })
               }
               placeholder="Bank Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
-            <Text style={styles.fieldname}>Password</Text>
+            <Text style={styles.fieldname}>Pin</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "password" })
               }
               placeholder="Password"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>Note</Text>
@@ -166,7 +208,7 @@ export default function CardDetails({ navigation }) {
                 handleInput({ value: text, name: "notes" })
               }
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
           </View>
 

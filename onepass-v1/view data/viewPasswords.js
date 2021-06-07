@@ -90,7 +90,7 @@ export default function Password({ navigation }) {
     showMessage({
       message: "Data Deleted Successfully",
       color: "#f0f5f9",
-      type: "danger",
+      backgroundColor: "#E4252D",
       style: {
         borderRadius: 20,
         height: 50,
@@ -119,7 +119,7 @@ export default function Password({ navigation }) {
     showMessage({
       message: "Data Added",
       color: "#f0f5f9",
-      type: "success",
+      backgroundColor: "#6bf060",
       style: {
         borderRadius: 20,
         height: 50,
@@ -243,7 +243,7 @@ export default function Password({ navigation }) {
                       handleInput({ value: text, name: "name" })
                     }
                     placeholder="Name"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                     defaultValue={data.name}
                     editable={editable}
                   />
@@ -257,7 +257,7 @@ export default function Password({ navigation }) {
                     placeholder="Category"
                     defaultValue={data.category}
                     editable={editable}
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>URL</Text>
@@ -280,7 +280,7 @@ export default function Password({ navigation }) {
                     placeholder="URL"
                     defaultValue={data.url}
                     editable={editable}
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Username</Text>
@@ -291,7 +291,7 @@ export default function Password({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -311,8 +311,9 @@ export default function Password({ navigation }) {
                     }
                     placeholder="User Name"
                     defaultValue={data.username}
+                    secureTextEntry={!editable}
                     editable={editable}
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
 
                   <View style={styles.generateinform}>
@@ -324,7 +325,7 @@ export default function Password({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -345,7 +346,7 @@ export default function Password({ navigation }) {
                     placeholder="Email"
                     defaultValue={data.email}
                     editable={editable}
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
 
                   <View style={styles.generateinform}>
@@ -357,7 +358,7 @@ export default function Password({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -381,12 +382,13 @@ export default function Password({ navigation }) {
                     key={password}
                     style={styles.fieldinput}
                     editable={editable}
+                    secureTextEntry={!editable}
                     defaultValue={password}
                     onChangeText={(text) =>
                       handleInput({ value: text, name: "password" })
                     }
                     placeholder="Password"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <Text style={styles.fieldname}>Note</Text>
                   <TextInput
@@ -397,7 +399,7 @@ export default function Password({ navigation }) {
                     defaultValue={data.note}
                     editable={editable}
                     placeholder="Note"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                 </View>
 

@@ -81,12 +81,13 @@ export default function Register2FA({ navigation }) {
           showMessage({
             message: "Successfully Registered",
             color: "#f0f5f9",
-            type: "success",
+            backgroundColor: "#6bf060",
             style: {
               borderRadius: 20,
               height: 50,
             },
           });
+          console.log(data.username, data.hint);
           navigation.navigate("Login", {
             username: data.username,
             hint: data.hint,
@@ -104,7 +105,7 @@ export default function Register2FA({ navigation }) {
       showMessage({
         message: "Data cannot be empty",
         color: "#f0f5f9",
-        type: "danger",
+        backgroundColor: "#E4252D",
         style: {
           borderRadius: 20,
           height: 50,
@@ -138,7 +139,7 @@ export default function Register2FA({ navigation }) {
                   handleInput({ value: text, key: `question`, index: 0 })
                 }
                 placeholder="Enter Question"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
               />
 
               <Text style={styles.bodytext}>Answer</Text>
@@ -148,7 +149,7 @@ export default function Register2FA({ navigation }) {
                   handleInput({ value: text, key: `answer`, index: 0 })
                 }
                 placeholder="Enter Answer"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
               />
             </View>
             <View key={2} style={styles.form}>
@@ -159,13 +160,13 @@ export default function Register2FA({ navigation }) {
                   handleInput({ value: text, key: `question`, index: 1 })
                 }
                 placeholder="Enter Question"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
               />
               <Text style={styles.bodytext}>Answer</Text>
               <TextInput
                 style={styles.passwordinputbox}
                 placeholder="Enter Answer"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
                 onChangeText={(text) =>
                   handleInput({ value: text, key: `answer`, index: 1 })
                 }
@@ -180,13 +181,13 @@ export default function Register2FA({ navigation }) {
                   handleInput({ value: text, key: `question`, index: 2 })
                 }
                 placeholder="Enter Question"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
               />
               <Text style={styles.bodytext}>Answer</Text>
               <TextInput
                 style={styles.passwordinputbox}
                 placeholder="Enter Answer"
-                placeholderTextColor="#F0F5F9"
+                placeholderTextColor="#858282"
                 onChangeText={(text) =>
                   handleInput({ value: text, key: `answer`, index: 2 })
                 }

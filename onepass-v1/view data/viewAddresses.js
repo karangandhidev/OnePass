@@ -60,7 +60,7 @@ export default function viewaddresses({ navigation }) {
     showMessage({
       message: "Data Deleted Successfully",
       color: "#f0f5f9",
-      type: "danger",
+      backgroundColor: "#E4252D",
       style: {
         borderRadius: 20,
         height: 50,
@@ -84,7 +84,7 @@ export default function viewaddresses({ navigation }) {
     showMessage({
       message: "Data Edited Successfully",
       color: "#f0f5f9",
-      type: "success",
+      backgroundColor: "#6bf060",
       style: {
         borderRadius: 20,
         height: 50,
@@ -211,7 +211,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -232,7 +232,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.name}
                     editable={editable}
                     placeholder="Name"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Apartment / Flat</Text>
@@ -243,7 +243,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -264,7 +264,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.apartment}
                     editable={editable}
                     placeholder="Apartment / Flat"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Street</Text>
@@ -275,7 +275,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -296,7 +296,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.street}
                     editable={editable}
                     placeholder="Street"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Landmark</Text>
@@ -307,7 +307,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -328,7 +328,7 @@ export default function viewaddresses({ navigation }) {
                     defaultValue={data.landmark}
                     editable={editable}
                     placeholder="Landmark"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>City</Text>
@@ -339,7 +339,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -360,7 +360,7 @@ export default function viewaddresses({ navigation }) {
                       handleInput({ value: text, name: "city" })
                     }
                     placeholder="City"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>State</Text>
@@ -371,7 +371,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -392,7 +392,7 @@ export default function viewaddresses({ navigation }) {
                       handleInput({ value: text, name: "state" })
                     }
                     placeholder="State"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Country</Text>
@@ -403,7 +403,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -424,7 +424,7 @@ export default function viewaddresses({ navigation }) {
                     placeholder="Country"
                     defaultValue={data.country}
                     editable={editable}
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                   <View style={styles.generateinform}>
                     <Text style={styles.generatename}>Pin-Code</Text>
@@ -435,7 +435,7 @@ export default function viewaddresses({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -457,7 +457,7 @@ export default function viewaddresses({ navigation }) {
                     }
                     keyboardType="number-pad"
                     placeholder="Pin-Code"
-                    placeholderTextColor="#F0F5F9"
+                    placeholderTextColor="#858282"
                   />
                 </View>
                 {deleteable ? null : (

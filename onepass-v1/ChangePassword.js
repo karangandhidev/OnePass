@@ -83,7 +83,7 @@ export default function ChangePassword({ navigation }) {
             showMessage({
               message: "Invalid Input",
               color: "#f0f5f9",
-              type: "danger",
+              backgroundColor: "#E4252D",
               style: {
                 borderRadius: 20,
                 height: 50,
@@ -93,7 +93,7 @@ export default function ChangePassword({ navigation }) {
         showMessage({
           message: "Data Updated",
           color: "#f0f5f9",
-          type: "success",
+          backgroundColor: "#6bf060",
           style: {
             borderRadius: 20,
             height: 50,
@@ -119,7 +119,7 @@ export default function ChangePassword({ navigation }) {
             showMessage({
               message: "Invalid Input",
               color: "#f0f5f9",
-              type: "danger",
+              backgroundColor: "#E4252D",
               style: {
                 borderRadius: 20,
                 height: 50,
@@ -130,7 +130,7 @@ export default function ChangePassword({ navigation }) {
         showMessage({
           message: "Data Updated",
           color: "#f0f5f9",
-          type: "success",
+          backgroundColor: "#6bf060",
           style: {
             borderRadius: 20,
             height: 50,
@@ -151,7 +151,7 @@ export default function ChangePassword({ navigation }) {
             showMessage({
               message: "Invalid Input",
               color: "#f0f5f9",
-              type: "danger",
+              backgroundColor: "#E4252D",
               style: {
                 borderRadius: 20,
                 height: 50,
@@ -161,7 +161,7 @@ export default function ChangePassword({ navigation }) {
         showMessage({
           message: "Data Updated",
           color: "#f0f5f9",
-          type: "success",
+          backgroundColor: "#6bf060",
           style: {
             borderRadius: 20,
             height: 50,
@@ -218,7 +218,7 @@ export default function ChangePassword({ navigation }) {
                     handleInput({ value: text, name: "Username" })
                   }
                   placeholder="New Username"
-                  placeholderTextColor="#F0F5F9"
+                  placeholderTextColor="#858282"
                 />
               </View>
             </>
@@ -250,7 +250,7 @@ export default function ChangePassword({ navigation }) {
                     handleInput({ value: text, name: "Hint" })
                   }
                   placeholder="New Hint"
-                  placeholderTextColor="#F0F5F9"
+                  placeholderTextColor="#858282"
                 />
               </View>
             </>
@@ -281,7 +281,8 @@ export default function ChangePassword({ navigation }) {
                     handleInput({ value: text, name: "OldPassword" })
                   }
                   placeholder="Old Password"
-                  placeholderTextColor="#F0F5F9"
+                  placeholderTextColor="#858282"
+                  secureTextEntry={true}
                 />
                 <Text style={styles.fieldname}>New Password</Text>
                 <TextInput
@@ -290,7 +291,8 @@ export default function ChangePassword({ navigation }) {
                     handleInput({ value: text, name: "NewPassword" })
                   }
                   placeholder="New Password"
-                  placeholderTextColor="#F0F5F9"
+                  secureTextEntry={true}
+                  placeholderTextColor="#858282"
                 />
                 <Text style={styles.fieldname}>Confirm New Password</Text>
                 <TextInput
@@ -299,7 +301,8 @@ export default function ChangePassword({ navigation }) {
                     handleInput({ value: text, name: "ConfirmNewPassword" })
                   }
                   placeholder="Confirm New Password"
-                  placeholderTextColor="#F0F5F9"
+                  secureTextEntry={true}
+                  placeholderTextColor="#858282"
                 />
               </View>
             </>

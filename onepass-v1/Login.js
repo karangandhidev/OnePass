@@ -65,7 +65,7 @@ export default function Login({ navigation }) {
           showMessage({
             message: "Password Incorrect",
             color: "#f0f5f9",
-            type: "danger",
+            backgroundColor: "#E4252D",
             style: {
               borderRadius: 20,
               height: 50,
@@ -76,7 +76,7 @@ export default function Login({ navigation }) {
       showMessage({
         message: "Invalid Input",
         color: "#f0f5f9",
-        type: "danger",
+        backgroundColor: "#E4252D",
         style: {
           borderRadius: 20,
           height: 50,

@@ -61,7 +61,7 @@ export default function CardDetails({ navigation }) {
     showMessage({
       message: "Data Deleted Successfully",
       color: "#f0f5f9",
-      type: "danger",
+      backgroundColor: "#E4252D",
       style: {
         borderRadius: 20,
         height: 50,
@@ -94,7 +94,7 @@ export default function CardDetails({ navigation }) {
     showMessage({
       message: "Data Added",
       color: "#f0f5f9",
-      type: "success",
+      backgroundColor: "#6bf060",
       style: {
         borderRadius: 20,
         height: 50,
@@ -218,7 +218,7 @@ export default function CardDetails({ navigation }) {
                       handleInput({ value: text, name: "name" })
                     }
                     placeholder="Card Holder Name"
-                    // secureTextEntry = {true}
+                    // secureTextEntry={true}
                     defaultValue={data.name}
                     editable={editable}
                     placeholderTextColor="#000000"
@@ -233,7 +233,7 @@ export default function CardDetails({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -252,7 +252,7 @@ export default function CardDetails({ navigation }) {
                       handleInput({ value: text, name: "number" })
                     }
                     placeholder="Card Number"
-                    // secureTextEntry = {true}
+                    secureTextEntry={!editable}
                     defaultValue={data.number}
                     editable={editable}
                     placeholderTextColor="#000000"
@@ -266,7 +266,7 @@ export default function CardDetails({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -285,7 +285,7 @@ export default function CardDetails({ navigation }) {
                       handleInput({ value: text, name: "cvv" })
                     }
                     placeholder="CVV"
-                    // secureTextEntry = {true}
+                    secureTextEntry={!editable}
                     defaultValue={data.cvv}
                     editable={editable}
                     placeholderTextColor="#000000"
@@ -300,7 +300,7 @@ export default function CardDetails({ navigation }) {
                       placeholder="MM"
                       defaultValue={array[0]}
                       keyboardType="numeric"
-                      placeholderTextColor="#F0F5F9"
+                      placeholderTextColor="#858282"
                     />
                     <Text style={styles.moename}>/</Text>
                     <TextInput
@@ -310,7 +310,7 @@ export default function CardDetails({ navigation }) {
                       placeholder="YYYY"
                       defaultValue={array[1]}
                       keyboardType="numeric"
-                      placeholderTextColor="#F0F5F9"
+                      placeholderTextColor="#858282"
                     />
                   </View>
 
@@ -336,7 +336,7 @@ export default function CardDetails({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -356,8 +356,7 @@ export default function CardDetails({ navigation }) {
                     }
                     placeholder="Password"
                     defaultValue={data.password}
-                    editable={editable}
-                    // secureTextEntry = {true}
+                    secureTextEntry={!editable}
                     placeholderTextColor="#000000"
                   />
 

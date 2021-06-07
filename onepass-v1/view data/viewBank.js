@@ -49,7 +49,7 @@ export default function Viewbank({ navigation }) {
     showMessage({
       message: "Data Deleted Successfully",
       color: "#f0f5f9",
-      type: "danger",
+      backgroundColor: "#E4252D",
       style: {
         borderRadius: 20,
         height: 50,
@@ -76,11 +76,14 @@ export default function Viewbank({ navigation }) {
           "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
         },
       })
-      .then(navigation.navigate("Homepage"));
+      .then(navigation.navigate("Homepage"))
+      .catch((err) => {
+        console.log(err);
+      });
     showMessage({
       message: "Data Added",
       color: "#f0f5f9",
-      type: "success",
+      backgroundColor: "#6bf060",
       style: {
         borderRadius: 20,
         height: 50,
@@ -217,7 +220,7 @@ export default function Viewbank({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -238,6 +241,7 @@ export default function Viewbank({ navigation }) {
                     }
                     placeholder="Account Number"
                     placeholderTextColor="#000000"
+                    secureTextEntry={!editable}
                     defaultValue={data.acc_no}
                     editable={editable}
                   />
@@ -250,7 +254,7 @@ export default function Viewbank({ navigation }) {
                           showMessage({
                             message: "Data Copied!",
                             color: "#f0f5f9",
-                            type: "default",
+                            backgroundColor: "#000000",
                             style: {
                               borderRadius: 20,
                               height: 50,
@@ -270,6 +274,7 @@ export default function Viewbank({ navigation }) {
                     }
                     placeholder="IFSC Code"
                     placeholderTextColor="#000000"
+                    // secureTextEntry={editable}
                     defaultValue={data.ifsc}
                     editable={editable}
                   />

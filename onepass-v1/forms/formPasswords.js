@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "react-native-axios";
 import { css } from "../css";
 import { fonts } from "../fonts";
@@ -24,6 +24,23 @@ export default function Password({ navigation }) {
   const [input, setInput] = useState({});
   const [password, setPassword] = useState("");
   const preference = useSelector((state) => state.preference.preference);
+  const [validate, setValidate] = useState(false);
+  useEffect(() => {
+    console.log(input);
+    if (
+      input.name === "" ||
+      input.category === "" ||
+      input.url === "" ||
+      input.username === "" ||
+      input.email === "" ||
+      input.password === ""
+    ) {
+      setValidate(false);
+    } else {
+      setValidate(true);
+    }
+  }),
+    [input];
   const handleInput = (e) => {
     const { name, value } = e;
     setInput((values) => {
@@ -55,25 +72,40 @@ export default function Password({ navigation }) {
       });
   };
   const submit = () => {
-    axios
-      .post("http://10.0.0.2:3000/passwords", input, {
-        headers: {
-          "Access-Control-Allow-Headers":
-            "Access-Control-Allow-Headers, Authorization",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+    if (validate) {
+      axios
+        .post("http://10.0.0.2:3000/passwords", input, {
+          headers: {
+            "Access-Control-Allow-Headers":
+              "Access-Control-Allow-Headers, Authorization",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS",
+          },
+        })
+        .then(navigation.navigate("Homepage"))
+        .catch((err) => {
+          console.log(err);
+        });
+      showMessage({
+        message: "Data Added",
+        color: "#f0f5f9",
+        backgroundColor: "#6bf060",
+        style: {
+          borderRadius: 20,
+          height: 50,
         },
-      })
-      .then(navigation.navigate("Passwords"));
-    showMessage({
-      message: "Data Added",
-      color: "#f0f5f9",
-      type: "success",
-      style: {
-        borderRadius: 20,
-        height: 50,
-      },
-    });
+      });
+    } else {
+      showMessage({
+        message: "Invalid Input",
+        color: "#f0f5f9",
+        backgroundColor: "#E4252D",
+        style: {
+          borderRadius: 20,
+          height: 50,
+        },
+      });
+    }
   };
 
   if (!isLoaded) {
@@ -107,7 +139,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "name" })
               }
               placeholder="Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>Category</Text>
@@ -117,7 +149,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "category" })
               }
               placeholder="Category"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>URL</Text>
@@ -125,17 +157,17 @@ export default function Password({ navigation }) {
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "url" })}
               placeholder="https://www.example.com"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
-            <Text style={styles.fieldname}>User Name</Text>
+            <Text style={styles.fieldname}>Username</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>
                 handleInput({ value: text, name: "username" })
               }
               placeholder="User Name"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>Email</Text>
@@ -145,7 +177,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "email" })
               }
               placeholder="Email"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
             <View style={styles.generateinform}>
               <Text style={styles.generatename}>Password</Text>
@@ -164,7 +196,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "password" })
               }
               placeholder="Password"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
 
             <Text style={styles.fieldname}>Note</Text>
@@ -174,7 +206,7 @@ export default function Password({ navigation }) {
                 handleInput({ value: text, name: "note" })
               }
               placeholder="Note"
-              placeholderTextColor="#F0F5F9"
+              placeholderTextColor="#858282"
             />
           </View>
 

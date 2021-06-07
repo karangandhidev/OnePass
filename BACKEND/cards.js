@@ -44,12 +44,13 @@ const cardsSchema = new mongoose.Schema(
 const model = mongoose.model("cards schema", cardsSchema);
 router.post("/cards", async (req, res) => {
   let { name, number, cvv, moe, bankname, password, notes } = req.body;
-  number = encrypt(number);
-  cvv = encrypt(cvv);
-  moe = encrypt(moe);
-  password = encrypt(password);
 
   try {
+    number = encrypt(number);
+    cvv = encrypt(cvv);
+    moe = encrypt(moe);
+    password = encrypt(password);
+
     const response = await model.create({
       name,
       number,
@@ -62,9 +63,7 @@ router.post("/cards", async (req, res) => {
     res.json({ status: "okay" });
   } catch (error) {
     console.log(error);
-    return res.json({
-      status: "error",
-    });
+    res.status(400).json(error);
   }
 });
 router.get("/cards", async (req, res) => {
@@ -79,7 +78,7 @@ router.get("/cards", async (req, res) => {
         card.password = decrypt(card.password);
         card.moe = decrypt(card.moe);
       });
-      
+
       res.status(200).json(Cards);
     } else {
       res.status(200).json({ message: "User Unauthorized" });

@@ -30,9 +30,7 @@ router.post("/notes", async (req, res) => {
     res.json({ status: "okay" });
   } catch (error) {
     console.log(error);
-    return res.json({
-      status: "error",
-    });
+    res.status(400).json(error);
   }
 });
 

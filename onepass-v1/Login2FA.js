@@ -68,7 +68,7 @@ export default function Login2FA({ navigation }) {
           showMessage({
             message: "Successfully Logged In",
             color: "#f0f5f9",
-            type: "success",
+            backgroundColor: "#6bf060",
             style: {
               borderRadius: 20,
               height: 50,
@@ -80,7 +80,7 @@ export default function Login2FA({ navigation }) {
           showMessage({
             message: "Answer Incorrect",
             color: "#f0f5f9",
-            type: "danger",
+            backgroundColor: "#E4252D",
             style: {
               borderRadius: 20,
               height: 50,
@@ -91,7 +91,7 @@ export default function Login2FA({ navigation }) {
       showMessage({
         message: "Invalid Input",
         color: "#f0f5f9",
-        type: "danger",
+        backgroundColor: "#E4252D",
         style: {
           borderRadius: 20,
           height: 50,

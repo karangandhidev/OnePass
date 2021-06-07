@@ -4,14 +4,21 @@ const secretKey = "vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3";
 const iv = crypto.randomBytes(16);
 
 const encrypt = (text) => {
-  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+  try {
+    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
 
-  const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
+    const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 
-  return {
-    iv: iv.toString("hex"),
-    content: encrypted.toString("hex"),
-  };
+    return {
+      iv: iv.toString("hex"),
+      content: encrypted.toString("hex"),
+    };
+  } catch (err) {
+    // console.log(err);
+    return {
+      status: "error",
+    };
+  }
 };
 
 const decrypt = (hash) => {
