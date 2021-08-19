@@ -251,6 +251,7 @@ export default function CardDetails({ navigation }) {
                     onChangeText={(text) =>
                       handleInput({ value: text, name: "number" })
                     }
+                    maxLength={16}
                     placeholder="Card Number"
                     secureTextEntry={!editable}
                     defaultValue={data.number}
@@ -284,6 +285,7 @@ export default function CardDetails({ navigation }) {
                     onChangeText={(text) =>
                       handleInput({ value: text, name: "cvv" })
                     }
+                    maxLength={3}
                     placeholder="CVV"
                     secureTextEntry={!editable}
                     defaultValue={data.cvv}

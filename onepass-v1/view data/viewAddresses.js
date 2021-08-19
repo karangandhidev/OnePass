@@ -161,319 +161,317 @@ export default function viewaddresses({ navigation }) {
             </>
           )}
         </View>
-        <View style={styles.screenview}>
-          <ScrollView style={styles.scroll}>
-            {popup ? (
-              <View style={styles.editpopupbox}>
-                <View style={styles.editpopupheader}>
+        {/* <View style={styles.screenview}> */}
+        <ScrollView style={styles.scroll}>
+          {popup ? (
+            <View style={styles.editpopupbox}>
+              <View style={styles.editpopupheader}>
+                <Icons
+                  class="material-icons-round"
+                  name={"close"}
+                  style={styles.editclosebutton}
+                  size={30}
+                  color="transparent"
+                />
+
+                <Text style={styles.editpopuptitle}>Confirm Delete</Text>
+                <TouchableOpacity
+                  style={styles.editclosebutton}
+                  onPress={() => {
+                    setPopup(!popup);
+                  }}
+                >
                   <Icons
                     class="material-icons-round"
                     name={"close"}
-                    style={styles.editclosebutton}
                     size={30}
-                    color="transparent"
+                    color="#F0F5F9"
                   />
-
-                  <Text style={styles.editpopuptitle}>Confirm Delete</Text>
-                  <TouchableOpacity
-                    style={styles.editclosebutton}
-                    onPress={() => {
-                      setPopup(!popup);
-                    }}
-                  >
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.editpopupcontent}>
+                Are you sure you want to delete?
+              </Text>
+              <TouchableOpacity
+                onPress={del}
+                style={styles.editpopupRightbutton}
+              >
+                <Text style={styles.editpopupbuttoncontent}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <>
+              <View style={styles.formview}>
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>Name</Text>
+                  {!editable ? (
                     <Icons
-                      class="material-icons-round"
-                      name={"close"}
+                      onPress={() => {
+                        copy(data.name);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
                       size={30}
                       color="#F0F5F9"
                     />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "name" })
+                  }
+                  defaultValue={data.name}
+                  editable={editable}
+                  placeholder="Name"
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>Apartment / Flat</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.apartment);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "apartment" })
+                  }
+                  defaultValue={data.apartment}
+                  editable={editable}
+                  placeholder="Apartment / Flat"
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>Street</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.street);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "street" })
+                  }
+                  defaultValue={data.street}
+                  editable={editable}
+                  placeholder="Street"
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>Landmark</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.landmark);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "landmark" })
+                  }
+                  defaultValue={data.landmark}
+                  editable={editable}
+                  placeholder="Landmark"
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>City</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.city);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  defaultValue={data.city}
+                  editable={editable}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "city" })
+                  }
+                  placeholder="City"
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>State</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.state);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  defaultValue={data.state}
+                  editable={editable}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "state" })
+                  }
+                  placeholder="State"
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>Country</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.country);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "country" })
+                  }
+                  placeholder="Country"
+                  defaultValue={data.country}
+                  editable={editable}
+                  placeholderTextColor="#858282"
+                />
+                <View style={styles.generateinform}>
+                  <Text style={styles.generatename}>Pin-Code</Text>
+                  {!editable ? (
+                    <Icons
+                      onPress={() => {
+                        copy(data.pincode);
+                        showMessage({
+                          message: "Data Copied!",
+                          color: "#f0f5f9",
+                          backgroundColor: "#000000",
+                          style: {
+                            borderRadius: 20,
+                            height: 50,
+                          },
+                        });
+                      }}
+                      name={"content-copy"}
+                      size={30}
+                      color="#F0F5F9"
+                    />
+                  ) : null}
+                </View>
+                <TextInput
+                  style={styles.fieldinput}
+                  defaultValue={data.pincode}
+                  editable={editable}
+                  onChangeText={(text) =>
+                    handleInput({ value: text, name: "pincode" })
+                  }
+                  maxLength={6}
+                  keyboardType="number-pad"
+                  placeholder="Pin-Code"
+                  placeholderTextColor="#858282"
+                />
+              </View>
+              {deleteable ? null : (
+                <View style={styles.formsubmitview}>
+                  <TouchableOpacity style={styles.submitdata} onPress={submit}>
+                    <Text style={styles.submitdatatext}>Submit</Text>
                   </TouchableOpacity>
                 </View>
-                <Text style={styles.editpopupcontent}>
-                  Are you sure you want to delete?
-                </Text>
-                <TouchableOpacity
-                  onPress={del}
-                  style={styles.editpopupRightbutton}
-                >
-                  <Text style={styles.editpopupbuttoncontent}>Confirm</Text>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <>
-                <View style={styles.formview}>
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>Name</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.name);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "name" })
-                    }
-                    defaultValue={data.name}
-                    editable={editable}
-                    placeholder="Name"
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>Apartment / Flat</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.apartment);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "apartment" })
-                    }
-                    defaultValue={data.apartment}
-                    editable={editable}
-                    placeholder="Apartment / Flat"
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>Street</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.street);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "street" })
-                    }
-                    defaultValue={data.street}
-                    editable={editable}
-                    placeholder="Street"
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>Landmark</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.landmark);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "landmark" })
-                    }
-                    defaultValue={data.landmark}
-                    editable={editable}
-                    placeholder="Landmark"
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>City</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.city);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    defaultValue={data.city}
-                    editable={editable}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "city" })
-                    }
-                    placeholder="City"
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>State</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.state);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    defaultValue={data.state}
-                    editable={editable}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "state" })
-                    }
-                    placeholder="State"
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>Country</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.country);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "country" })
-                    }
-                    placeholder="Country"
-                    defaultValue={data.country}
-                    editable={editable}
-                    placeholderTextColor="#858282"
-                  />
-                  <View style={styles.generateinform}>
-                    <Text style={styles.generatename}>Pin-Code</Text>
-                    {!editable ? (
-                      <Icons
-                        onPress={() => {
-                          copy(data.pincode);
-                          showMessage({
-                            message: "Data Copied!",
-                            color: "#f0f5f9",
-                            backgroundColor: "#000000",
-                            style: {
-                              borderRadius: 20,
-                              height: 50,
-                            },
-                          });
-                        }}
-                        name={"content-copy"}
-                        size={30}
-                        color="#F0F5F9"
-                      />
-                    ) : null}
-                  </View>
-                  <TextInput
-                    style={styles.fieldinput}
-                    defaultValue={data.pincode}
-                    editable={editable}
-                    onChangeText={(text) =>
-                      handleInput({ value: text, name: "pincode" })
-                    }
-                    keyboardType="number-pad"
-                    placeholder="Pin-Code"
-                    placeholderTextColor="#858282"
-                  />
-                </View>
-                {deleteable ? null : (
-                  <View style={styles.formsubmitview}>
-                    <TouchableOpacity
-                      style={styles.submitdata}
-                      onPress={submit}
-                    >
-                      <Text style={styles.submitdatatext}>Submit</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </>
-            )}
-          </ScrollView>
-        </View>
+              )}
+            </>
+          )}
+        </ScrollView>
+        {/* </View> */}
       </KeyboardAvoidingView>
     );
   }

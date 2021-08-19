@@ -150,6 +150,7 @@ export default function CardDetails({ navigation }) {
               onChangeText={(text) =>
                 handleInput({ value: text, name: "number" })
               }
+              maxLength={16}
               keyboardType="numeric"
               placeholder="Card Number"
               placeholderTextColor="#858282"
@@ -159,6 +160,7 @@ export default function CardDetails({ navigation }) {
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) => handleInput({ value: text, name: "cvv" })}
+              maxLength={3}
               placeholder="CVV"
               keyboardType="numeric"
               placeholderTextColor="#858282"

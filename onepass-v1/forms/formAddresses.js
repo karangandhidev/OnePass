@@ -186,6 +186,7 @@ export default function Addresses({ navigation }) {
               onChangeText={(text) =>
                 handleInput({ value: text, name: "pincode" })
               }
+              maxLength={6}
               keyboardType="numeric"
               placeholder="Pin-Code"
               placeholderTextColor="#858282"

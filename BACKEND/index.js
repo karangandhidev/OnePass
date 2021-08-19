@@ -83,14 +83,33 @@ app.get("/alldata", async (req, res) => {
 
 app.post("/generatepass", (req, res) => {
   const { length, numbers, uppercase, lowercase, symbols, exclude } = req.body;
+  let low = lowercase;
+  if (!numbers && !uppercase && !lowercase && !symbols) {
+    low = true;
+  }
+  // console.log(
+  //   "length:",
+  //   length,
+  //   "numbers:",
+  //   numbers,
+  //   "uppercase:",
+  //   uppercase,
+  //   "lowercase:",
+  //   lowercase,
+  //   "symbols:",
+  //   symbols,
+  //   "exclude:",
+  //   exclude
+  // );
   let pass = generator.generate({
     length: length,
     numbers: numbers,
     uppercase: uppercase,
-    lowercase: lowercase,
+    lowercase: low,
     symbols: symbols,
     exclude: exclude,
     strict: true,
   });
+  // console.log(pass);
   res.status(200).send(pass);
 });

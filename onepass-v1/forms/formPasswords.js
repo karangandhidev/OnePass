@@ -132,7 +132,7 @@ export default function Password({ navigation }) {
         </View>
         <ScrollView style={styles.scroll}>
           <View style={styles.formview}>
-            <Text style={styles.fieldname}>Name</Text>
+            <Text style={styles.fieldname}>App/Website Name</Text>
             <TextInput
               style={styles.fieldinput}
               onChangeText={(text) =>

@@ -180,7 +180,6 @@ export function Homepage({ navigation }) {
   } else {
     return (
       <View style={styles.background}>
-        <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
         {visible ? (
           <View style={styles.overlay}>
             <TouchableOpacity
@@ -264,6 +263,7 @@ export function Homepage({ navigation }) {
           </>
         )}
         <View style={styles.screenview}>
+          <StatusBar barStyle="light-content" backgroundColor="#1E2022" />
           <ScrollView style={styles.scroll}>
             <TouchableOpacity
               style={[

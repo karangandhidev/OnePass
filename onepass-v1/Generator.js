@@ -126,29 +126,21 @@ function Generator() {
   }, [generalchar, specialchar, parenthesis, dispatch]);
 
   const generatePassword = () => {
-    if (
-      preference.isNumber ||
-      preference.isLower ||
-      preference.isUpper ||
-      preference.isSpecial ||
-      preference.exclusion
-    ) {
-      axios
-        .post("http://10.0.0.2:3000/generatepass", {
-          length: preference.length,
-          numbers: preference.isNumber,
-          lowercase: preference.isLower,
-          uppercase: preference.isUpper,
-          symbols: preference.isSpecial,
-          exclude: preference.exclusion,
-        })
-        .then((res) => {
-          setPassword(res.data);
-        });
-    }
+    axios
+      .post("http://10.0.0.2:3000/generatepass", {
+        length: preference.length,
+        numbers: preference.isNumber,
+        lowercase: preference.isLower,
+        uppercase: preference.isUpper,
+        symbols: preference.isSpecial,
+        exclude: preference.exclusion,
+      })
+      .then((res) => {
+        setPassword(res.data);
+      });
   };
   useEffect(() => {
-    console.log("USEEFFECT");
+    // console.log(passStat);
     if (slider == null) {
       axios
         .post("http://10.0.0.2:3000/generatepass", {
@@ -170,33 +162,20 @@ function Generator() {
       preference.isSpecial == false &&
       preference.exclusion == false
     ) {
-      console.log("false mei aagaya");
-      axios
-        .post("http://10.0.0.2:3000/generatepass", {
-          length: preference.length,
-          numbers: preference.isNumber,
-          lowercase: true,
-          uppercase: preference.isUpper,
-          symbols: preference.isSpecial,
-          exclude: preference.exclusion,
-        })
-        .then((res) => {
-          setPassword(res.data);
-        });
-    } else {
-      axios
-        .post("http://10.0.0.2:3000/generatepass", {
-          length: preference.length,
-          numbers: preference.isNumber,
-          lowercase: preference.isLower,
-          uppercase: preference.isUpper,
-          symbols: preference.isSpecial,
-          exclude: preference.exclusion,
-        })
-        .then((res) => {
-          setPassword(res.data);
-        });
+      preference.isLower = true;
     }
+    axios
+      .post("http://10.0.0.2:3000/generatepass", {
+        length: preference.length,
+        numbers: preference.isNumber,
+        lowercase: preference.isLower,
+        uppercase: preference.isUpper,
+        symbols: preference.isSpecial,
+        exclude: preference.exclusion,
+      })
+      .then((res) => {
+        setPassword(res.data);
+      });
   }, [setPassword, preference]);
   useEffect(() => {
     if (rerender) {
@@ -283,7 +262,7 @@ function Generator() {
         <Switch
           trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
           thumbColor="#F0F5F9"
-          onValueChange={setUpper}
+          onValueChange={(value) => setUpper(value)}
           value={isUpper}
           style={styles.generatorcardtext}
         />
@@ -294,7 +273,8 @@ function Generator() {
         <Switch
           trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
           thumbColor="#F0F5F9"
-          onValueChange={setLower}
+          // onValueChange={(value) => changeLength(value)}
+          onValueChange={(value) => setLower(value)}
           value={isLower}
           style={styles.generatorcardtext}
         />
@@ -308,7 +288,7 @@ function Generator() {
         <Switch
           trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
           thumbColor="#F0F5F9"
-          onValueChange={setNumber}
+          onValueChange={(value) => setNumber(value)}
           value={isNumber}
           style={styles.generatorcardtext}
         />
@@ -360,7 +340,7 @@ function Generator() {
             <Switch
               trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
               thumbColor="#F0F5F9"
-              onValueChange={setGeneralchar}
+              onValueChange={(value) => setGeneralchar(value)}
               value={generalchar}
               style={styles.generatorcardtext}
             />
@@ -375,7 +355,7 @@ function Generator() {
             <Switch
               trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
               thumbColor="#F0F5F9"
-              onValueChange={setSpecialchar}
+              onValueChange={(value) => setSpecialchar(value)}
               value={specialchar}
               style={styles.generatorcardtext}
             />
@@ -389,7 +369,7 @@ function Generator() {
             <Switch
               trackColor={{ false: "#f0f5f9", true: "#6bf060" }}
               thumbColor="#F0F5F9"
-              onValueChange={setParenthesis}
+              onValueChange={(value) => setParenthesis(value)}
               value={parenthesis}
               style={styles.generatorcardtext}
             />

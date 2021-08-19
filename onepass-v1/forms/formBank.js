@@ -128,6 +128,7 @@ export default function Bank({ navigation }) {
               onChangeText={(text) =>
                 handleInput({ value: text, name: "acc_no" })
               }
+              maxLength={18}
               placeholder="Account Number"
               placeholderTextColor="#858282"
             />
@@ -138,6 +139,7 @@ export default function Bank({ navigation }) {
               onChangeText={(text) =>
                 handleInput({ value: text, name: "ifsc" })
               }
+              maxLength={11}
               placeholder="IFSC Code"
               placeholderTextColor="#858282"
             />
@@ -158,6 +160,7 @@ export default function Bank({ navigation }) {
               onChangeText={(text) =>
                 handleInput({ value: text, name: "telephone" })
               }
+              maxLength={10}
               keyboardType="numeric"
               placeholder="Telephone Number"
               placeholderTextColor="#858282"

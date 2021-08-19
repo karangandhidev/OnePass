@@ -239,6 +239,7 @@ export default function Viewbank({ navigation }) {
                     onChangeText={(text) =>
                       handleInput({ value: text, name: "acc_no" })
                     }
+                    maxLength={18}
                     placeholder="Account Number"
                     placeholderTextColor="#000000"
                     secureTextEntry={!editable}
@@ -272,6 +273,7 @@ export default function Viewbank({ navigation }) {
                     onChangeText={(text) =>
                       handleInput({ value: text, name: "ifsc" })
                     }
+                    maxLength={11}
                     placeholder="IFSC Code"
                     placeholderTextColor="#000000"
                     // secureTextEntry={editable}
@@ -310,6 +312,7 @@ export default function Viewbank({ navigation }) {
                     onChangeText={(text) =>
                       handleInput({ value: text, name: "telephone" })
                     }
+                    maxLength={10}
                     placeholder="Telephone Number"
                     placeholderTextColor="#000000"
                     defaultValue={data.telephone}

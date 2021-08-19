@@ -118,7 +118,7 @@ export default function CardDetails({ navigation }) {
                   name={"close"}
                   size={50}
                   color="#F0F5F9"
-                  style={styles.editbackicon}
+                  style={styles.cancelsearchicon}
                 />
               </>
             )}
